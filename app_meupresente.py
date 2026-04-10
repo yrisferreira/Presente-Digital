@@ -95,7 +95,11 @@ def index():
 
 @app.route('/planos')
 def planos():
-    return render_template('planos.html')
+    return render_template('planos_v2.html')
+
+@app.route('/demo')
+def demo():
+    return render_template('demo.html')
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
@@ -124,24 +128,28 @@ def cadastro():
         flash('Cadastro realizado com sucesso! Faça login para continuar.')
         return redirect(url_for('login'))
     
-    return render_template('auth/cadastro.html')
+    return render_template('auth/cadastro_v3.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
+        username_or_email = request.form.get('username')
         password = request.form.get('password')
         
-        user = User.query.filter_by(username=username).first()
+        # Tentar encontrar por username ou email
+        user = User.query.filter(
+            (User.username == username_or_email) | (User.email == username_or_email)
+        ).first()
         
         if user and check_password_hash(user.password_hash, password):
             login_user(user)
+            flash(f'Bem-vindo de volta, {user.username}!')
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('dashboard'))
         else:
-            flash('Usuário ou senha incorretos!')
+            flash('Email/Usuário ou senha incorretos!')
     
-    return render_template('auth/login.html')
+    return render_template('auth/login_v3.html')
 
 @app.route('/logout')
 @login_required
@@ -371,4 +379,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     
-    app.run(debug=True, host='0.0.0.0', port=5003)
+    app.run(debug=True, host='0.0.0.0', port=5004)

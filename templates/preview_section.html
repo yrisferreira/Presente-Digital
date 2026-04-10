@@ -1,0 +1,1442 @@
+<!-- Veja como fica seu presente Section -->
+<section class="preview-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Veja como fica seu presente</h2>
+            <p class="section-subtitle">Experimente diferentes estilos e veja o resultado em tempo real</p>
+        </div>
+
+        <div class="preview-container">
+            <!-- Controls Panel -->
+            <div class="preview-controls">
+                <div class="control-tabs">
+                    <button class="tab-btn active" data-tab="message">Mensagem</button>
+                    <button class="tab-btn" data-tab="photos">Fotos</button>
+                    <button class="tab-btn" data-tab="music">Música</button>
+                    <button class="tab-btn" data-tab="theme">Tema</button>
+                </div>
+
+                <div class="tab-content">
+                    <!-- Message Tab -->
+                    <div class="tab-pane active" id="message-tab">
+                        <h3><i class="fas fa-pen"></i> Escreva sua mensagem</h3>
+                        <textarea id="previewMessage" class="message-input" placeholder="Digite uma mensagem romântica aqui..." maxlength="150">Para o amor da minha vida, você faz cada dia mais especial...</textarea>
+                        <div class="message-options">
+                            <div class="char-counter">
+                                <span id="messageCounter">85</span>/150
+                            </div>
+                            <div class="message-templates">
+                                <button class="template-btn" onclick="useTemplate('anniversary')">
+                                    <i class="fas fa-heart"></i>
+                                    Aniversário
+                                </button>
+                                <button class="template-btn" onclick="useTemplate('love')">
+                                    <i class="fas fa-heart"></i>
+                                    Amor
+                                </button>
+                                <button class="template-btn" onclick="useTemplate('valentine')">
+                                    <i class="fas fa-heart"></i>
+                                    Dia dos Namorados
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Photos Tab -->
+                    <div class="tab-pane" id="photos-tab">
+                        <h3><i class="fas fa-images"></i> Escolha suas fotos</h3>
+                        <div class="photo-grid">
+                            <div class="photo-option selected" data-photo="https://picsum.photos/seed/couple1/400/300">
+                                <img src="https://picsum.photos/seed/couple1/100/100" alt="Foto 1">
+                                <div class="photo-overlay">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            <div class="photo-option" data-photo="https://picsum.photos/seed/couple2/400/300">
+                                <img src="https://picsum.photos/seed/couple2/100/100" alt="Foto 2">
+                                <div class="photo-overlay">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            <div class="photo-option" data-photo="https://picsum.photos/seed/couple3/400/300">
+                                <img src="https://picsum.photos/seed/couple3/100/100" alt="Foto 3">
+                                <div class="photo-overlay">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            <div class="photo-option" data-photo="https://picsum.photos/seed/couple4/400/300">
+                                <img src="https://picsum.photos/seed/couple4/100/100" alt="Foto 4">
+                                <div class="photo-overlay">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            <div class="photo-option" data-photo="https://picsum.photos/seed/couple5/400/300">
+                                <img src="https://picsum.photos/seed/couple5/100/100" alt="Foto 5">
+                                <div class="photo-overlay">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            <div class="photo-option" data-photo="https://picsum.photos/seed/couple6/400/300">
+                                <img src="https://picsum.photos/seed/couple6/100/100" alt="Foto 6">
+                                <div class="photo-overlay">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="photo-info">
+                            <p><i class="fas fa-info-circle"></i> Selecione até 3 fotos para sua surpresa</p>
+                        </div>
+                    </div>
+
+                    <!-- Music Tab -->
+                    <div class="tab-pane" id="music-tab">
+                        <h3><i class="fas fa-music"></i> Escolha a trilha sonora</h3>
+                        <div class="music-list">
+                            <div class="music-item selected" data-music="romantic">
+                                <div class="music-cover">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="music-info">
+                                    <h4>Clássico Romântico</h4>
+                                    <p>Perfeito para momentos especiais</p>
+                                </div>
+                                <div class="music-play">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="music-item" data-music="acoustic">
+                                <div class="music-cover">
+                                    <i class="fas fa-guitar"></i>
+                                </div>
+                                <div class="music-info">
+                                    <h4>Acústico Romântico</h4>
+                                    <p>Suave e emocionante</p>
+                                </div>
+                                <div class="music-play">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="music-item" data-music="modern">
+                                <div class="music-cover">
+                                    <i class="fas fa-headphones"></i>
+                                </div>
+                                <div class="music-info">
+                                    <h4>Amor Moderno</h4>
+                                    <p>Contemporâneo e vibrante</p>
+                                </div>
+                                <div class="music-play">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="music-item" data-music="classical">
+                                <div class="music-cover">
+                                    <i class="fas fa-violin"></i>
+                                </div>
+                                <div class="music-info">
+                                    <h4>Música Clássica</h4>
+                                    <p>Elegante e atemporal</p>
+                                </div>
+                                <div class="music-play">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Theme Tab -->
+                    <div class="tab-pane" id="theme-tab">
+                        <h3><i class="fas fa-palette"></i> Escolha o tema visual</h3>
+                        <div class="theme-grid">
+                            <div class="theme-card selected" data-theme="romantic-pink">
+                                <div class="theme-preview" style="background: linear-gradient(45deg, #FF6B9D, #FF8FAB);">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <h4>Romântico Rosa</h4>
+                                <p>Clássico e apaixonante</p>
+                            </div>
+                            <div class="theme-card" data-theme="elegant-purple">
+                                <div class="theme-preview" style="background: linear-gradient(45deg, #667EEA, #764BA2);">
+                                    <i class="fas fa-gem"></i>
+                                </div>
+                                <h4>Elegante Roxo</h4>
+                                <p>Sofisticado e moderno</p>
+                            </div>
+                            <div class="theme-card" data-theme="golden-sunset">
+                                <div class="theme-preview" style="background: linear-gradient(45deg, #F093FB, #F5576C);">
+                                    <i class="fas fa-sun"></i>
+                                </div>
+                                <h4>Pôr Dourado</h4>
+                                <p>Quente e vibrante</p>
+                            </div>
+                            <div class="theme-card" data-theme="ocean-blue">
+                                <div class="theme-preview" style="background: linear-gradient(45deg, #4FACFE, #00F2FE);">
+                                    <i class="fas fa-water"></i>
+                                </div>
+                                <h4>Oceano Azul</h4>
+                                <p>Fresco e sereno</p>
+                            </div>
+                            <div class="theme-card" data-theme="forest-green">
+                                <div class="theme-preview" style="background: linear-gradient(45deg, #11998e, #38ef7d);">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <h4>Floresta Verde</h4>
+                                <p>Natural e relaxante</p>
+                            </div>
+                            <div class="theme-card" data-theme="midnight-dark">
+                                <div class="theme-preview" style="background: linear-gradient(45deg, #2c3e50, #34495e);">
+                                    <i class="fas fa-moon"></i>
+                                </div>
+                                <h4>Noite Escura</h4>
+                                <p>Misterioso e dramático</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Panel -->
+            <div class="preview-panel">
+                <div class="preview-header">
+                    <h3>Prévia em Tempo Real</h3>
+                    <div class="preview-actions">
+                        <button class="preview-btn" onclick="toggleFullscreen()" title="Tela cheia">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                        <button class="preview-btn" onclick="sharePreview()" title="Compartilhar">
+                            <i class="fas fa-share"></i>
+                        </button>
+                        <button class="preview-btn" onclick="resetPreview()" title="Resetar">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="preview-device">
+                    <div class="device-frame">
+                        <div class="device-screen" id="livePreview">
+                            <!-- Dynamic preview content -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-footer">
+                    <div class="preview-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-images"></i>
+                            <span id="photoCount">1</span> fotos
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-font"></i>
+                            <span id="charCount">85</span> caracteres
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-music"></i>
+                            <span id="musicName">Clássico Romântico</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="createSurprise()">
+                        <i class="fas fa-heart"></i>
+                        Criar Esta Surpresa
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Templates Gallery -->
+        <div class="templates-gallery">
+            <h3>Inspire-se em nossos templates</h3>
+            <div class="templates-grid">
+                <div class="template-card" onclick="loadTemplate('romantic-dinner')">
+                    <div class="template-preview">
+                        <img src="https://picsum.photos/seed/dinner/300/200" alt="Jantar Romântico">
+                        <div class="template-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h4>Jantar Romântico</h4>
+                        <p>Perfeito para uma noite especial</p>
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="loadTemplate('beach-sunset')">
+                    <div class="template-preview">
+                        <img src="https://picsum.photos/seed/beach/300/200" alt="Pôr na Praia">
+                        <div class="template-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h4>Pôr na Praia</h4>
+                        <p>Romance ao som das ondas</p>
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="loadTemplate('flower-garden')">
+                    <div class="template-preview">
+                        <img src="https://picsum.photos/seed/flowers/300/200" alt="Jardim de Flores">
+                        <div class="template-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h4>Jardim de Flores</h4>
+                        <p>Natureza e amor em harmonia</p>
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="loadTemplate('city-lights')">
+                    <div class="template-preview">
+                        <img src="https://picsum.photos/seed/city/300/200" alt="Luzes da Cidade">
+                        <div class="template-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h4>Luzes da Cidade</h4>
+                        <p>Amor urbano e vibrante</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Preview State
+let previewState = {
+    message: "Para o amor da minha vida, você faz cada dia mais especial...",
+    photos: ["https://picsum.photos/seed/couple1/400/300"],
+    music: "romantic",
+    theme: "romantic-pink"
+};
+
+// Initialize preview controls
+document.addEventListener('DOMContentLoaded', function() {
+    initializeTabs();
+    initializePhotoSelection();
+    initializeMusicSelection();
+    initializeThemeSelection();
+    initializeMessageInput();
+    updateLivePreview();
+});
+
+// Tab functionality
+function initializeTabs() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetTab = btn.dataset.tab;
+            
+            // Update buttons
+            tabBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Update panes
+            tabPanes.forEach(pane => {
+                pane.classList.toggle('active', pane.id === `${targetTab}-tab`);
+            });
+        });
+    });
+}
+
+// Message input
+function initializeMessageInput() {
+    const messageInput = document.getElementById('previewMessage');
+    const messageCounter = document.getElementById('messageCounter');
+
+    messageInput.addEventListener('input', () => {
+        previewState.message = messageInput.value;
+        messageCounter.textContent = messageInput.value.length;
+        document.getElementById('charCount').textContent = messageInput.value.length;
+        updateLivePreview();
+    });
+}
+
+// Photo selection
+function initializePhotoSelection() {
+    const photoOptions = document.querySelectorAll('.photo-option');
+
+    photoOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const selectedPhotos = document.querySelectorAll('.photo-option.selected');
+            
+            if (option.classList.contains('selected')) {
+                option.classList.remove('selected');
+            } else if (selectedPhotos.length < 3) {
+                option.classList.add('selected');
+            } else {
+                showNotification('Você pode selecionar no máximo 3 fotos!', 'warning');
+                return;
+            }
+            
+            previewState.photos = Array.from(document.querySelectorAll('.photo-option.selected'))
+                .map(el => el.dataset.photo);
+            
+            document.getElementById('photoCount').textContent = previewState.photos.length;
+            updateLivePreview();
+        });
+    });
+}
+
+// Music selection
+function initializeMusicSelection() {
+    const musicItems = document.querySelectorAll('.music-item');
+
+    musicItems.forEach(item => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.music-item').forEach(i => i.classList.remove('selected'));
+            item.classList.add('selected');
+            
+            previewState.music = item.dataset.music;
+            document.getElementById('musicName').textContent = item.querySelector('h4').textContent;
+            updateLivePreview();
+        });
+    });
+}
+
+// Theme selection
+function initializeThemeSelection() {
+    const themeCards = document.querySelectorAll('.theme-card');
+
+    themeCards.forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            
+            previewState.theme = card.dataset.theme;
+            updateLivePreview();
+        });
+    });
+}
+
+// Message templates
+function useTemplate(type) {
+    const templates = {
+        'anniversary': "Feliz aniversário de namoro! Cada dia ao seu lado é um presente que eu guardo no coração. Te amo!",
+        'love': "Você é a melhor coisa que aconteceu na minha vida. Obrigado por me fazer tão feliz todos os dias.",
+        'valentine': "Feliz Dia dos Namorados! Você não é apenas meu amor, você é minha vida inteira."
+    };
+
+    const messageInput = document.getElementById('previewMessage');
+    const messageCounter = document.getElementById('messageCounter');
+    
+    messageInput.value = templates[type];
+    previewState.message = templates[type];
+    messageCounter.textContent = templates[type].length;
+    document.getElementById('charCount').textContent = templates[type].length;
+    
+    updateLivePreview();
+}
+
+// Load full template
+function loadTemplate(templateName) {
+    const templates = {
+        'romantic-dinner': {
+            message: "Para a pessoa que torna cada jantar especial... esta noite é só nossa, cheia de amor e romance.",
+            photos: ["https://picsum.photos/seed/dinner1/400/300", "https://picsum.photos/seed/dinner2/400/300"],
+            music: 'romantic',
+            theme: 'golden-sunset'
+        },
+        'beach-sunset': {
+            message: "Como o pôr do sol na praia, nosso amor pinta o céu com cores lindas. Você é meu sol, minha luz, minha vida.",
+            photos: ["https://picsum.photos/seed/beach1/400/300", "https://picsum.photos/seed/beach2/400/300", "https://picsum.photos/seed/beach3/400/300"],
+            music: 'acoustic',
+            theme: 'ocean-blue'
+        },
+        'flower-garden': {
+            message: "Nosso amor floresce como um jardim primavera, cada dia mais bonito, mais forte, mais perfumado.",
+            photos: ["https://picsum.photos/seed/flowers1/400/300", "https://picsum.photos/seed/flowers2/400/300"],
+            music: 'classical',
+            theme: 'forest-green'
+        },
+        'city-lights': {
+            message: "No meio das luzes da cidade, seu brilho é o que mais ilumina meu mundo. Você é minha estrela guia.",
+            photos: ["https://picsum.photos/seed/city1/400/300", "https://picsum.photos/seed/city2/400/300"],
+            music: 'modern',
+            theme: 'midnight-dark'
+        }
+    };
+
+    const template = templates[templateName];
+    if (template) {
+        previewState = { ...template };
+        
+        // Update UI
+        document.getElementById('previewMessage').value = template.message;
+        document.getElementById('messageCounter').textContent = template.message.length;
+        document.getElementById('charCount').textContent = template.message.length;
+        document.getElementById('photoCount').textContent = template.photos.length;
+        
+        // Update selections
+        document.querySelectorAll('.photo-option').forEach(opt => {
+            opt.classList.toggle('selected', template.photos.includes(opt.dataset.photo));
+        });
+        
+        document.querySelectorAll('.music-item').forEach(item => {
+            item.classList.toggle('selected', item.dataset.music === template.music);
+        });
+        
+        document.querySelectorAll('.theme-card').forEach(card => {
+            card.classList.toggle('selected', card.dataset.theme === template.theme);
+        });
+        
+        updateLivePreview();
+    }
+}
+
+// Live preview update
+function updateLivePreview() {
+    const preview = document.getElementById('livePreview');
+    const themes = {
+        'romantic-pink': 'linear-gradient(45deg, #FF6B9D, #FF8FAB)',
+        'elegant-purple': 'linear-gradient(45deg, #667EEA, #764BA2)',
+        'golden-sunset': 'linear-gradient(45deg, #F093FB, #F5576C)',
+        'ocean-blue': 'linear-gradient(45deg, #4FACFE, #00F2FE)',
+        'forest-green': 'linear-gradient(45deg, #11998e, #38ef7d)',
+        'midnight-dark': 'linear-gradient(45deg, #2c3e50, #34495e)'
+    };
+
+    const musicInfo = {
+        'romantic': { name: 'Clássico Romântico', icon: 'fa-heart' },
+        'acoustic': { name: 'Acústico Romântico', icon: 'fa-guitar' },
+        'modern': { name: 'Amor Moderno', icon: 'fa-headphones' },
+        'classical': { name: 'Música Clássica', icon: 'fa-violin' }
+    };
+
+    preview.innerHTML = `
+        <div class="surprise-preview" style="background: ${themes[previewState.theme]};">
+            <div class="surprise-header">
+                <h3>Para Meu Amor</h3>
+                <div class="surprise-actions">
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-share"></i>
+                </div>
+            </div>
+            <div class="surprise-content">
+                <div class="surprise-photos">
+                    ${previewState.photos.map(photo => `
+                        <div class="photo-item">
+                            <img src="${photo}" alt="Foto">
+                            <div class="photo-frame"></div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="surprise-message">
+                    <div class="message-quote">
+                        <i class="fas fa-quote-left"></i>
+                        <p>${previewState.message}</p>
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                </div>
+                <div class="surprise-music">
+                    <div class="music-player">
+                        <i class="fas ${musicInfo[previewState.music].icon}"></i>
+                        <div class="music-info">
+                            <span>${musicInfo[previewState.music].name}</span>
+                            <div class="music-wave">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="surprise-footer">
+                <div class="signature">Com todo meu amor</div>
+                <div class="date">${new Date().toLocaleDateString('pt-BR')}</div>
+            </div>
+        </div>
+    `;
+}
+
+// Preview actions
+function toggleFullscreen() {
+    const preview = document.getElementById('livePreview');
+    if (!document.fullscreenElement) {
+        preview.requestFullscreen().catch(err => {
+            console.log('Error attempting to enable fullscreen:', err);
+        });
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+function sharePreview() {
+    showNotification('Função de compartilhamento em desenvolvimento! Cadastre-se para compartilhar sua surpresa.', 'info');
+}
+
+function resetPreview() {
+    previewState = {
+        message: "Para o amor da minha vida, você faz cada dia mais especial...",
+        photos: ["https://picsum.photos/seed/couple1/400/300"],
+        music: "romantic",
+        theme: "romantic-pink"
+    };
+    
+    // Reset UI
+    document.getElementById('previewMessage').value = previewState.message;
+    document.getElementById('messageCounter').textContent = previewState.message.length;
+    document.getElementById('charCount').textContent = previewState.message.length;
+    document.getElementById('photoCount').textContent = previewState.photos.length;
+    
+    // Reset selections
+    document.querySelectorAll('.photo-option').forEach((opt, index) => {
+        opt.classList.toggle('selected', index === 0);
+    });
+    
+    document.querySelectorAll('.music-item').forEach((item, index) => {
+        item.classList.toggle('selected', index === 0);
+    });
+    
+    document.querySelectorAll('.theme-card').forEach((card, index) => {
+        card.classList.toggle('selected', index === 0);
+    });
+    
+    updateLivePreview();
+    showNotification('Preview resetado com sucesso!', 'success');
+}
+
+function createSurprise() {
+    showNotification('Para criar sua surpresa, cadastre-se gratuitamente! Assim você poderá salvar e compartilhar.', 'info');
+}
+
+// Notification system
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas ${getNotificationIcon(type)}"></i>
+        <span>${message}</span>
+        <button onclick="this.parentElement.remove()">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+function getNotificationIcon(type) {
+    const icons = {
+        'success': 'fa-check-circle',
+        'error': 'fa-exclamation-circle',
+        'warning': 'fa-exclamation-triangle',
+        'info': 'fa-info-circle'
+    };
+    return icons[type] || 'fa-info-circle';
+}
+</script>
+
+<style>
+/* Preview Section Styles */
+.preview-section {
+    padding: 100px 0;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 16px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.section-subtitle {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.preview-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+    margin-bottom: 80px;
+}
+
+/* Controls Panel */
+.preview-controls {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.control-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.tab-pane h3 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+}
+
+/* Message Tab */
+.message-input {
+    width: 100%;
+    min-height: 120px;
+    padding: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: all 0.3s ease;
+    background: var(--bg-primary);
+}
+
+.message-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.1);
+}
+
+.message-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.char-counter {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.message-templates {
+    display: flex;
+    gap: 12px;
+}
+
+.template-btn {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-primary);
+}
+
+.template-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* Photos Tab */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.photo-option {
+    position: relative;
+    cursor: pointer;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    aspect-ratio: 1;
+}
+
+.photo-option:hover {
+    transform: scale(1.05);
+}
+
+.photo-option.selected {
+    box-shadow: 0 0 0 3px var(--primary-color);
+}
+
+.photo-option img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 107, 157, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.photo-option.selected .photo-overlay {
+    opacity: 1;
+}
+
+.photo-info {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Music Tab */
+.music-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.music-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--bg-primary);
+}
+
+.music-item:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.music-item.selected {
+    border-color: var(--primary-color);
+    background: rgba(255, 107, 157, 0.05);
+}
+
+.music-cover {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.music-info {
+    flex: 1;
+}
+
+.music-info h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.music-info p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.music-play {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+/* Theme Tab */
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.theme-card {
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.theme-card.selected {
+    border-color: var(--primary-color);
+    background: rgba(255, 107, 157, 0.05);
+}
+
+.theme-preview {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+}
+
+.theme-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.theme-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Preview Panel */
+.preview-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.preview-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.preview-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.preview-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.preview-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.preview-device {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 40px;
+    padding: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.device-frame {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.device-screen {
+    width: 100%;
+    height: 600px;
+    background: white;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Surprise Preview Styles */
+.surprise-preview {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 24px;
+}
+
+.surprise-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.surprise-header h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.surprise-actions {
+    display: flex;
+    gap: 16px;
+}
+
+.surprise-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.surprise-photos {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 8px 0;
+}
+
+.photo-item {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.photo-item img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.photo-frame {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+.surprise-message {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 24px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.message-quote {
+    text-align: center;
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.message-quote i {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+}
+
+.message-quote i:first-child {
+    margin-right: 8px;
+}
+
+.message-quote i:last-child {
+    margin-left: 8px;
+}
+
+.surprise-music {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.music-player {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.music-player i {
+    font-size: 1.5rem;
+}
+
+.music-info span {
+    font-weight: 500;
+}
+
+.music-wave {
+    display: flex;
+    gap: 3px;
+    margin-left: 12px;
+}
+
+.music-wave span {
+    width: 3px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 2px;
+    animation: wave 1s ease-in-out infinite;
+}
+
+.music-wave span:nth-child(2) { animation-delay: 0.1s; }
+.music-wave span:nth-child(3) { animation-delay: 0.2s; }
+.music-wave span:nth-child(4) { animation-delay: 0.3s; }
+.music-wave span:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes wave {
+    0%, 100% { height: 8px; }
+    50% { height: 16px; }
+}
+
+.surprise-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.preview-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.preview-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.stat-item i {
+    color: var(--primary-color);
+}
+
+/* Templates Gallery */
+.templates-gallery {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.templates-gallery h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 40px;
+    color: white;
+}
+
+.templates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+}
+
+.template-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.template-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.template-preview {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.template-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.template-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.template-card:hover .template-overlay {
+    opacity: 1;
+}
+
+.template-info {
+    padding: 24px;
+}
+
+.template-info h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.template-info p {
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary-color);
+    color: white;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 10000;
+    animation: slideInRight 0.5s ease;
+    max-width: 400px;
+}
+
+.notification.warning {
+    background: var(--warning-color);
+}
+
+.notification.info {
+    background: var(--secondary-color);
+}
+
+.notification button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.notification button:hover {
+    opacity: 1;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .preview-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .preview-controls,
+    .preview-panel {
+        padding: 24px;
+    }
+
+    .control-tabs {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .tab-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .theme-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .templates-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-footer {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    .preview-stats {
+        justify-content: center;
+    }
+
+    .device-screen {
+        height: 500px;
+    }
+}
+
+@media (max-width: 480px) {
+    .preview-section {
+        padding: 60px 0;
+    }
+
+    .message-templates {
+        flex-direction: column;
+    }
+
+    .photo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .theme-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .surprise-photos {
+        justify-content: center;
+    }
+
+    .device-screen {
+        height: 400px;
+    }
+}
+</style>

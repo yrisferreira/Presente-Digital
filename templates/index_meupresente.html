@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Presente Digital Personalizado com Fotos e Música | Surpresas Românticas</title>
     <meta name="description" content="A melhor forma de eternizar momentos especiais. Crie presentes digitais personalizados com fotos, música e mensagens.">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_meupresente.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_meupresente_v2.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -296,54 +296,7 @@
         </div>
     </section>
 
-    <!-- Example Section -->
-    <section class="example-section" id="exemplo">
-        <div class="container">
-            <h2 class="section-title">Veja como fica seu presente</h2>
-            <div class="example-preview">
-                <div class="preview-phone">
-                    <div class="phone-frame">
-                        <div class="phone-screen">
-                            <div class="preview-header">
-                                <h3>Para: Amor da minha vida</h3>
-                            </div>
-                            <div class="preview-photos">
-                                <div class="photo-grid">
-                                    <div class="photo-placeholder">Foto 1</div>
-                                    <div class="photo-placeholder">Foto 2</div>
-                                    <div class="photo-placeholder">Foto 3</div>
-                                </div>
-                            </div>
-                            <div class="preview-message">
-                                <p>"Cada dia ao seu lado é um presente que eu guardo no coração..."</p>
-                            </div>
-                            <div class="preview-signature">
-                                <span>- Com todo amor, Seu Nome</span>
-                            </div>
-                            <div class="preview-music">
-                                <span>musica_romantica.mp3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="preview-description">
-                    <h3>Uma experiência completa</h3>
-                    <ul>
-                        <li>Design responsivo que funciona em qualquer dispositivo</li>
-                        <li>Fotos organizadas em galeria elegante</li>
-                        <li>Mensagem personalizada com sua caligrafia digital</li>
-                        <li>Trilha sonora romântica que toca automaticamente</li>
-                        <li>Link único e QR Code para fácil compartilhamento</li>
-                    </ul>
-                    <div class="preview-actions">
-                        <a href="{{ url_for('criar_surpresa') }}" class="btn btn-primary">Criar Meu Presente</a>
-                        <button class="btn btn-outline" onclick="playPreview()">Ver Demonstração</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    
     <!-- FAQ Section -->
     <section class="faq-section">
         <div class="container">
@@ -401,6 +354,9 @@
             <a href="{{ url_for('criar_surpresa') }}" class="btn btn-primary btn-large">Criar Presente Agora</a>
         </div>
     </section>
+
+    <!-- Veja como fica seu presente Section -->
+    {% include 'preview_section.html' %}
 
     <!-- Footer -->
     <footer class="footer">
