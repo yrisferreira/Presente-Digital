@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Surpresas Românticas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_comercial.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-main">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1 class="logo">** Surpresas Românticas</h1>
+                </div>
+                <div class="nav-menu">
+                    <a href="{{ url_for('index') }}" class="nav-link">Início</a>
+                    <a href="{{ url_for('admin') }}" class="nav-link active">Admin</a>
+                    <a href="{{ url_for('dashboard') }}" class="nav-link">Meu Painel</a>
+                    <a href="{{ url_for('logout') }}" class="nav-link">Sair</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Admin Dashboard -->
+    <main class="admin-main">
+        <div class="container">
+            <!-- Admin Header -->
+            <section class="admin-header">
+                <div class="admin-welcome">
+                    <h2>** Painel Administrativo **</h2>
+                    <p>Gerencie sua plataforma de surpresas românticas</p>
+                </div>
+                <div class="admin-actions">
+                    <button onclick="refreshData()" class="btn btn-secondary">
+                        <span class="icon">**</span>
+                        Atualizar Dados
+                    </button>
+                </div>
+            </section>
+
+            <!-- Stats Overview -->
+            <section class="admin-stats">
+                <div class="stats-grid">
+                    <div class="stat-card admin">
+                        <div class="stat-icon">**</div>
+                        <div class="stat-content">
+                            <h3>{{ usuarios|length }}</h3>
+                            <p>Usuários Totais</p>
+                        </div>
+                    </div>
+                    <div class="stat-card admin">
+                        <div class="stat-icon">**</div>
+                        <div class="stat-content">
+                            <h3>{{ surpresas|length }}</h3>
+                            <p>Surpresas Criadas</p>
+                        </div>
+                    </div>
+                    <div class="stat-card admin">
+                        <div class="stat-icon">**</div>
+                        <div class="stat-content">
+                            <h3>{{ pagamentos|length }}</h3>
+                            <p>Pagamentos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card admin">
+                        <div class="stat-icon">**</div>
+                        <div class="stat-content">
+                            <h3>R$ {{ "%.2f"|format(pagamentos|selectattr('status', 'equalto', 'aprovado')|map(attribute='valor')|sum) }}</h3>
+                            <p>Receita Total</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="admin-activity">
+                <h3>** Atividade Recente **</h3>
+                <div class="activity-tabs">
+                    <button class="tab-btn active" onclick="showTab('users')">Usuários</button>
+                    <button class="tab-btn" onclick="showTab('surprises')">Surpresas</button>
+                    <button class="tab-btn" onclick="showTab('payments')">Pagamentos</button>
+                </div>
+
+                <!-- Users Tab -->
+                <div class="tab-content active" id="users-tab">
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Usuário</th>
+                                    <th>Email</th>
+                                    <th>Plano</th>
+                                    <th>Créditos</th>
+                                    <th>Cadastro</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for usuario in usuarios[:10] %}
+                                <tr>
+                                    <td>
+                                        <div class="user-info">
+                                            <span class="user-avatar">**</span>
+                                            <span>{{ usuario.username }}</span>
+                                        </div>
+                                    </td>
+                                    <td>{{ usuario.email }}</td>
+                                    <td>
+                                        <span class="plan-badge plan-{{ usuario.plano }}">
+                                            {{ usuario.plano.title() }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="credits-count">{{ usuario.creditos }}</span>
+                                    </td>
+                                    <td>{{ usuario.data_cadastro.strftime('%d/%m/%Y') }}</td>
+                                    <td>
+                                        <button class="btn-small" onclick="editUser({{ usuario.id }})">
+                                            Editar
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Surprises Tab -->
+                <div class="tab-content" id="surprises-tab">
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>De</th>
+                                    <th>Para</th>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for surpresa in surpresas[:10] %}
+                                <tr>
+                                    <td>
+                                        <span class="surprise-id">{{ surpresa.id_unico }}</span>
+                                    </td>
+                                    <td>{{ surpresa.seu_nome }}</td>
+                                    <td>{{ surpresa.nome_parceiro }}</td>
+                                    <td>{{ surpresa.data_criacao.strftime('%d/%m/%Y') }}</td>
+                                    <td>
+                                        <span class="status-badge status-{{ surpresa.status }}">
+                                            {{ surpresa.status.title() }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('visualizar_surpresa', id_unico=surpresa.id_unico) }}" 
+                                           target="_blank" class="btn-small">
+                                            ** Ver
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Payments Tab -->
+                <div class="tab-content" id="payments-tab">
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Usuário</th>
+                                    <th>Plano</th>
+                                    <th>Valor</th>
+                                    <th>Status</th>
+                                    <th>Data</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pagamento in pagamentos[:10] %}
+                                <tr>
+                                    <td>{{ pagamento.usuario.username if pagamento.usuario else 'N/A' }}</td>
+                                    <td>
+                                        <span class="plan-badge plan-{{ pagamento.plano }}">
+                                            {{ pagamento.plano.title() }}
+                                        </span>
+                                    </td>
+                                    <td>R$ {{ "%.2f"|format(pagamento.valor) }}</td>
+                                    <td>
+                                        <span class="status-badge status-{{ pagamento.status }}">
+                                            {{ pagamento.status.title() }}
+                                        </span>
+                                    </td>
+                                    <td>{{ pagamento.data_pagamento.strftime('%d/%m/%Y %H:%M') }}</td>
+                                    <td>
+                                        <button class="btn-small" onclick="viewPayment({{ pagamento.id }})">
+                                            Detalhes
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="admin-quick-actions">
+                <h3>** Ações Rápidas **</h3>
+                <div class="actions-grid">
+                    <div class="action-card">
+                        <div class="action-icon">**</div>
+                        <h4>Enviar Newsletter</h4>
+                        <p>Comunicar novidades para todos os usuários</p>
+                        <button class="btn btn-outline" onclick="sendNewsletter()">
+                            Enviar Agora
+                        </button>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-icon">**</div>
+                        <h4>Gerar Relatório</h4>
+                        <p>Baixar relatório completo de atividades</p>
+                        <button class="btn btn-outline" onclick="generateReport()">
+                            Baixar Relatório
+                        </button>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-icon">**</div>
+                        <h4>Backup do Sistema</h4>
+                        <p>Criar backup completo do banco de dados</p>
+                        <button class="btn btn-outline" onclick="createBackup()">
+                            Criar Backup
+                        </button>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-icon">**</div>
+                        <h4>Configurações</h4>
+                        <p>Ajustar configurações da plataforma</p>
+                        <button class="btn btn-outline" onclick="openSettings()">
+                            Configurar
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Flash Messages -->
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Quick actions
+        function refreshData() {
+            location.reload();
+        }
+
+        function editUser(userId) {
+            showNotification('Funcionalidade de edição em desenvolvimento **', 'info');
+        }
+
+        function viewPayment(paymentId) {
+            showNotification('Detalhes do pagamento em desenvolvimento **', 'info');
+        }
+
+        function sendNewsletter() {
+            showNotification('Sistema de newsletter em desenvolvimento **', 'info');
+        }
+
+        function generateReport() {
+            showNotification('Gerador de relatórios em desenvolvimento **', 'info');
+        }
+
+        function createBackup() {
+            showNotification('Sistema de backup em desenvolvimento **', 'info');
+        }
+
+        function openSettings() {
+            showNotification('Painel de configurações em desenvolvimento **', 'info');
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `flash-message ${type === 'error' ? 'error' : ''}`;
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.zIndex = '10000';
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 3000);
+        }
+
+        // Auto-hide flash messages
+        setTimeout(() => {
+            const flashMessages = document.querySelector('.flash-messages');
+            if (flashMessages) {
+                flashMessages.style.opacity = '0';
+                setTimeout(() => {
+                    flashMessages.innerHTML = '';
+                }, 500);
+            }
+        }, 5000);
+
+        // Floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '**';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.top = window.innerHeight + 'px';
+            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '1';
+            heart.style.fontWeight = 'bold';
+            document.body.appendChild(heart);
+
+            const duration = Math.random() * 4000 + 3000;
+            const startTime = Date.now();
+
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = elapsed / duration;
+
+                if (progress < 1) {
+                    heart.style.transform = `translateY(-${window.innerHeight * progress}px) rotate(${progress * 360}deg)`;
+                    heart.style.opacity = (1 - progress) * 0.5;
+                    requestAnimationFrame(animate);
+                } else {
+                    heart.remove();
+                }
+            }
+
+            animate();
+        }
+
+        setInterval(createHeart, 5000);
+
+        // Auto-refresh data every 30 seconds
+        setInterval(() => {
+            console.log('Auto-refreshing admin data...');
+            // Here you could implement AJAX data refresh
+        }, 30000);
+    </script>
+</body>
+</html>

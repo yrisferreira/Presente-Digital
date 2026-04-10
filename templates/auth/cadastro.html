@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Surpresas Românticas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-simple">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1 class="logo">💕 Surpresas Românticas</h1>
+                </div>
+                <div class="nav-menu">
+                    <a href="{{ url_for('index') }}" class="nav-link">Início</a>
+                    <a href="{{ url_for('planos') }}" class="nav-link">Planos</a>
+                    <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="auth-main">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-content">
+                    <h2 class="auth-title">Crie sua Conta Grátis</h2>
+                    <p class="auth-subtitle">Comece a criar surpresas românticas incríveis hoje mesmo!</p>
+                    
+                    <form method="POST" class="auth-form">
+                        <div class="form-group">
+                            <label for="username">Nome de Usuário *</label>
+                            <input type="text" id="username" name="username" class="form-control" required 
+                                   placeholder="Escolha um nome de usuário">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" class="form-control" required 
+                                   placeholder="seu@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Senha *</label>
+                            <input type="password" id="password" name="password" class="form-control" required 
+                                   placeholder="Crie uma senha forte" minlength="6">
+                            <small class="form-help">Mínimo 6 caracteres</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm_password">Confirmar Senha *</label>
+                            <input type="password" id="confirm_password" name="confirm_password" class="form-control" required 
+                                   placeholder="Digite a senha novamente">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <span class="checkmark"></span>
+                                Eu concordo com os <a href="#" class="link">Termos de Uso</a> e 
+                                <a href="#" class="link">Política de Privacidade</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">Criar Conta Gratuita</button>
+                    </form>
+
+                    <div class="auth-divider">
+                        <span>ou</span>
+                    </div>
+
+                    <div class="auth-social">
+                        <button class="btn btn-social btn-google">
+                            <span class="icon">🔍</span>
+                            Cadastrar com Google
+                        </button>
+                        <button class="btn btn-social btn-facebook">
+                            <span class="icon">📘</span>
+                            Cadastrar com Facebook
+                        </button>
+                    </div>
+
+                    <div class="auth-footer">
+                        <p>Já tem uma conta? <a href="{{ url_for('login') }}" class="link">Faça login aqui</a></p>
+                    </div>
+                </div>
+
+                <div class="auth-benefits">
+                    <h3>Por que se cadastrar?</h3>
+                    <ul class="benefits-list">
+                        <li>
+                            <span class="benefit-icon">💕</span>
+                            <div>
+                                <strong>1 Surpresa Grátis</strong>
+                                <p>Crie sua primeira surpresa sem custo algum</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="benefit-icon">🎨</span>
+                            <div>
+                                <strong>Designs Exclusivos</strong>
+                                <p>Acesso a templates românticos profissionais</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="benefit-icon">🎵</span>
+                            <div>
+                                <strong>Músicas Românticas</strong>
+                                <p>Escolha entre diversas opções musicais</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="benefit-icon">📱</span>
+                            <div>
+                                <strong>Compatível com Celular</strong>
+                                <p>Crie e compartilhe de qualquer dispositivo</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="benefit-icon">🔒</span>
+                            <div>
+                                <strong>Seguro e Privado</strong>
+                                <p>Seus dados e fotos estão protegidos</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Flash Messages -->
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        // Password confirmation validation
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm_password');
+        
+        function validatePasswords() {
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity('As senhas não coincidem');
+            } else {
+                confirmPassword.setCustomValidity('');
+            }
+        }
+        
+        password.addEventListener('change', validatePasswords);
+        confirmPassword.addEventListener('keyup', validatePasswords);
+
+        // Auto-hide flash messages
+        setTimeout(() => {
+            const flashMessages = document.querySelector('.flash-messages');
+            if (flashMessages) {
+                flashMessages.style.opacity = '0';
+                setTimeout(() => {
+                    flashMessages.innerHTML = '';
+                }, 500);
+            }
+        }, 5000);
+
+        // Floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💕';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.top = window.innerHeight + 'px';
+            heart.style.fontSize = Math.random() * 15 + 10 + 'px';
+            heart.style.opacity = Math.random() * 0.4 + 0.2;
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '1';
+            document.body.appendChild(heart);
+
+            const duration = Math.random() * 3000 + 2000;
+            const startTime = Date.now();
+
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = elapsed / duration;
+
+                if (progress < 1) {
+                    heart.style.transform = `translateY(-${window.innerHeight * progress}px) rotate(${progress * 360}deg)`;
+                    heart.style.opacity = (1 - progress) * 0.4;
+                    requestAnimationFrame(animate);
+                } else {
+                    heart.remove();
+                }
+            }
+
+            animate();
+        }
+
+        setInterval(createHeart, 4000);
+    </script>
+</body>
+</html>

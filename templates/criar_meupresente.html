@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Presente Digital - Surpresas Românticas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_meupresente.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-main">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1 class="logo">Surpresas Românticas</h1>
+                </div>
+                <div class="nav-menu">
+                    <a href="{{ url_for('index') }}" class="nav-link">Início</a>
+                    <a href="{{ url_for('planos') }}" class="nav-link">Planos</a>
+                    <a href="{{ url_for('dashboard') }}" class="nav-link">Meu Painel</a>
+                    <div class="user-menu">
+                        <span class="user-name">{{ current_user.username }}</span>
+                        <a href="{{ url_for('logout') }}" class="nav-link">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="create-main">
+        <div class="container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-step active" id="progress-1">
+                        <span class="step-number">1</span>
+                        <span class="step-title">Informações</span>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="progress-2">
+                        <span class="step-number">2</span>
+                        <span class="step-title">Fotos</span>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="progress-3">
+                        <span class="step-number">3</span>
+                        <span class="step-title">Música</span>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="progress-4">
+                        <span class="step-number">4</span>
+                        <span class="step-title">Revisão</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create Form Container -->
+            <div class="create-form-container">
+                <form method="POST" enctype="multipart/form-data" id="surpriseForm" class="surprise-form">
+                    <!-- Step 1: Basic Information -->
+                    <div class="form-step active" id="step1">
+                        <div class="step-header">
+                            <h2>Informações Básicas</h2>
+                            <p>Conte-nos um pouco sobre vocês</p>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="seu_nome">Seu Nome *</label>
+                                <input type="text" id="seu_nome" name="seu_nome" class="form-control" required 
+                                       placeholder="Digite seu nome">
+                                <small class="form-help">Como você gostaria de ser chamado(a)</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nome_parceiro">Nome do Parceiro(a) *</label>
+                                <input type="text" id="nome_parceiro" name="nome_parceiro" class="form-control" required 
+                                       placeholder="Nome da pessoa amada">
+                                <small class="form-help">Quem receberá esta surpresa</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mensagem">Sua Mensagem Romântica *</label>
+                            <textarea id="mensagem" name="mensagem" class="form-control" required 
+                                      placeholder="Escreva aqui seus sentimentos mais sinceros..." 
+                                      rows="6" maxlength="500"></textarea>
+                            <div class="message-info">
+                                <small class="form-help">Seja criativo e sincero! Esta é a parte mais importante.</small>
+                                <span class="char-count"><span id="charCount">0</span>/500</span>
+                            </div>
+                        </div>
+
+                        <div class="step-navigation">
+                            <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                                Continuar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Photos -->
+                    <div class="form-step" id="step2">
+                        <div class="step-header">
+                            <h2>Adicionar Fotos</h2>
+                            <p>Escolha até 6 fotos que marcam sua história</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Selecione suas fotos (Opcional)</label>
+                            <div class="photo-upload-area">
+                                <input type="file" id="imagens" name="imagens" accept="image/*" multiple>
+                                <label for="imagens" class="upload-label">
+                                    <div class="upload-icon">photos</div>
+                                    <div class="upload-text">
+                                        <h4>Clique ou arraste suas fotos aqui</h4>
+                                        <p>Até 6 fotos - PNG, JPG, JPEG, GIF, WebP (Máx 16MB cada)</p>
+                                    </div>
+                                </label>
+                            </div>
+                            <div id="photoPreview" class="photo-preview"></div>
+                        </div>
+
+                        <div class="photo-tips">
+                            <h4>Dicas para fotos perfeitas:</h4>
+                            <ul>
+                                <li>Escolha fotos que tenham significado especial para vocês</li>
+                                <li>Prefira imagens nítidas e bem iluminadas</li>
+                                <li>Fotos de momentos marcantes funcionam melhor</li>
+                                <li>Qualidade é mais importante que quantidade</li>
+                            </ul>
+                        </div>
+
+                        <div class="step-navigation">
+                            <button type="button" class="btn btn-outline" onclick="prevStep(1)">
+                                Voltar
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+                                Continuar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Music -->
+                    <div class="form-step" id="step3">
+                        <div class="step-header">
+                            <h2>Escolha a Música</h2>
+                            <p>Selecione a trilha sonora perfeita para sua surpresa</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Música de Fundo *</label>
+                            <div class="music-options">
+                                <div class="music-option">
+                                    <input type="radio" id="music1" name="musica" value="romantic1" checked>
+                                    <label for="music1" class="music-label">
+                                        <div class="music-icon">music_note</div>
+                                        <div class="music-info">
+                                            <h4>Piano Romântico</h4>
+                                            <p>Clássico, elegante e emocionante</p>
+                                        </div>
+                                        <div class="music-preview">
+                                            <button type="button" class="btn-small btn-outline" onclick="previewMusic('romantic1')">Ouvir</button>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div class="music-option">
+                                    <input type="radio" id="music2" name="musica" value="romantic2">
+                                    <label for="music2" class="music-label">
+                                        <div class="music-icon">music_note</div>
+                                        <div class="music-info">
+                                            <h4>Melodia Doce</h4>
+                                            <p>Suave, acolhedor e romântico</p>
+                                        </div>
+                                        <div class="music-preview">
+                                            <button type="button" class="btn-small btn-outline" onclick="previewMusic('romantic2')">Ouvir</button>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div class="music-option">
+                                    <input type="radio" id="music3" name="musica" value="romantic3">
+                                    <label for="music3" class="music-label">
+                                        <div class="music-icon">music_note</div>
+                                        <div class="music-info">
+                                            <h4>Sinfonia do Amor</h4>
+                                            <p>Épico, grandioso e inesquecível</p>
+                                        </div>
+                                        <div class="music-preview">
+                                            <button type="button" class="btn-small btn-outline" onclick="previewMusic('romantic3')">Ouvir</button>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="music-note">
+                            <p>A música tocará automaticamente quando sua surpresa for aberta, criando uma experiência imersiva e emocionante.</p>
+                        </div>
+
+                        <div class="step-navigation">
+                            <button type="button" class="btn btn-outline" onclick="prevStep(2)">
+                                Voltar
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(4)">
+                                Revisar e Criar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Review -->
+                    <div class="form-step" id="step4">
+                        <div class="step-header">
+                            <h2>Revisão Final</h2>
+                            <p>Confirme todos os detalhes antes de criar</p>
+                        </div>
+
+                        <div class="review-section">
+                            <div class="review-item">
+                                <h4>De:</h4>
+                                <p id="review_seu_nome">-</p>
+                            </div>
+
+                            <div class="review-item">
+                                <h4>Para:</h4>
+                                <p id="review_nome_parceiro">-</p>
+                            </div>
+
+                            <div class="review-item">
+                                <h4>Mensagem:</h4>
+                                <p id="review_mensagem">-</p>
+                            </div>
+
+                            <div class="review-item">
+                                <h4>Fotos:</h4>
+                                <p id="review_fotos">Nenhuma foto adicionada</p>
+                            </div>
+
+                            <div class="review-item">
+                                <h4>Música:</h4>
+                                <p id="review_musica">-</p>
+                            </div>
+                        </div>
+
+                        <div class="preview-section">
+                            <h3>Prévia do seu presente</h3>
+                            <div class="preview-phone">
+                                <div class="phone-frame">
+                                    <div class="phone-screen">
+                                        <div class="preview-header">
+                                            <h3 id="preview_nome">Para: Nome do Parceiro</h3>
+                                        </div>
+                                        <div class="preview-photos" id="preview_photos">
+                                            <div class="photo-grid">
+                                                <div class="photo-placeholder">Foto 1</div>
+                                                <div class="photo-placeholder">Foto 2</div>
+                                                <div class="photo-placeholder">Foto 3</div>
+                                            </div>
+                                        </div>
+                                        <div class="preview-message">
+                                            <p id="preview_mensagem">"Sua mensagem aparecerá aqui..."</p>
+                                        </div>
+                                        <div class="preview-signature">
+                                            <span id="preview_assinatura">- Com amor, Seu Nome</span>
+                                        </div>
+                                        <div class="preview-music">
+                                            <span id="preview_musica_nome">musica_romantica.mp3</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="final-notice">
+                            <div class="notice-content">
+                                <h4>Pronto para emocionar?</h4>
+                                <p>Sua surpresa será criada com 1 crédito. Após a criação, você receberá um link especial para compartilhar.</p>
+                                <div class="credits-info">
+                                    <span class="credits-badge">Créditos disponíveis: {{ current_user.creditos }}</span>
+                                    {% if current_user.creditos <= 1 %}
+                                        <a href="{{ url_for('planos') }}" class="btn btn-small btn-primary">Adquirir Mais</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-navigation">
+                            <button type="button" class="btn btn-outline" onclick="prevStep(3)">
+                                Voltar
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-large" id="submitBtn">
+                                Criar Presente Digital
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tips Sidebar -->
+            <div class="create-tips">
+                <div class="tips-card">
+                    <h3>Dicas de Ouro</h3>
+                    <ul class="tips-list">
+                        <li>
+                            <span class="tip-icon">star</span>
+                            <span>Seja autêntico e escreva do coração</span>
+                        </li>
+                        <li>
+                            <span class="tip-icon">star</span>
+                            <span>Lembre-se de momentos especiais compartilhados</span>
+                        </li>
+                        <li>
+                            <span class="tip-icon">star</span>
+                            <span>Use apelidos carinhosos se tiverem</span>
+                        </li>
+                        <li>
+                            <span class="tip-icon">star</span>
+                            <span>Mencione qualidades que você ama</span>
+                        </li>
+                        <li>
+                            <span class="tip-icon">star</span>
+                            <span>Fale sobre planos futuros juntos</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="inspiration-card">
+                    <h3>Inspiração</h3>
+                    <div class="inspiration-examples">
+                        <div class="example">
+                            <p>"Desde que te conheci, meu mundo ganhou cores que eu nunca imaginei existir..."</p>
+                        </div>
+                        <div class="example">
+                            <p>"Cada dia ao seu lado é um presente que eu guardo no coração..."</p>
+                        </div>
+                        <div class="example">
+                            <p>"Você é a minha pessoa favorita neste universo inteiro..."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-card">
+                    <h3>Precisa de Ajuda?</h3>
+                    <p>Nossa equipe está disponível para ajudar você a criar o presente perfeito.</p>
+                    <div class="help-actions">
+                        <button class="btn btn-outline btn-small">Chat Online</button>
+                        <button class="btn btn-outline btn-small">Ver Tutorial</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Modal -->
+    <div class="loading-modal" id="loadingModal">
+        <div class="loading-content">
+            <div class="loading-animation">
+                <div class="heart-icon">favorite</div>
+            </div>
+            <h3>Criando seu presente...</h3>
+            <p>Estamos preparando algo mágico para você!</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flash Messages -->
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        // Form Steps Management
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.form-step').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Show current step
+            document.getElementById(`step${step}`).classList.add('active');
+            
+            // Update progress bar
+            updateProgress(step);
+            
+            // Update preview if on review step
+            if (step === 4) {
+                updatePreview();
+            }
+        }
+
+        function updateProgress(step) {
+            for (let i = 1; i <= totalSteps; i++) {
+                const progressStep = document.getElementById(`progress-${i}`);
+                if (i <= step) {
+                    progressStep.classList.add('active');
+                } else {
+                    progressStep.classList.remove('active');
+                }
+            }
+        }
+
+        function nextStep(step) {
+            if (validateCurrentStep(currentStep)) {
+                updateReviewData();
+                currentStep = step;
+                showStep(step);
+            }
+        }
+
+        function prevStep(step) {
+            currentStep = step;
+            showStep(step);
+        }
+
+        function validateCurrentStep(step) {
+            switch(step) {
+                case 1:
+                    const seuNome = document.getElementById('seu_nome').value.trim();
+                    const nomeParceiro = document.getElementById('nome_parceiro').value.trim();
+                    const mensagem = document.getElementById('mensagem').value.trim();
+                    
+                    if (!seuNome || !nomeParceiro || !mensagem) {
+                        showNotification('Por favor, preencha todos os campos obrigatórios', 'error');
+                        return false;
+                    }
+                    
+                    if (mensagem.length < 20) {
+                        showNotification('Sua mensagem precisa ter pelo menos 20 caracteres', 'error');
+                        return false;
+                    }
+                    
+                    return true;
+                    
+                case 2:
+                    // Photos are optional, always valid
+                    return true;
+                    
+                case 3:
+                    // Music is required but radio buttons ensure selection
+                    return true;
+                    
+                default:
+                    return true;
+            }
+        }
+
+        function updateReviewData() {
+            // Update review section with form data
+            document.getElementById('review_seu_nome').textContent = document.getElementById('seu_nome').value || '-';
+            document.getElementById('review_nome_parceiro').textContent = document.getElementById('nome_parceiro').value || '-';
+            document.getElementById('review_mensagem').textContent = document.getElementById('mensagem').value || '-';
+            
+            // Update photos count
+            const photoCount = document.querySelectorAll('.photo-item').length;
+            document.getElementById('review_fotos').textContent = photoCount > 0 ? `${photoCount} foto(s) adicionada(s)` : 'Nenhuma foto adicionada';
+            
+            // Update selected music
+            const selectedMusic = document.querySelector('input[name="musica"]:checked');
+            const musicLabels = {
+                'romantic1': 'Piano Romântico',
+                'romantic2': 'Melodia Doce', 
+                'romantic3': 'Sinfonia do Amor'
+            };
+            document.getElementById('review_musica').textContent = selectedMusic ? musicLabels[selectedMusic.value] : '-';
+        }
+
+        function updatePreview() {
+            // Update phone preview
+            const seuNome = document.getElementById('seu_nome').value || 'Seu Nome';
+            const nomeParceiro = document.getElementById('nome_parceiro').value || 'Nome do Parceiro';
+            const mensagem = document.getElementById('mensagem').value || 'Sua mensagem aparecerá aqui...';
+            
+            document.getElementById('preview_nome').textContent = `Para: ${nomeParceiro}`;
+            document.getElementById('preview_mensagem').textContent = `"${mensagem}"`;
+            document.getElementById('preview_assinatura').textContent = `- Com amor, ${seuNome}`;
+            
+            // Update photos in preview
+            const photoItems = document.querySelectorAll('.photo-item');
+            const photoGrid = document.querySelector('#preview_photos .photo-grid');
+            photoGrid.innerHTML = '';
+            
+            const maxPreviewPhotos = 3;
+            for (let i = 0; i < Math.min(photoItems.length, maxPreviewPhotos); i++) {
+                const img = photoItems[i].querySelector('img');
+                if (img) {
+                    const photoDiv = document.createElement('div');
+                    photoDiv.className = 'photo-preview-item';
+                    photoDiv.style.backgroundImage = `url(${img.src})`;
+                    photoGrid.appendChild(photoDiv);
+                }
+            }
+            
+            // Fill empty slots
+            const remainingSlots = maxPreviewPhotos - photoItems.length;
+            for (let i = 0; i < remainingSlots; i++) {
+                const photoDiv = document.createElement('div');
+                photoDiv.className = 'photo-placeholder';
+                photoDiv.textContent = `Foto ${photoItems.length + i + 1}`;
+                photoGrid.appendChild(photoDiv);
+            }
+            
+            // Update music name
+            const selectedMusic = document.querySelector('input[name="musica"]:checked');
+            const musicLabels = {
+                'romantic1': 'piano_romantico.mp3',
+                'romantic2': 'melodia_doce.mp3', 
+                'romantic3': 'sinfonia_do_amor.mp3'
+            };
+            document.getElementById('preview_musica_nome').textContent = selectedMusic ? musicLabels[selectedMusic.value] : 'musica_romantica.mp3';
+        }
+
+        // Character counter
+        const messageTextarea = document.getElementById('mensagem');
+        const charCount = document.getElementById('charCount');
+        
+        messageTextarea.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+            
+            if (count > 450) {
+                charCount.style.color = '#FF6B6B';
+            } else if (count > 400) {
+                charCount.style.color = '#FFA500';
+            } else {
+                charCount.style.color = '#7F8C8D';
+            }
+        });
+
+        // Photo upload handling
+        const fileInput = document.getElementById('imagens');
+        const photoPreview = document.getElementById('photoPreview');
+        
+        fileInput.addEventListener('change', function(e) {
+            const files = e.target.files;
+            photoPreview.innerHTML = '';
+            
+            if (files.length > 6) {
+                showNotification('Por favor, selecione no máximo 6 fotos', 'error');
+                e.target.value = '';
+                return;
+            }
+            
+            Array.from(files).forEach((file, index) => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const photoItem = document.createElement('div');
+                        photoItem.className = 'photo-item';
+                        photoItem.innerHTML = `
+                            <img src="${e.target.result}" alt="Foto ${index + 1}">
+                            <button type="button" class="remove-photo" onclick="removePhoto(${index})">×</button>
+                        `;
+                        photoPreview.appendChild(photoItem);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        function removePhoto(index) {
+            const photoItems = document.querySelectorAll('.photo-item');
+            if (photoItems[index]) {
+                photoItems[index].remove();
+            }
+        }
+
+        // Music preview (placeholder)
+        function previewMusic(musicId) {
+            showNotification('Preview da música em desenvolvimento', 'info');
+        }
+
+        // Form submission
+        document.getElementById('surpriseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateCurrentStep(4)) {
+                return;
+            }
+            
+            // Check credits
+            const credits = {{ current_user.creditos }};
+            if (credits <= 0) {
+                showNotification('Voce nao tem creditos suficientes! Adquira um plano para continuar.', 'error');
+                return;
+            }
+            
+            // Show loading modal
+            document.getElementById('loadingModal').style.display = 'flex';
+            
+            // Simulate loading progress
+            let progress = 0;
+            const progressBar = document.querySelector('.loading-progress');
+            const loadingInterval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(loadingInterval);
+                    // Submit form
+                    this.submit();
+                }
+            }, 200);
+        });
+
+        // Notification function
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `flash-message ${type === 'error' ? 'error' : ''}`;
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.zIndex = '10000';
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 3000);
+        }
+
+        // Auto-hide flash messages
+        setTimeout(() => {
+            const flashMessages = document.querySelector('.flash-messages');
+            if (flashMessages) {
+                flashMessages.style.opacity = '0';
+                setTimeout(() => {
+                    flashMessages.innerHTML = '';
+                }, 500);
+            }
+        }, 5000);
+
+        // Real-time preview updates
+        document.getElementById('seu_nome').addEventListener('input', updatePreview);
+        document.getElementById('nome_parceiro').addEventListener('input', updatePreview);
+        document.getElementById('mensagem').addEventListener('input', updatePreview);
+
+        // Add styles for preview items
+        const style = document.createElement('style');
+        style.textContent = `
+            .progress-container {
+                max-width: 600px;
+                margin: 0 auto 40px;
+                padding: 20px;
+            }
+
+            .progress-bar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .progress-step {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                opacity: 0.5;
+                transition: opacity 0.3s ease;
+            }
+
+            .progress-step.active {
+                opacity: 1;
+            }
+
+            .progress-step .step-number {
+                width: 40px;
+                height: 40px;
+                background: #E1E8ED;
+                color: #7F8C8D;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+            .progress-step.active .step-number {
+                background: #FF6B6B;
+                color: white;
+            }
+
+            .progress-step .step-title {
+                font-size: 0.85rem;
+                color: #7F8C8D;
+                font-weight: 500;
+            }
+
+            .progress-step.active .step-title {
+                color: #FF6B6B;
+            }
+
+            .progress-line {
+                flex: 1;
+                height: 2px;
+                background: #E1E8ED;
+                margin: 0 8px;
+            }
+
+            .form-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .photo-preview-item {
+                aspect-ratio: 1;
+                background-size: cover;
+                background-position: center;
+                border-radius: 8px;
+                border: 1px solid #E1E8ED;
+            }
+
+            .loading-animation {
+                margin-bottom: 20px;
+            }
+
+            .heart-icon {
+                font-size: 3rem;
+                color: #FF6B6B;
+                animation: heartbeat 1.5s ease-in-out infinite;
+            }
+
+            @keyframes heartbeat {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.1); }
+            }
+
+            .preview-section {
+                background: #F8F9FA;
+                padding: 32px;
+                border-radius: 16px;
+                margin: 32px 0;
+            }
+
+            .preview-section h3 {
+                text-align: center;
+                margin-bottom: 24px;
+                color: #2C3E50;
+            }
+
+            .help-card {
+                background: white;
+                padding: 24px;
+                border-radius: 16px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                border: 1px solid #E1E8ED;
+            }
+
+            .help-actions {
+                display: flex;
+                gap: 12px;
+                margin-top: 16px;
+            }
+
+            @media (max-width: 768px) {
+                .form-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .progress-bar {
+                    flex-wrap: wrap;
+                    gap: 8px;
+                }
+
+                .progress-line {
+                    display: none;
+                }
+
+                .preview-section {
+                    padding: 20px;
+                }
+
+                .help-actions {
+                    flex-direction: column;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

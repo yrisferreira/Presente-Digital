@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uma Surpresa Especial para {{ surpresa.nome_parceiro }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_meupresente.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta property="og:title" content="Uma Surpresa Especial para {{ surpresa.nome_parceiro }}">
+    <meta property="og:description" content="Presente digital personalizado criado com muito amor">
+    <meta property="og:image" content="{{ url_for('static', filename='images/og-image.jpg', _external=True) }}">
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="surprise-container">
+        <!-- Header -->
+        <header class="surprise-header">
+            <div class="header-content">
+                <h1 class="surprise-title">Para: {{ surpresa.nome_parceiro }}</h1>
+                <div class="surprise-date">{{ surpresa.data_criacao.strftime('%d/%m/%Y') }}</div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="surprise-main">
+            <!-- Message Section -->
+            <section class="message-section">
+                <div class="message-content">
+                    <div class="message-header">
+                        <h2>Uma mensagem especial para você</h2>
+                    </div>
+                    <div class="love-message">
+                        <p>{{ surpresa.mensagem }}</p>
+                    </div>
+                    <div class="message-signature">
+                        <div class="signature-line">
+                            Com todo o meu amor,
+                        </div>
+                        <div class="signature-name">
+                            {{ surpresa.seu_nome }}
+                        </div>
+                        <div class="signature-date">
+                            {{ surpresa.data_criacao.strftime('%d de %B de %Y') }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Photos Section -->
+            {% if surpresa.imagens_lista and surpresa.imagens_lista|length > 0 %}
+            <section class="photos-section">
+                <div class="section-header">
+                    <h2>Nossos momentos especiais</h2>
+                    <div class="photo-count">{{ surpresa.imagens_lista|length }} fotos</div>
+                </div>
+                
+                <div class="photo-gallery">
+                    {% for imagem in surpresa.imagens_lista %}
+                    <div class="photo-item" onclick="openPhotoModal({{ loop.index0 }})">
+                        <img src="{{ url_for('uploaded_file', filename=imagem) }}" 
+                             alt="Momento especial {{ loop.index }}"
+                             loading="lazy">
+                        <div class="photo-overlay">
+                            <div class="photo-number">Foto {{ loop.index }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <!-- Music Section -->
+            <section class="music-section">
+                <div class="music-content">
+                    <div class="music-info">
+                        <h3>Trilha Sonora</h3>
+                        <p>Uma música especial para acompanhar este momento</p>
+                    </div>
+                    <div class="music-controls">
+                        <button onclick="toggleMusic()" class="music-toggle-btn" id="musicToggle">
+                            <span class="music-icon">music_note</span>
+                            <span class="music-text">Tocar Música</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quote Section -->
+            <section class="quote-section">
+                <div class="quote-content">
+                    <div class="quote-mark">"</div>
+                    <p class="quote-text">
+                        O amor não se vê com os olhos, mas com a alma; por isso é que as asas da beleza são tão curtas.
+                    </p>
+                    <div class="quote-author">- William Shakespeare</div>
+                </div>
+            </section>
+
+            <!-- Share Section -->
+            <section class="share-section">
+                <div class="share-content">
+                    <h3>Compartilhe este amor</h3>
+                    <p>Envie esta surpresa para quem você ama</p>
+                    <div class="share-buttons">
+                        <button onclick="shareOnWhatsApp()" class="share-btn whatsapp">
+                            <span class="share-icon">whatsapp</span>
+                            <span>WhatsApp</span>
+                        </button>
+                        <button onclick="copyLink()" class="share-btn copy">
+                            <span class="share-icon">link</span>
+                            <span>Copiar Link</span>
+                        </button>
+                        <button onclick="shareOnFacebook()" class="share-btn facebook">
+                            <span class="share-icon">facebook</span>
+                            <span>Facebook</span>
+                        </button>
+                    </div>
+                    <div class="qr-section">
+                        <div class="qr-code">
+                            <div class="qr-placeholder">
+                                <div class="qr-icon">qr_code</div>
+                                <p>QR Code</p>
+                            </div>
+                        </div>
+                        <p>Escaneie para acessar esta página</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="surprise-footer">
+                <div class="footer-content">
+                    <div class="footer-hearts">
+                        <span class="heart">favorite</span>
+                        <span class="heart">favorite</span>
+                        <span class="heart">favorite</span>
+                    </div>
+                    <p class="footer-text">
+                        Esta surpresa foi criada com 
+                        <span class="heart-icon">favorite</span> 
+                        pela plataforma Surpresas Românticas
+                    </p>
+                    <div class="footer-cta">
+                        <p>Crie sua própria surpresa romântica!</p>
+                        <a href="{{ url_for('index') }}" class="btn btn-outline">Começar Agora</a>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Photo Modal -->
+    <div class="photo-modal" id="photoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Foto 1</h3>
+                <button onclick="closePhotoModal()" class="modal-close">close</button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="Foto ampliada">
+            </div>
+            <div class="modal-nav">
+                <button onclick="previousPhoto()" class="nav-btn prev">chevron_left</button>
+                <button onclick="nextPhoto()" class="nav-btn next">chevron_right</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="backgroundMusic" loop>
+        <source src="{{ url_for('music_file', filename=surpresa.musica + '.mp3') }}" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <span class="notification-icon">check_circle</span>
+            <span class="notification-text" id="notificationText">Link copiado!</span>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-heart">favorite</div>
+            <h3>Preparando sua surpresa...</h3>
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentPhotoIndex = 0;
+        let musicPlaying = false;
+        const photos = [
+            {% for imagem in surpresa.imagens_lista %}
+            "{{ url_for('uploaded_file', filename=imagem) }}",
+            {% endfor %}
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading screen
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loadingScreen');
+                if (loadingScreen) {
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                    }, 500);
+                }
+            }, 1500);
+
+            // Try to autoplay music
+            initAudio();
+            
+            // Add keyboard navigation
+            initKeyboardNavigation();
+            
+            // Add touch gestures
+            initTouchGestures();
+        });
+
+        // Audio management
+        function initAudio() {
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            
+            // Try to play on first user interaction
+            document.addEventListener('click', function playAudio() {
+                if (!musicPlaying) {
+                    backgroundMusic.play().catch(e => console.log('Autoplay prevented'));
+                }
+                document.removeEventListener('click', playAudio);
+            }, { once: true });
+        }
+
+        function toggleMusic() {
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            const musicToggle = document.getElementById('musicToggle');
+            const musicText = musicToggle.querySelector('.music-text');
+            const musicIcon = musicToggle.querySelector('.music-icon');
+            
+            if (musicPlaying) {
+                backgroundMusic.pause();
+                musicText.textContent = 'Tocar Música';
+                musicIcon.textContent = 'music_note';
+                musicPlaying = false;
+            } else {
+                backgroundMusic.play().catch(e => console.log('Music play failed'));
+                musicText.textContent = 'Pausar Música';
+                musicIcon.textContent = 'pause';
+                musicPlaying = true;
+            }
+        }
+
+        // Photo modal
+        function openPhotoModal(index) {
+            currentPhotoIndex = index;
+            const modal = document.getElementById('photoModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            modalImage.src = photos[index];
+            modalTitle.textContent = `Foto ${index + 1}`;
+            modal.style.display = 'flex';
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePhotoModal() {
+            const modal = document.getElementById('photoModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function nextPhoto() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+            updateModalPhoto();
+        }
+
+        function previousPhoto() {
+            currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
+            updateModalPhoto();
+        }
+
+        function updateModalPhoto() {
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            modalImage.src = photos[currentPhotoIndex];
+            modalTitle.textContent = `Foto ${currentPhotoIndex + 1}`;
+        }
+
+        // Share functions
+        function shareOnWhatsApp() {
+            const url = window.location.href;
+            const text = `Criei uma surpresa especial para você! Confira aqui: ${url}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+            showNotification('Abrindo WhatsApp...');
+        }
+
+        function shareOnFacebook() {
+            const url = window.location.href;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+            showNotification('Abrindo Facebook...');
+        }
+
+        function shareOnTwitter() {
+            const url = window.location.href;
+            const text = `Uma surpresa romântica especial! ${url}`;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            showNotification('Abrindo Twitter...');
+        }
+
+        function copyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                showNotification('Link copiado com sucesso!');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('Link copiado com sucesso!');
+            });
+        }
+
+        // Notification system
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationText.textContent = message;
+            notification.className = `notification show ${type}`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Keyboard navigation
+        function initKeyboardNavigation() {
+            document.addEventListener('keydown', (e) => {
+                const modal = document.getElementById('photoModal');
+                if (modal.style.display === 'flex') {
+                    if (e.key === 'ArrowLeft') {
+                        previousPhoto();
+                    } else if (e.key === 'ArrowRight') {
+                        nextPhoto();
+                    } else if (e.key === 'Escape') {
+                        closePhotoModal();
+                    }
+                }
+            });
+        }
+
+        // Touch gestures for mobile
+        function initTouchGestures() {
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            document.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const modal = document.getElementById('photoModal');
+                if (modal.style.display === 'flex') {
+                    const swipeThreshold = 50;
+                    const diff = touchStartX - touchEndX;
+                    
+                    if (Math.abs(diff) > swipeThreshold) {
+                        if (diff > 0) {
+                            nextPhoto(); // Swipe left, next photo
+                        } else {
+                            previousPhoto(); // Swipe right, previous photo
+                        }
+                    }
+                }
+            }
+        }
+
+        // Page visibility API
+        document.addEventListener('visibilitychange', () => {
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            if (document.hidden) {
+                backgroundMusic.pause();
+            } else if (musicPlaying) {
+                backgroundMusic.play().catch(e => console.log('Music resume failed'));
+            }
+        });
+
+        // Prevent context menu on images
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        // Add parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const messageSection = document.querySelector('.message-section');
+            if (messageSection) {
+                messageSection.style.transform = `translateY(${scrolled * 0.2}px)`;
+            }
+        });
+
+        // Close modal on background click
+        document.getElementById('photoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePhotoModal();
+            }
+        });
+
+        // Add styles dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            .surprise-container {
+                min-height: 100vh;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                font-family: 'Inter', sans-serif;
+            }
+
+            .surprise-header {
+                text-align: center;
+                padding: 60px 20px 40px;
+                color: white;
+            }
+
+            .surprise-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 8px;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+
+            .surprise-date {
+                font-size: 1rem;
+                opacity: 0.8;
+            }
+
+            .surprise-main {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 0 20px 60px;
+            }
+
+            .message-section {
+                background: white;
+                border-radius: 20px;
+                padding: 40px;
+                margin-bottom: 40px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                text-align: center;
+            }
+
+            .message-header h2 {
+                color: #2C3E50;
+                font-size: 1.5rem;
+                margin-bottom: 24px;
+            }
+
+            .love-message {
+                font-size: 1.3rem;
+                line-height: 1.8;
+                color: #2C3E50;
+                margin-bottom: 32px;
+                font-style: italic;
+            }
+
+            .message-signature {
+                text-align: right;
+                color: #7F8C8D;
+            }
+
+            .signature-line {
+                font-size: 1rem;
+                margin-bottom: 8px;
+            }
+
+            .signature-name {
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #FF6B6B;
+                margin-bottom: 4px;
+            }
+
+            .signature-date {
+                font-size: 0.9rem;
+            }
+
+            .photos-section {
+                background: white;
+                border-radius: 20px;
+                padding: 40px;
+                margin-bottom: 40px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            .section-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 24px;
+            }
+
+            .section-header h2 {
+                color: #2C3E50;
+                font-size: 1.5rem;
+            }
+
+            .photo-count {
+                background: #FF6B6B;
+                color: white;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.9rem;
+            }
+
+            .photo-gallery {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 16px;
+            }
+
+            .photo-item {
+                position: relative;
+                aspect-ratio: 1;
+                border-radius: 12px;
+                overflow: hidden;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+            }
+
+            .photo-item:hover {
+                transform: scale(1.05);
+            }
+
+            .photo-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .photo-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .photo-item:hover .photo-overlay {
+                opacity: 1;
+            }
+
+            .photo-number {
+                background: #FF6B6B;
+                color: white;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.9rem;
+            }
+
+            .music-section {
+                background: white;
+                border-radius: 20px;
+                padding: 30px 40px;
+                margin-bottom: 40px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .music-info h3 {
+                color: #2C3E50;
+                font-size: 1.3rem;
+                margin-bottom: 8px;
+            }
+
+            .music-info p {
+                color: #7F8C8D;
+            }
+
+            .music-toggle-btn {
+                background: #FF6B6B;
+                color: white;
+                border: none;
+                padding: 12px 24px;
+                border-radius: 25px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+            }
+
+            .music-toggle-btn:hover {
+                background: #FF5252;
+                transform: translateY(-2px);
+            }
+
+            .quote-section {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border-radius: 20px;
+                padding: 40px;
+                margin-bottom: 40px;
+                text-align: center;
+                color: white;
+            }
+
+            .quote-mark {
+                font-size: 4rem;
+                margin-bottom: 16px;
+                opacity: 0.8;
+            }
+
+            .quote-text {
+                font-size: 1.2rem;
+                line-height: 1.6;
+                margin-bottom: 16px;
+                font-style: italic;
+            }
+
+            .quote-author {
+                font-size: 1rem;
+                opacity: 0.8;
+            }
+
+            .share-section {
+                background: white;
+                border-radius: 20px;
+                padding: 40px;
+                margin-bottom: 40px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                text-align: center;
+            }
+
+            .share-section h3 {
+                color: #2C3E50;
+                font-size: 1.5rem;
+                margin-bottom: 8px;
+            }
+
+            .share-section p {
+                color: #7F8C8D;
+                margin-bottom: 24px;
+            }
+
+            .share-buttons {
+                display: flex;
+                justify-content: center;
+                gap: 12px;
+                margin-bottom: 32px;
+                flex-wrap: wrap;
+            }
+
+            .share-btn {
+                background: #F8F9FA;
+                border: 1px solid #E1E8ED;
+                padding: 12px 20px;
+                border-radius: 25px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                color: #2C3E50;
+            }
+
+            .share-btn:hover {
+                background: #E1E8ED;
+                transform: translateY(-2px);
+            }
+
+            .share-btn.whatsapp:hover {
+                background: #25D366;
+                color: white;
+            }
+
+            .share-btn.facebook:hover {
+                background: #1877F2;
+                color: white;
+            }
+
+            .qr-section {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .qr-code {
+                width: 120px;
+                height: 120px;
+                background: #F8F9FA;
+                border: 2px solid #E1E8ED;
+                border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .qr-icon {
+                font-size: 2rem;
+                color: #7F8C8D;
+                margin-bottom: 4px;
+            }
+
+            .qr-placeholder p {
+                color: #7F8C8D;
+                font-size: 0.8rem;
+            }
+
+            .surprise-footer {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border-radius: 20px;
+                padding: 40px;
+                text-align: center;
+                color: white;
+            }
+
+            .footer-hearts {
+                display: flex;
+                justify-content: center;
+                gap: 16px;
+                margin-bottom: 16px;
+            }
+
+            .heart {
+                font-size: 1.5rem;
+                color: #FF6B6B;
+            }
+
+            .footer-text {
+                margin-bottom: 24px;
+                font-size: 1rem;
+            }
+
+            .heart-icon {
+                color: #FF6B6B;
+            }
+
+            .footer-cta p {
+                margin-bottom: 16px;
+            }
+
+            .photo-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.9);
+                z-index: 1000;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .modal-content {
+                background: white;
+                border-radius: 20px;
+                max-width: 90vw;
+                max-height: 90vh;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px;
+                border-bottom: 1px solid #E1E8ED;
+            }
+
+            .modal-header h3 {
+                color: #2C3E50;
+                font-size: 1.2rem;
+            }
+
+            .modal-close {
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: #7F8C8D;
+                padding: 4px;
+            }
+
+            .modal-body {
+                text-align: center;
+            }
+
+            .modal-body img {
+                max-width: 100%;
+                max-height: 70vh;
+                object-fit: contain;
+            }
+
+            .modal-nav {
+                position: absolute;
+                bottom: 20px;
+                left: 0;
+                right: 0;
+                display: flex;
+                justify-content: space-between;
+                padding: 0 20px;
+            }
+
+            .nav-btn {
+                background: rgba(0, 0, 0, 0.5);
+                color: white;
+                border: none;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 1.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            }
+
+            .nav-btn:hover {
+                background: rgba(0, 0, 0, 0.8);
+            }
+
+            .notification {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4CAF50;
+                color: white;
+                padding: 16px 24px;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 1001;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            }
+
+            .notification.show {
+                transform: translateX(0);
+            }
+
+            .notification-content {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .loading-screen {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2000;
+                color: white;
+                transition: opacity 0.5s ease;
+            }
+
+            .loading-heart {
+                font-size: 3rem;
+                margin-bottom: 20px;
+                animation: heartbeat 1.5s ease-in-out infinite;
+            }
+
+            .loading-dots {
+                display: flex;
+                gap: 8px;
+                justify-content: center;
+            }
+
+            .loading-dots span {
+                width: 8px;
+                height: 8px;
+                background: white;
+                border-radius: 50%;
+                animation: pulse 1.5s ease-in-out infinite;
+            }
+
+            .loading-dots span:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            .loading-dots span:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+
+            @keyframes heartbeat {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.1); }
+            }
+
+            @keyframes pulse {
+                0%, 100% { opacity: 0.3; }
+                50% { opacity: 1; }
+            }
+
+            @media (max-width: 768px) {
+                .surprise-title {
+                    font-size: 2rem;
+                }
+
+                .photo-gallery {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
+                .music-section {
+                    flex-direction: column;
+                    gap: 20px;
+                    text-align: center;
+                }
+
+                .share-buttons {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .share-btn {
+                    width: 200px;
+                    justify-content: center;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .surprise-main {
+                    padding: 0 16px 40px;
+                }
+
+                .message-section,
+                .photos-section,
+                .music-section,
+                .share-section,
+                .surprise-footer {
+                    padding: 24px;
+                }
+
+                .surprise-title {
+                    font-size: 1.8rem;
+                }
+
+                .love-message {
+                    font-size: 1.1rem;
+                }
+
+                .photo-gallery {
+                    grid-template-columns: 1fr;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

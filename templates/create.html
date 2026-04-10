@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Romantic Surprise</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Georgia&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">💕 Create Your Surprise</h1>
+            <p class="subtitle">Fill in the details to create something magical</p>
+        </header>
+
+        <main>
+            <div class="form-container">
+                <form action="{{ url_for('submit') }}" method="POST" enctype="multipart/form-data" id="surpriseForm">
+                    <div class="form-group">
+                        <label for="your_name">Your Name *</label>
+                        <input type="text" id="your_name" name="your_name" class="form-control" required placeholder="Enter your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="partner_name">Partner's Name *</label>
+                        <input type="text" id="partner_name" name="partner_name" class="form-control" required placeholder="Enter your partner's name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Romantic Message *</label>
+                        <textarea id="message" name="message" class="form-control" required placeholder="Write your heartfelt message here..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Photos (Up to 3 images)</label>
+                        <div class="file-upload">
+                            <input type="file" id="images" name="images" accept="image/*" multiple>
+                            <label for="images" class="file-upload-label">
+                                <div>📸 Click to upload photos</div>
+                                <small style="color: #e91e63; margin-top: 5px; display: block;">
+                                    PNG, JPG, JPEG, GIF, WebP (Max 16MB per file)
+                                </small>
+                            </label>
+                        </div>
+                        <div id="imagePreview" style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Choose Background Music *</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="music1" name="music" value="romantic1" checked>
+                                <label for="music1" class="radio-label">
+                                    🎵 Romantic Piano
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="music2" name="music" value="romantic2">
+                                <label for="music2" class="radio-label">
+                                    🎶 Sweet Melody
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="music3" name="music" value="romantic3">
+                                <label for="music3" class="radio-label">
+                                    🎼 Love Symphony
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button type="submit" class="btn" style="font-size: 1.2rem; padding: 18px 50px;">
+                            Create Surprise 💕
+                        </button>
+                        <a href="{{ url_for('index') }}" class="btn btn-secondary" style="margin-left: 20px;">
+                            Back to Home
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="heart"></div>
+                <p style="margin-top: 20px; color: #d63384; font-size: 1.2rem;">Creating your magical surprise...</p>
+            </div>
+        </main>
+    </div>
+
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        // Form submission with loading animation
+        document.getElementById('surpriseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading
+            document.querySelector('.form-container').style.display = 'none';
+            document.getElementById('loading').classList.add('active');
+            
+            // Submit form after a short delay for animation
+            setTimeout(() => {
+                this.submit();
+            }, 1500);
+        });
+
+        // Image preview functionality
+        document.getElementById('images').addEventListener('change', function(e) {
+            const files = e.target.files;
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '';
+            
+            if (files.length > 3) {
+                alert('Please select up to 3 images only.');
+                e.target.value = '';
+                return;
+            }
+            
+            Array.from(files).forEach((file, index) => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const div = document.createElement('div');
+                        div.style.cssText = 'position: relative; display: inline-block;';
+                        div.innerHTML = `
+                            <img src="${e.target.result}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 10px; border: 2px solid #ff6b9d;">
+                            <div style="position: absolute; top: -5px; right: -5px; background: #ff6b9d; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;">
+                                ${index + 1}
+                            </div>
+                        `;
+                        preview.appendChild(div);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        // Character counter for message
+        const messageTextarea = document.getElementById('message');
+        messageTextarea.addEventListener('input', function() {
+            const charCount = this.value.length;
+            if (charCount > 500) {
+                this.value = this.value.substring(0, 500);
+            }
+        });
+
+        // Auto-hide flash messages
+        setTimeout(() => {
+            const flashMessages = document.querySelector('.flash-messages');
+            if (flashMessages) {
+                flashMessages.style.opacity = '0';
+                setTimeout(() => {
+                    flashMessages.innerHTML = '';
+                }, 500);
+            }
+        }, 5000);
+
+        // Form validation
+        function validateForm() {
+            const yourName = document.getElementById('your_name').value.trim();
+            const partnerName = document.getElementById('partner_name').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            if (!yourName || !partnerName || !message) {
+                alert('Please fill in all required fields.');
+                return false;
+            }
+            
+            if (message.length < 10) {
+                alert('Please write a longer message (at least 10 characters).');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Add romantic floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💕';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.top = window.innerHeight + 'px';
+            heart.style.fontSize = Math.random() * 15 + 10 + 'px';
+            heart.style.opacity = Math.random() * 0.3 + 0.2;
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '1';
+            document.body.appendChild(heart);
+
+            const duration = Math.random() * 4000 + 3000;
+            const startTime = Date.now();
+
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = elapsed / duration;
+
+                if (progress < 1) {
+                    heart.style.transform = `translateY(-${window.innerHeight * progress}px) rotate(${progress * 360}deg)`;
+                    heart.style.opacity = (1 - progress) * 0.3;
+                    requestAnimationFrame(animate);
+                } else {
+                    heart.remove();
+                }
+            }
+
+            animate();
+        }
+
+        // Create hearts periodically
+        setInterval(createHeart, 4000);
+    </script>
+</body>
+</html>

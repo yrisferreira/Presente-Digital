@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surpresas Românticas - Crie Momentos Inesquecíveis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-main">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1 class="logo">💕 Surpresas Românticas</h1>
+                </div>
+                <div class="nav-menu">
+                    <a href="{{ url_for('index') }}" class="nav-link">Início</a>
+                    <a href="{{ url_for('planos') }}" class="nav-link">Planos</a>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('dashboard') }}" class="nav-link">Meu Painel</a>
+                        <a href="{{ url_for('logout') }}" class="nav-link">Sair</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+                        <a href="{{ url_for('cadastro') }}" class="btn btn-small">Cadastrar</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Crie Surpresas Românticas <span class="highlight">Inesquecíveis</span></h1>
+                <p class="hero-subtitle">Transforme momentos especiais em memórias eternas com nossa plataforma de surpresas personalizadas</p>
+                <div class="hero-buttons">
+                    <a href="{{ url_for('cadastro') }}" class="btn btn-primary">Começar Gratuitamente</a>
+                    <a href="{{ url_for('planos') }}" class="btn btn-secondary">Ver Planos</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-hearts">
+                    <div class="heart heart-1">💕</div>
+                    <div class="heart heart-2">💖</div>
+                    <div class="heart heart-3">💗</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Por que escolher nossa plataforma?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3>Fotos Personalizadas</h3>
+                    <p>Adicione até 3 fotos especiais para tornar sua surpresa única e memorável</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h3>Música Romântica</h3>
+                    <p>Escolha entre diversas opções de músicas para criar o clima perfeito</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💝</div>
+                    <h3>Mensagens do Coração</h3>
+                    <p>Escreva mensagens personalizadas que emocionarão quem você ama</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Compatível com Celular</h3>
+                    <p>Surpresas perfeitas em qualquer dispositivo, a qualquer hora e lugar</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Compartilhe Facilmente</h3>
+                    <p>Envie sua surpresa por WhatsApp ou compartilhe o link especial</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Design Profissional</h3>
+                    <p>Layouts modernos e românticos que encantam à primeira vista</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Preview -->
+    <section class="pricing-preview">
+        <div class="container">
+            <h2 class="section-title">Planos para todos os bolsos</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Grátis</h3>
+                    <div class="price">R$ 0<span>/mês</span></div>
+                    <ul>
+                        <li>✓ 1 surpresa romântica</li>
+                        <li>✓ Design básico</li>
+                        <li>✓ Compartilhamento</li>
+                        <li>✗ Música limitada</li>
+                    </ul>
+                    <a href="{{ url_for('cadastro') }}" class="btn btn-outline">Começar Grátis</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="badge">Mais Popular</div>
+                    <h3>Básico</h3>
+                    <div class="price">R$ 19,90<span>/mês</span></div>
+                    <ul>
+                        <li>✓ 5 surpresas românticas</li>
+                        <li>✓ Todos os designs</li>
+                        <li>✓ Músicas ilimitadas</li>
+                        <li>✓ Suporte por email</li>
+                    </ul>
+                    <a href="{{ url_for('pagamento', plano='basico') }}" class="btn btn-primary">Assinar Agora</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Premium</h3>
+                    <div class="price">R$ 39,90<span>/mês</span></div>
+                    <ul>
+                        <li>✓ 15 surpresas românticas</li>
+                        <li>✓ Recursos exclusivos</li>
+                        <li>✓ Músicas premium</li>
+                        <li>✓ Suporte prioritário</li>
+                    </ul>
+                    <a href="{{ url_for('pagamento', plano='premium') }}" class="btn btn-outline">Assinar Agora</a>
+                </div>
+            </div>
+            <div class="pricing-cta">
+                <p>Não satisfeito? Cancelamento a qualquer momento sem complicações!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Como funciona?</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Cadastre-se</h3>
+                    <p>Crie sua conta gratuita em menos de 1 minuto</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Escolha um Plano</h3>
+                    <p>Selecione o plano que melhor atende suas necessidades</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Crie sua Surpresa</h3>
+                    <p>Adicione fotos, mensagens e música personalizados</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Compartilhe</h3>
+                    <p>Envie pelo WhatsApp e veja a alegria que causa!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">O que nossos clientes dizem</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Minha namorada chorou de emoção! Valeu cada centavo investido."</p>
+                    <div class="author">- João Pedro, 28 anos</div>
+                </div>
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Super fácil de usar e o resultado foi incrível. Recomendo muito!"</p>
+                    <div class="author">- Maria Clara, 25 anos</div>
+                </div>
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Usei para nosso aniversário de casamento e foi perfeito!"</p>
+                    <div class="author">- Carlos Alberto, 35 anos</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Pronto para criar momentos inesquecíveis?</h2>
+            <p>Comece gratuitamente hoje mesmo e surpreenda quem você ama!</p>
+            <a href="{{ url_for('cadastro') }}" class="btn btn-primary btn-large">Começar Agora</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>💕 Surpresas Românticas</h3>
+                    <p>Criando momentos especiais para casais apaixonados</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Úteis</h4>
+                    <ul>
+                        <li><a href="{{ url_for('planos') }}">Planos e Preços</a></li>
+                        <li><a href="#">Como Funciona</a></li>
+                        <li><a href="#">Dúvidas Frequentes</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Política de Reembolso</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>📧 suporte@surpresasromanticas.com.br</p>
+                    <p>📱 WhatsApp: (11) 99999-8888</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Surpresas Românticas. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Flash Messages -->
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        // Auto-hide flash messages
+        setTimeout(() => {
+            const flashMessages = document.querySelector('.flash-messages');
+            if (flashMessages) {
+                flashMessages.style.opacity = '0';
+                setTimeout(() => {
+                    flashMessages.innerHTML = '';
+                }, 500);
+            }
+        }, 5000);
+
+        // Floating hearts animation
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = ['💕', '💖', '💗', '💝'][Math.floor(Math.random() * 4)];
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.top = window.innerHeight + 'px';
+            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '1';
+            document.body.appendChild(heart);
+
+            const duration = Math.random() * 4000 + 3000;
+            const startTime = Date.now();
+
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = elapsed / duration;
+
+                if (progress < 1) {
+                    heart.style.transform = `translateY(-${window.innerHeight * progress}px) rotate(${progress * 360}deg)`;
+                    heart.style.opacity = (1 - progress) * 0.5;
+                    requestAnimationFrame(animate);
+                } else {
+                    heart.remove();
+                }
+            }
+
+            animate();
+        }
+
+        // Create hearts periodically
+        setInterval(createHeart, 3000);
+    </script>
+</body>
+</html>

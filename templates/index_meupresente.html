@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presente Digital Personalizado com Fotos e Música | Surpresas Românticas</title>
+    <meta name="description" content="A melhor forma de eternizar momentos especiais. Crie presentes digitais personalizados com fotos, música e mensagens.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_meupresente.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-main">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1 class="logo">Surpresas Românticas</h1>
+                </div>
+                <div class="nav-menu">
+                    <a href="{{ url_for('index') }}" class="nav-link">Início</a>
+                    <a href="{{ url_for('planos') }}" class="nav-link">Planos</a>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('dashboard') }}" class="nav-link">Meu Painel</a>
+                        <a href="{{ url_for('logout') }}" class="nav-link">Sair</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+                        <a href="{{ url_for('cadastro') }}" class="btn btn-small">Cadastrar</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Presente Digital Personalizado com Fotos e Música</h1>
+                <p class="hero-subtitle">Demonstre seu amor com uma Surpresa Online Inesquecível</p>
+                <div class="hero-buttons">
+                    <a href="{{ url_for('criar_surpresa') }}" class="btn btn-primary btn-large">Criar Presente Agora</a>
+                    <a href="#exemplo" class="btn btn-outline btn-large">Ver Exemplo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof">
+        <div class="container">
+            <div class="social-proof-header">
+                <h2>Aprovado por +439 casais apaixonados</h2>
+            </div>
+            <div class="testimonials-carousel">
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        <div class="names">Camila & Rafael</div>
+                        <div class="time">1 ano e 3 meses</div>
+                        <div class="review">Muito criativo!! Nunca tinha visto algo assim, parabéns</div>
+                    </div>
+                </div>
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        <div class="names">Thiago & Letícia</div>
+                        <div class="time">2 anos e 1 mês</div>
+                        <div class="review">Amei! Foi a melhor surpresa que já recebi</div>
+                    </div>
+                </div>
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        <div class="names">Pedro & Ana Paula</div>
+                        <div class="time">8 meses</div>
+                        <div class="review">Incrível! Me emocionei até as lágrimas</div>
+                    </div>
+                </div>
+            </div>
+            <div class="more-testimonials">
+                <div class="testimonial-grid">
+                    <div class="testimonial-small">
+                        <span class="names">Felipe & Mariana</span>
+                        <span class="time">2 anos e 6 meses</span>
+                    </div>
+                    <div class="testimonial-small">
+                        <span class="names">Renata & Gustavo</span>
+                        <span class="time">4 anos e 2 meses</span>
+                    </div>
+                    <div class="testimonial-small">
+                        <span class="names">Juliana & Bruno</span>
+                        <span class="time">6 meses</span>
+                    </div>
+                    <div class="testimonial-small">
+                        <span class="names">Mariana & Lucas</span>
+                        <span class="time">1 ano e 7 meses</span>
+                    </div>
+                    <div class="testimonial-small">
+                        <span class="names">Diego & Fernanda</span>
+                        <span class="time">3 anos e 4 meses</span>
+                    </div>
+                    <div class="testimonial-small">
+                        <span class="names">Isabela & Matheus</span>
+                        <span class="time">11 meses</span>
+                    </div>
+                    <div class="testimonial-small">
+                        <span class="names">Carlos & Priscila</span>
+                        <span class="time">5 anos e 1 mês</span>
+                    </div>
+                    <div class="testimonial-small">
+                        <span class="names">Larissa & Vinícius</span>
+                        <span class="time">3 anos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Como funciona - do formulário ao link em minutos</h2>
+            <div class="steps-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <h3>Preenchimento do formulário</h3>
+                    <p>Adicione até 6 fotos, escolha a música que marca a relação e escreva sua mensagem. Você vê a prévia em tempo real - se não gostar de algo, muda na hora.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <h3>Teste grátis, pague só se aprovar</h3>
+                    <p>A prévia é gratuita. Você só paga quando estiver satisfeito com o resultado.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <h3>Geração de QR Code e Link</h3>
+                    <p>Assim que o pagamento é confirmado, você recebe link + QR Code no e-mail e na tela. Pronto para enviar.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <h3>Compartilhar</h3>
+                    <p>Manda pelo WhatsApp, cola o QR Code num cartão ou surpreenda pessoalmente. A parte mais gostosa é essa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why It Works Section -->
+    <section class="why-works">
+        <div class="container">
+            <h2 class="section-title">Por que funciona - mesmo se você não é nada criativo</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">3</div>
+                    <h4>Leva 3 minutos</h4>
+                    <p>Você preenche um formulário. O site monta tudo. Não tem template em branco, não tem nada pra travar.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">infinite</div>
+                    <h4>A página fica online para sempre</h4>
+                    <p>Ela pode abrir o link daqui a 2 anos e rever tudo - fotos, música, mensagem. Igual ao primeiro dia.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">qr</div>
+                    <h4>Link e QR Code na hora</h4>
+                    <p>Pagamento confirmado, surpresa liberada em segundos. Dá pra criar agora e enviar hoje à noite.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">mobile</div>
+                    <h4>Sem app, sem cadastro pra quem recebe</h4>
+                    <p>Ela abre no celular, direto no navegador. Simples assim.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="precos">
+        <div class="container">
+            <h2 class="section-title">Quanto custa eternizar um momento</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Teste Grátis</h3>
+                        <div class="price">
+                            <span class="currency">R$</span>
+                            <span class="amount">0</span>
+                        </div>
+                        <p class="description">Crie e visualize sem compromisso</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>Criação completa</span>
+                            </li>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>Preview em tempo real</span>
+                            </li>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>Até 6 fotos</span>
+                            </li>
+                            <li class="excluded">
+                                <span class="icon">close</span>
+                                <span>Link para compartilhar</span>
+                            </li>
+                            <li class="excluded">
+                                <span class="icon">close</span>
+                                <span>QR Code</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pricing-action">
+                        <a href="{{ url_for('criar_surpresa') }}" class="btn btn-outline">Testar Agora</a>
+                    </div>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="badge">Mais Popular</div>
+                    <div class="pricing-header">
+                        <h3>Plano Eterno</h3>
+                        <div class="price">
+                            <span class="currency">R$</span>
+                            <span class="amount">29,90</span>
+                        </div>
+                        <p class="description">Sua surpresa online para sempre</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>Tudo do plano gratuito</span>
+                            </li>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>Link permanente</span>
+                            </li>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>QR Code personalizado</span>
+                            </li>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>Compartilhamento ilimitado</span>
+                            </li>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>Suporte prioritário</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pricing-action">
+                        <a href="{{ url_for('pagamento', plano='eterno') }}" class="btn btn-primary">Criar Agora</a>
+                    </div>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Plano Ilimitado</h3>
+                        <div class="price">
+                            <span class="currency">R$</span>
+                            <span class="amount">79,90</span>
+                        </div>
+                        <p class="description">Surpresas ilimitadas por 30 dias</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>Tudo do plano eterno</span>
+                            </li>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>Surpresas ilimitadas</span>
+                            </li>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>Templates exclusivos</span>
+                            </li>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>Músicas premium</span>
+                            </li>
+                            <li class="included">
+                                <span class="icon">check</span>
+                                <span>Suporte VIP</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pricing-action">
+                        <a href="{{ url_for('pagamento', plano='ilimitado') }}" class="btn btn-outline">Assinar Agora</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example Section -->
+    <section class="example-section" id="exemplo">
+        <div class="container">
+            <h2 class="section-title">Veja como fica seu presente</h2>
+            <div class="example-preview">
+                <div class="preview-phone">
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <div class="preview-header">
+                                <h3>Para: Amor da minha vida</h3>
+                            </div>
+                            <div class="preview-photos">
+                                <div class="photo-grid">
+                                    <div class="photo-placeholder">Foto 1</div>
+                                    <div class="photo-placeholder">Foto 2</div>
+                                    <div class="photo-placeholder">Foto 3</div>
+                                </div>
+                            </div>
+                            <div class="preview-message">
+                                <p>"Cada dia ao seu lado é um presente que eu guardo no coração..."</p>
+                            </div>
+                            <div class="preview-signature">
+                                <span>- Com todo amor, Seu Nome</span>
+                            </div>
+                            <div class="preview-music">
+                                <span>musica_romantica.mp3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="preview-description">
+                    <h3>Uma experiência completa</h3>
+                    <ul>
+                        <li>Design responsivo que funciona em qualquer dispositivo</li>
+                        <li>Fotos organizadas em galeria elegante</li>
+                        <li>Mensagem personalizada com sua caligrafia digital</li>
+                        <li>Trilha sonora romântica que toca automaticamente</li>
+                        <li>Link único e QR Code para fácil compartilhamento</li>
+                    </ul>
+                    <div class="preview-actions">
+                        <a href="{{ url_for('criar_surpresa') }}" class="btn btn-primary">Criar Meu Presente</a>
+                        <button class="btn btn-outline" onclick="playPreview()">Ver Demonstração</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Perguntas Frequentes sobre Presente Digital e Surpresa Online</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Como fazer um presente virtual?</h3>
+                    <p>É simples! Preencha nosso formulário com fotos, escolha uma música, escreva sua mensagem e receba um link único para compartilhar. Todo o processo leva menos de 5 minutos.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>O que é o nosso Presente Digital?</h3>
+                    <p>É uma página web personalizada com suas fotos, mensagem e música, criada especialmente para celebrar momentos especiais. Fica online para sempre e pode ser acessada de qualquer dispositivo.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>O que está incluído na minha página personalizada?</h3>
+                    <p>Inclui até 6 fotos, mensagem personalizada, trilha sonora romântica, design responsivo, link permanente e QR Code para compartilhamento fácil.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>A página personalizada tem validade?</h3>
+                    <p>Não! Sua página fica online para sempre. A pessoa pode acessar o link daqui a 1 ano, 5 anos, 10 anos e tudo estará exatamente como você criou.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Quanto tempo demora para receber o link e o QR Code?</h3>
+                    <p>Imediato! Assim que o pagamento é confirmado, você recebe o link e QR Code na tela e no seu e-mail. O processo é automático e leva segundos.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Como posso criar uma página personalizada?</h3>
+                    <p>Clique em "Criar Presente Agora", preencha o formulário com suas informações, faça o preview gratuito e, se gostar, finalize o pagamento para liberar o link.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Quais são as formas de pagamento?</h3>
+                    <p>Aceitamos cartão de crédito, débito e PIX através do Stripe, uma plataforma de pagamento 100% segura.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Posso alterar depois de pagar?</h3>
+                    <p>Sim! Você pode fazer alterações gratuitamente por 24 horas após o pagamento. Depois disso, entre em contato conosco para ajustes.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Preciso instalar algum app? E a pessoa que vai receber?</h3>
+                    <p>Não! Tudo funciona direto no navegador, sem necessidade de instalar nenhum aplicativo. Nem você nem a pessoa que recebe precisam de apps.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>O que é um presente digital e como funciona?</h3>
+                    <p>É uma experiência digital única que combina fotos, música e mensagem em uma página web personalizada. Funciona como um cartão de presente moderno, mas eterno e interativo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Sua surpresa fica pronta em 3 minutos.</h2>
+            <p>Comece agora mesmo e emocione quem você ama</p>
+            <a href="{{ url_for('criar_surpresa') }}" class="btn btn-primary btn-large">Criar Presente Agora</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Surpresas Românticas</h3>
+                    <p>Criando momentos especiais que duram para sempre</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Úteis</h4>
+                    <ul>
+                        <li><a href="{{ url_for('planos') }}">Planos e Preços</a></li>
+                        <li><a href="#exemplo">Ver Exemplo</a></li>
+                        <li><a href="#precos">Como Funciona</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="#">Dúvidas Frequentes</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Política de Reembolso</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>** suporte@surpresasromanticas.com.br</p>
+                    <p>** WhatsApp: (11) 99999-8888</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Surpresas Românticas. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Flash Messages -->
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        // Auto-hide flash messages
+        setTimeout(() => {
+            const flashMessages = document.querySelector('.flash-messages');
+            if (flashMessages) {
+                flashMessages.style.opacity = '0';
+                setTimeout(() => {
+                    flashMessages.innerHTML = '';
+                }, 500);
+            }
+        }, 5000);
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Testimonials carousel
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-item');
+        
+        function showTestimonial(index) {
+            testimonials.forEach((testimonial, i) => {
+                testimonial.style.display = i === index ? 'block' : 'none';
+            });
+        }
+        
+        if (testimonials.length > 0) {
+            showTestimonial(0);
+            setInterval(() => {
+                currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+                showTestimonial(currentTestimonial);
+            }, 3000);
+        }
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-item h3').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const content = item.querySelector('p');
+                
+                // Toggle active class
+                item.classList.toggle('active');
+                
+                // Toggle content visibility
+                if (item.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                } else {
+                    content.style.maxHeight = '0';
+                }
+            });
+        });
+
+        // Preview demo
+        function playPreview() {
+            alert('Demonstração em desenvolvimento! Em breve você poderá ver uma apresentação interativa.');
+        }
+
+        // Add floating animation to elements
+        function addFloatingAnimation() {
+            const elements = document.querySelectorAll('.benefit-icon, .step-number');
+            elements.forEach((element, index) => {
+                element.style.animation = `float ${3 + index * 0.5}s ease-in-out infinite`;
+            });
+        }
+
+        addFloatingAnimation();
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.step-item, .benefit-item, .pricing-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .testimonial-item {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            max-width: 400px;
+        }
+
+        .testimonial-content .names {
+            font-weight: 600;
+            color: #2C3E50;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-content .time {
+            color: #7F8C8D;
+            font-size: 0.9rem;
+            margin: 4px 0;
+        }
+
+        .testimonial-content .review {
+            color: #2C3E50;
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .testimonial-small {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .testimonial-small .names {
+            font-weight: 600;
+            color: #2C3E50;
+            display: block;
+        }
+
+        .testimonial-small .time {
+            color: #7F8C8D;
+            font-size: 0.85rem;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .step-item {
+            text-align: center;
+            padding: 32px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #FF6B6B;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step-item h3 {
+            color: #2C3E50;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .step-item p {
+            color: #7F8C8D;
+            line-height: 1.6;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 32px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            background: #4ECDC4;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .benefit-item h4 {
+            color: #2C3E50;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .benefit-item p {
+            color: #7F8C8D;
+            line-height: 1.6;
+        }
+
+        .example-preview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .preview-phone {
+            display: flex;
+            justify-content: center;
+        }
+
+        .phone-frame {
+            width: 300px;
+            height: 600px;
+            background: #2C3E50;
+            border-radius: 30px;
+            padding: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .preview-header h3 {
+            color: #FF6B6B;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .photo-placeholder {
+            aspect-ratio: 1;
+            background: #F8F9FA;
+            border: 2px dashed #E1E8ED;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #7F8C8D;
+        }
+
+        .preview-message {
+            background: #F8F9FA;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .preview-message p {
+            color: #2C3E50;
+            font-style: italic;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .preview-signature {
+            text-align: right;
+            margin-bottom: 16px;
+        }
+
+        .preview-signature span {
+            color: #FF6B6B;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .preview-music {
+            text-align: center;
+            padding: 12px;
+            background: #F8F9FA;
+            border-radius: 8px;
+        }
+
+        .preview-music span {
+            color: #7F8C8D;
+            font-size: 0.8rem;
+        }
+
+        .preview-description h3 {
+            color: #2C3E50;
+            margin-bottom: 24px;
+            font-size: 1.5rem;
+        }
+
+        .preview-description ul {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .preview-description li {
+            padding: 8px 0;
+            color: #2C3E50;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .preview-description li::before {
+            content: "check";
+            position: absolute;
+            left: 0;
+            color: #4ECDC4;
+            font-weight: bold;
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .faq-item {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .faq-item h3 {
+            color: #2C3E50;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .faq-item p {
+            color: #7F8C8D;
+            line-height: 1.6;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            max-height: 200px;
+        }
+
+        @media (max-width: 768px) {
+            .example-preview {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .preview-phone {
+                order: 2;
+            }
+
+            .preview-description {
+                order: 1;
+            }
+
+            .phone-frame {
+                width: 250px;
+                height: 500px;
+            }
+
+            .steps-container,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</body>
+</html>
