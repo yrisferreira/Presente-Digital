@@ -14,11 +14,11 @@
     <!-- Background Animation -->
     <div class="bg-animation">
         <div class="floating-hearts">
-            <span class="heart">favorite</span>
-            <span class="heart">favorite</span>
-            <span class="heart">favorite</span>
-            <span class="heart">favorite</span>
-            <span class="heart">favorite</span>
+            <span class="heart">heart</span>
+            <span class="heart">heart</span>
+            <span class="heart">heart</span>
+            <span class="heart">heart</span>
+            <span class="heart">heart</span>
         </div>
         <div class="gradient-orbs">
             <div class="orb orb-1"></div>
@@ -33,7 +33,7 @@
             <div class="container">
                 <div class="nav-brand">
                     <h1 class="logo">
-                        <span class="logo-icon">favorite</span>
+                        <span class="logo-icon">heart</span>
                         Surpresas Românticas
                     </h1>
                 </div>
@@ -50,380 +50,112 @@
     <main class="login-main">
         <div class="container">
             <div class="login-container">
-                <!-- Left Side - Visual Content -->
-                <div class="login-visual">
-                    <div class="visual-content">
-                        <h2 class="visual-title">Transforme Amor em Arte Digital</h2>
-                        <p class="visual-subtitle">Crie surpresas românticas que emocionam e permanecem para sempre</p>
-                        
-                        <div class="features-showcase">
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-heart"></i>
-                                </div>
-                                <div class="feature-text">
-                                    <h4>Designs Exclusivos</h4>
-                                    <p>Templates profissionais e personalizados</p>
-                                </div>
-                            </div>
-                            
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-music"></i>
-                                </div>
-                                <div class="feature-text">
-                                    <h4>Músicas Românticas</h4>
-                                    <p>Trilhas sonoras que emocionam</p>
-                                </div>
-                            </div>
-                            
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-share-alt"></i>
-                                </div>
-                                <div class="feature-text">
-                                    <h4>Compartilhamento Fácil</h4>
-                                    <p>WhatsApp, redes sociais e QR Code</p>
-                                </div>
-                            </div>
-                            
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <div class="feature-text">
-                                    <h4>100% Seguro</h4>
-                                    <p>Seus dados protegidos com criptografia</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="testimonial">
-                            <div class="testimonial-content">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p>"Esta plataforma transformou meu relacionamento! Minha namorada adora cada surpresa que crio."</p>
-                                <div class="author">
-                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FF6B9D'/%3E%3C/svg%3E" alt="Avatar" class="author-avatar">
-                                    <div class="author-info">
-                                        <strong>Ricardo Mendes</strong>
-                                        <span>Usuário Premium</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="login-card">
+                    <div class="login-header-content">
+                        <h2>Olá novamente! <span class="heart-emoji">heart</span></h2>
+                        <p>Entre para criar e gerenciar suas surpresas românticas</p>
                     </div>
-                </div>
 
-                <!-- Right Side - Login Form -->
-                <div class="login-form-container">
-                    <div class="form-wrapper">
-                        <div class="form-header">
-                            <h2 class="form-title">Bem-vindo de Volta!</h2>
-                            <p class="form-subtitle">Entre na sua conta para continuar criando magia</p>
+                    <!-- Flash Messages -->
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <div class="flash-messages">
+                                {% for message in messages %}
+                                    <div class="flash-message {{ 'error' if 'erro' in message.lower() else 'success' }}">
+                                        <i class="fas {{ 'fa-exclamation-circle' if 'erro' in message.lower() else 'fa-check-circle' }}"></i>
+                                        <span>{{ message }}</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+
+                    <form method="POST" class="login-form">
+                        <div class="form-group">
+                            <label for="username">
+                                <i class="fas fa-user"></i>
+                                Usuário ou Email
+                            </label>
+                            <input type="text" id="username" name="username" required 
+                                   placeholder="Digite seu usuário ou email">
                         </div>
 
-                        <form method="POST" class="login-form" id="loginForm">
-                            <div class="form-group">
-                                <label for="username" class="form-label">
-                                    <i class="fas fa-user"></i>
-                                    Email ou Usuário
-                                </label>
-                                <div class="input-wrapper">
-                                    <input type="text" id="username" name="username" class="form-input" required 
-                                           placeholder="Digite seu email ou usuário">
-                                    <div class="input-icon">
-                                        <i class="fas fa-envelope"></i>
-                                    </div>
-                                </div>
-                                <div class="input-feedback" id="usernameFeedback"></div>
+                        <div class="form-group">
+                            <label for="password">
+                                <i class="fas fa-lock"></i>
+                                Senha
+                            </label>
+                            <div class="password-input">
+                                <input type="password" id="password" name="password" required 
+                                       placeholder="Digite sua senha">
+                                <button type="button" class="toggle-password" onclick="togglePassword()">
+                                    <i class="fas fa-eye" id="toggle-icon"></i>
+                                </button>
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="password" class="form-label">
-                                    <i class="fas fa-lock"></i>
-                                    Senha
-                                </label>
-                                <div class="input-wrapper">
-                                    <input type="password" id="password" name="password" class="form-input" required 
-                                           placeholder="Digite sua senha">
-                                    <div class="input-icon">
-                                        <i class="fas fa-lock"></i>
-                                    </div>
-                                    <button type="button" class="password-toggle" id="passwordToggle">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </div>
-                                <div class="input-feedback" id="passwordFeedback"></div>
-                            </div>
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" name="remember">
+                                <span class="checkmark"></span>
+                                Lembrar de mim
+                            </label>
+                            <a href="#" class="forgot-password">Esqueci minha senha</a>
+                        </div>
 
-                            <div class="form-options">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" id="remember" name="remember">
-                                    <span class="checkbox-custom"></span>
-                                    <span class="checkbox-text">Lembrar-me por 30 dias</span>
-                                </label>
-                                <a href="#" class="forgot-link">Esqueci minha senha</a>
-                            </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-heart"></i>
+                            Entrar
+                        </button>
+                    </form>
 
-                            <button type="submit" class="btn-login" id="submitBtn">
-                                <span class="btn-text">Entrar na Conta</span>
-                                <div class="btn-loader" style="display: none;">
-                                    <div class="loader-dots">
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </div>
-                                </div>
+                    <div class="login-footer">
+                        <p>Ainda não tem uma conta? 
+                            <a href="{{ url_for('cadastro') }}" class="register-link">
+                                Cadastre-se gratuitamente
+                            </a>
+                        </p>
+                    </div>
+
+                    <div class="social-login">
+                        <p>Ou entre com:</p>
+                        <div class="social-buttons">
+                            <button class="btn btn-google">
+                                <i class="fab fa-google"></i>
+                                Google
                             </button>
-
-                            <div class="form-divider">
-                                <span>ou continue com</span>
-                            </div>
-
-                            <div class="social-login">
-                                <button type="button" class="social-btn google" onclick="socialLogin('google')">
-                                    <i class="fab fa-google"></i>
-                                    Google
-                                </button>
-                                <button type="button" class="social-btn facebook" onclick="socialLogin('facebook')">
-                                    <i class="fab fa-facebook-f"></i>
-                                    Facebook
-                                </button>
-                                <button type="button" class="social-btn apple" onclick="socialLogin('apple')">
-                                    <i class="fab fa-apple"></i>
-                                    Apple
-                                </button>
-                            </div>
-
-                            <div class="form-footer">
-                                <p>Não tem uma conta ainda?</p>
-                                <a href="{{ url_for('cadastro') }}" class="signup-link">
-                                    <i class="fas fa-heart"></i>
-                                    Cadastre-se gratuitamente
-                                </a>
-                            </div>
-                        </form>
+                            <button class="btn btn-facebook">
+                                <i class="fab fa-facebook-f"></i>
+                                Facebook
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Flash Messages -->
-    <div class="flash-messages">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="flash-message {{ 'error' if 'erro' in message.lower() else 'success' }}">
-                        <div class="message-content">
-                            <i class="fas {{ 'fa-exclamation-circle' if 'erro' in message.lower() else 'fa-check-circle' }}"></i>
-                            <span>{{ message }}</span>
-                        </div>
-                        <button class="close-btn" onclick="this.parentElement.remove()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </div>
-
     <script>
-        // Password visibility toggle
-        const passwordToggle = document.getElementById('passwordToggle');
-        const passwordInput = document.getElementById('password');
-        const passwordIcon = passwordToggle.querySelector('i');
-
-        passwordToggle.addEventListener('click', () => {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            passwordIcon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
-        });
-
-        // Input validation and feedback
-        const usernameInput = document.getElementById('username');
-        const usernameFeedback = document.getElementById('usernameFeedback');
-        const passwordFeedback = document.getElementById('passwordFeedback');
-
-        usernameInput.addEventListener('input', function() {
-            const value = this.value.trim();
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggle-icon');
             
-            if (value.length > 0) {
-                if (value.includes('@')) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (emailRegex.test(value)) {
-                        showFeedback(usernameFeedback, 'success', 'Email válido!');
-                        this.classList.remove('error');
-                        this.classList.add('success');
-                    } else {
-                        showFeedback(usernameFeedback, 'error', 'Email inválido!');
-                        this.classList.add('error');
-                        this.classList.remove('success');
-                    }
-                } else {
-                    if (value.length >= 3) {
-                        showFeedback(usernameFeedback, 'success', 'Nome de usuário válido!');
-                        this.classList.remove('error');
-                        this.classList.add('success');
-                    } else {
-                        showFeedback(usernameFeedback, 'error', 'Mínimo 3 caracteres!');
-                        this.classList.add('error');
-                        this.classList.remove('success');
-                    }
-                }
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
             } else {
-                hideFeedback(usernameFeedback);
-                this.classList.remove('error', 'success');
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
             }
-        });
-
-        passwordInput.addEventListener('input', function() {
-            const value = this.value;
-            
-            if (value.length > 0) {
-                if (value.length < 6) {
-                    showFeedback(passwordFeedback, 'error', 'Mínimo 6 caracteres!');
-                    this.classList.add('error');
-                    this.classList.remove('success');
-                } else {
-                    const strength = calculatePasswordStrength(value);
-                    showFeedback(passwordFeedback, 'success', `Força: ${strength.text}`);
-                    this.classList.remove('error');
-                    this.classList.add('success');
-                }
-            } else {
-                hideFeedback(passwordFeedback);
-                this.classList.remove('error', 'success');
-            }
-        });
-
-        function showFeedback(element, type, message) {
-            element.textContent = message;
-            element.className = `input-feedback ${type}`;
-            element.style.display = 'block';
         }
-
-        function hideFeedback(element) {
-            element.style.display = 'none';
-        }
-
-        function calculatePasswordStrength(password) {
-            let strength = 0;
-            let text = 'Fraca';
-            
-            if (password.length >= 6) strength++;
-            if (password.length >= 10) strength++;
-            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
-            if (/\d/.test(password)) strength++;
-            if (/[^a-zA-Z\d]/.test(password)) strength++;
-            
-            const levels = ['Fraca', 'Média', 'Forte', 'Muito forte', 'Excelente'];
-            text = levels[Math.min(strength - 1, 4)];
-            
-            return { level: strength, text: text };
-        }
-
-        // Form submission
-        const loginForm = document.getElementById('loginForm');
-        const submitBtn = document.getElementById('submitBtn');
-
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = usernameInput.value.trim();
-            const password = passwordInput.value.trim();
-            
-            // Validation
-            if (!username || !password) {
-                showNotification('Por favor, preencha todos os campos!', 'error');
-                return;
-            }
-            
-            if (password.length < 6) {
-                showNotification('A senha deve ter pelo menos 6 caracteres!', 'error');
-                return;
-            }
-            
-            // Show loading state
-            submitBtn.disabled = true;
-            submitBtn.querySelector('.btn-text').style.display = 'none';
-            submitBtn.querySelector('.btn-loader').style.display = 'flex';
-            
-            // Simulate API call
-            setTimeout(() => {
-                // Submit form
-                this.submit();
-            }, 1500);
-        });
-
-        // Social login
-        function socialLogin(provider) {
-            showNotification(`Login com ${provider} em desenvolvimento!`, 'info');
-        }
-
-        // Forgot password
-        document.querySelector('.forgot-link').addEventListener('click', function(e) {
-            e.preventDefault();
-            showNotification('Recuperação de senha em desenvolvimento!', 'info');
-        });
-
-        // Notification system
-        function showNotification(message, type = 'info') {
-            const flashMessages = document.querySelector('.flash-messages');
-            const notification = document.createElement('div');
-            notification.className = `flash-message ${type}`;
-            notification.innerHTML = `
-                <div class="message-content">
-                    <i class="fas ${getNotificationIcon(type)}"></i>
-                    <span>${message}</span>
-                </div>
-                <button class="close-btn" onclick="this.parentElement.remove()">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            
-            flashMessages.appendChild(notification);
-            
-            // Auto remove after 5 seconds
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            }, 5000);
-        }
-
-        function getNotificationIcon(type) {
-            const icons = {
-                'success': 'fa-check-circle',
-                'error': 'fa-exclamation-circle',
-                'info': 'fa-info-circle',
-                'warning': 'fa-exclamation-triangle'
-            };
-            return icons[type] || 'fa-info-circle';
-        }
-
-        // Auto-hide existing flash messages
-        setTimeout(() => {
-            const flashMessages = document.querySelector('.flash-messages');
-            if (flashMessages) {
-                flashMessages.style.opacity = '0';
-                setTimeout(() => {
-                    flashMessages.innerHTML = '';
-                }, 500);
-            }
-        }, 5000);
 
         // Floating hearts animation
         function createFloatingHeart() {
             const heart = document.createElement('div');
-            heart.innerHTML = 'favorite';
+            heart.innerHTML = 'heart';
             heart.className = 'floating-heart';
             heart.style.left = Math.random() * window.innerWidth + 'px';
             heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
@@ -436,93 +168,75 @@
             }, 5000);
         }
 
-        // Create floating hearts periodically
+        // Generate hearts periodically
         setInterval(createFloatingHeart, 3000);
 
-        // Initial hearts
+        // Initialize with some hearts
         for (let i = 0; i < 3; i++) {
             setTimeout(createFloatingHeart, i * 1000);
         }
 
-        // Input focus effects
-        const inputs = document.querySelectorAll('.form-input');
-        inputs.forEach(input => {
+        // Auto-hide flash messages
+        setTimeout(() => {
+            const flashMessages = document.querySelector('.flash-messages');
+            if (flashMessages) {
+                flashMessages.style.opacity = '0';
+                setTimeout(() => {
+                    flashMessages.innerHTML = '';
+                }, 500);
+            }
+        }, 5000);
+
+        // Form validation
+        document.querySelector('.login-form').addEventListener('submit', function(e) {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (!username || !password) {
+                e.preventDefault();
+                alert('Por favor, preencha todos os campos.');
+            }
+        });
+
+        // Add animation to form inputs
+        document.querySelectorAll('input').forEach(input => {
             input.addEventListener('focus', function() {
                 this.parentElement.classList.add('focused');
             });
             
             input.addEventListener('blur', function() {
-                this.parentElement.classList.remove('focused');
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
             });
-        });
-
-        // Checkbox styling
-        const checkbox = document.getElementById('remember');
-        checkbox.addEventListener('change', function() {
-            if (this.checked) {
-                this.nextElementSibling.classList.add('checked');
-            } else {
-                this.nextElementSibling.classList.remove('checked');
-            }
         });
     </script>
 
     <style>
-        /* Enhanced Login Page Styles */
+        /* Login Specific Styles */
         .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        }
-
-        .floating-hearts {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .floating-heart {
-            position: absolute;
-            color: rgba(255, 107, 157, 0.6);
-            font-size: 20px;
-            font-family: 'Material Icons';
-            animation: float-up linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes float-up {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #FF6B9D 75%, #FF8FAB 100%);
+            z-index: -2;
         }
 
         .gradient-orbs {
-            position: absolute;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            z-index: -1;
         }
 
         .orb {
             position: absolute;
             border-radius: 50%;
             filter: blur(40px);
-            opacity: 0.6;
             animation: float 6s ease-in-out infinite;
         }
 
@@ -530,7 +244,7 @@
             width: 300px;
             height: 300px;
             background: rgba(255, 107, 157, 0.3);
-            top: 20%;
+            top: 10%;
             left: 10%;
             animation-delay: 0s;
         }
@@ -538,24 +252,70 @@
         .orb-2 {
             width: 200px;
             height: 200px;
-            background: rgba(102, 126, 234, 0.3);
-            bottom: 30%;
-            right: 15%;
+            background: rgba(240, 147, 251, 0.3);
+            top: 60%;
+            right: 10%;
             animation-delay: 2s;
         }
 
         .orb-3 {
             width: 250px;
             height: 250px;
-            background: rgba(118, 75, 162, 0.3);
-            top: 60%;
-            left: 60%;
+            background: rgba(102, 126, 234, 0.3);
+            bottom: 10%;
+            left: 50%;
             animation-delay: 4s;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.7);
+            animation: float-up 8s linear infinite;
+            text-shadow: 0 0 10px rgba(255, 107, 157, 0.5);
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.8);
+            animation: float-up 5s linear infinite;
+            text-shadow: 0 0 15px rgba(255, 107, 157, 0.7);
+            pointer-events: none;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                transform: translateY(90vh) rotate(45deg) scale(1);
+                opacity: 1;
+            }
+            90% {
+                transform: translateY(10vh) rotate(315deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0);
+                opacity: 0;
+            }
         }
 
         .login-header {
@@ -564,296 +324,146 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo-icon {
-            font-size: 2rem;
-            color: var(--primary-color);
-        }
-
         .login-main {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 40px 0;
+            justify-content: center;
+            padding: 120px 20px 40px;
         }
 
         .login-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            max-width: 1200px;
-            margin: 0 auto;
             width: 100%;
-            align-items: center;
+            max-width: 450px;
         }
 
-        .login-visual {
-            padding: 60px 40px;
-        }
-
-        .visual-content {
-            text-align: left;
-            color: white;
-        }
-
-        .visual-title {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 20px;
-            line-height: 1.1;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .visual-subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-
-        .features-showcase {
-            margin-bottom: 40px;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 24px;
-            opacity: 0;
-            animation: fadeInLeft 0.8s ease forwards;
-        }
-
-        .feature-item:nth-child(1) { animation-delay: 0.1s; }
-        .feature-item:nth-child(2) { animation-delay: 0.2s; }
-        .feature-item:nth-child(3) { animation-delay: 0.3s; }
-        .feature-item:nth-child(4) { animation-delay: 0.4s; }
-
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .feature-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .feature-text h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .feature-text p {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        .testimonial {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            padding: 24px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .stars {
-            color: #FFD700;
-            font-size: 1rem;
-            margin-bottom: 12px;
-            letter-spacing: 2px;
-        }
-
-        .testimonial p {
-            font-style: italic;
-            margin-bottom: 16px;
-            line-height: 1.6;
-        }
-
-        .author {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .author-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-
-        .author-info strong {
-            color: white;
-            display: block;
-            font-size: 0.9rem;
-        }
-
-        .author-info span {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.8rem;
-        }
-
-        .login-form-container {
-            display: flex;
-            justify-content: center;
-        }
-
-        .form-wrapper {
+        .login-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 24px;
-            padding: 48px;
+            padding: 40px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 100%;
-            max-width: 480px;
-            position: relative;
-            overflow: hidden;
         }
 
-        .form-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-        }
-
-        .form-header {
+        .login-header-content {
             text-align: center;
             margin-bottom: 32px;
         }
 
-        .form-title {
+        .login-header-content h2 {
+            font-family: 'Inter', sans-serif;
             font-size: 2rem;
-            font-weight: 800;
-            color: var(--text-primary);
+            font-weight: 700;
             margin-bottom: 8px;
+            color: var(--text-primary);
         }
 
-        .form-subtitle {
+        .heart-emoji {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .login-header-content p {
             color: var(--text-secondary);
             font-size: 1rem;
+        }
+
+        .flash-messages {
+            margin-bottom: 24px;
+        }
+
+        .flash-message {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        .flash-message.success {
+            background: rgba(72, 187, 120, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(72, 187, 120, 0.2);
+        }
+
+        .flash-message.error {
+            background: rgba(245, 101, 101, 0.1);
+            color: var(--error-color);
+            border: 1px solid rgba(245, 101, 101, 0.2);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .login-form {
+            margin-bottom: 32px;
         }
 
         .form-group {
             margin-bottom: 24px;
         }
 
-        .form-label {
+        .form-group label {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: var(--text-primary);
             font-weight: 600;
             margin-bottom: 8px;
-            font-size: 0.9rem;
+            color: var(--text-primary);
         }
 
-        .form-label i {
-            color: var(--primary-color);
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid rgba(255, 107, 157, 0.1);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
         }
 
-        .input-wrapper {
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+        }
+
+        .password-input {
             position: relative;
         }
 
-        .form-input {
-            width: 100%;
-            padding: 16px 20px 16px 50px;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 1rem;
-            background: var(--bg-primary);
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.1);
-        }
-
-        .form-input.error {
-            border-color: var(--error-color);
-        }
-
-        .form-input.success {
-            border-color: var(--success-color);
-        }
-
-        .input-icon {
+        .toggle-password {
             position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
-            transition: color 0.3s ease;
-        }
-
-        .input-wrapper.focused .input-icon {
-            color: var(--primary-color);
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 16px;
+            right: 12px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
-            color: var(--text-light);
+            color: var(--text-secondary);
             cursor: pointer;
             padding: 4px;
-            border-radius: 4px;
-            transition: color 0.3s ease;
         }
 
-        .password-toggle:hover {
+        .toggle-password:hover {
             color: var(--primary-color);
-        }
-
-        .input-feedback {
-            margin-top: 8px;
-            font-size: 0.85rem;
-            display: none;
-        }
-
-        .input-feedback.success {
-            color: var(--success-color);
-        }
-
-        .input-feedback.error {
-            color: var(--error-color);
         }
 
         .form-options {
@@ -863,291 +473,127 @@
             margin-bottom: 24px;
         }
 
-        .checkbox-label {
+        .remember-me {
             display: flex;
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
-        .checkbox-custom {
+        .remember-me input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkmark {
             width: 18px;
             height: 18px;
-            border: 2px solid var(--border-color);
+            border: 2px solid rgba(255, 107, 157, 0.3);
             border-radius: 4px;
             position: relative;
             transition: all 0.3s ease;
         }
 
-        .checkbox-custom.checked {
+        .remember-me input[type="checkbox"]:checked + .checkmark {
             background: var(--primary-color);
             border-color: var(--primary-color);
         }
 
-        .checkbox-custom.checked::after {
+        .remember-me input[type="checkbox"]:checked + .checkmark::after {
             content: 'check';
             position: absolute;
-            top: -2px;
-            left: 2px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             color: white;
             font-size: 12px;
-            font-family: 'Material Icons';
         }
 
-        .forgot-link {
+        .forgot-password {
             color: var(--primary-color);
             text-decoration: none;
             font-size: 0.9rem;
-            font-weight: 500;
             transition: color 0.3s ease;
         }
 
-        .forgot-link:hover {
-            color: var(--primary-dark);
+        .forgot-password:hover {
+            color: var(--secondary-color);
         }
 
-        .btn-login {
+        .btn-full {
             width: 100%;
-            padding: 16px;
-            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
-            color: white;
-            border: none;
-            border-radius: 12px;
+            justify-content: center;
+            padding: 14px;
             font-size: 1rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
 
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
-        }
-
-        .btn-login:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-loader {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
-
-        .loader-dots {
-            display: flex;
-            gap: 4px;
-        }
-
-        .loader-dots span {
-            width: 6px;
-            height: 6px;
-            background: white;
-            border-radius: 50%;
-            animation: loader-bounce 1.4s ease-in-out infinite both;
-        }
-
-        .loader-dots span:nth-child(1) { animation-delay: -0.32s; }
-        .loader-dots span:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes loader-bounce {
-            0%, 80%, 100% {
-                transform: scale(0);
-            }
-            40% {
-                transform: scale(1);
-            }
-        }
-
-        .form-divider {
+        .login-footer {
             text-align: center;
-            margin: 32px 0;
-            position: relative;
-        }
-
-        .form-divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: var(--border-color);
-        }
-
-        .form-divider span {
-            background: var(--bg-primary);
-            padding: 0 16px;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .social-login {
-            display: flex;
-            gap: 12px;
             margin-bottom: 24px;
         }
 
-        .social-btn {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .social-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .social-btn.google:hover {
-            border-color: #4285F4;
-            color: #4285F4;
-        }
-
-        .social-btn.facebook:hover {
-            border-color: #1877F2;
-            color: #1877F2;
-        }
-
-        .social-btn.apple:hover {
-            border-color: #000000;
-            color: #000000;
-        }
-
-        .form-footer {
-            text-align: center;
-            padding-top: 24px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .form-footer p {
+        .login-footer p {
             color: var(--text-secondary);
             font-size: 0.9rem;
-            margin-bottom: 12px;
         }
 
-        .signup-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+        .register-link {
             color: var(--primary-color);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95rem;
             transition: color 0.3s ease;
         }
 
-        .signup-link:hover {
-            color: var(--primary-dark);
+        .register-link:hover {
+            color: var(--secondary-color);
         }
 
-        .flash-messages {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 10000;
+        .social-login {
+            text-align: center;
         }
 
-        .flash-message {
-            background: var(--success-color);
-            color: white;
-            padding: 16px 20px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        .social-login p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+        }
+
+        .social-buttons {
             display: flex;
-            align-items: center;
             gap: 12px;
-            animation: slideInRight 0.5s ease;
-            max-width: 400px;
-            position: relative;
         }
 
-        .flash-message.error {
-            background: var(--error-color);
-        }
-
-        .flash-message.info {
-            background: var(--secondary-color);
-        }
-
-        .message-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .btn-google {
             flex: 1;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
+            background: #4285F4;
             color: white;
-            cursor: pointer;
-            padding: 4px;
-            border-radius: 4px;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
         }
 
-        .close-btn:hover {
-            opacity: 1;
+        .btn-facebook {
+            flex: 1;
+            background: #1877F2;
+            color: white;
         }
 
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        .btn-google:hover,
+        .btn-facebook:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .login-container {
-                grid-template-columns: 1fr;
-                gap: 40px;
+            .login-main {
+                padding: 100px 20px 40px;
             }
 
-            .login-visual {
-                padding: 40px 20px;
-                text-align: center;
-            }
-
-            .visual-title {
-                font-size: 2rem;
-            }
-
-            .visual-subtitle {
-                font-size: 1.1rem;
-            }
-
-            .form-wrapper {
+            .login-card {
                 padding: 32px 24px;
             }
 
-            .social-login {
-                flex-direction: column;
+            .login-header-content h2 {
+                font-size: 1.8rem;
             }
 
             .form-options {
@@ -1155,19 +601,9 @@
                 gap: 16px;
                 align-items: flex-start;
             }
-        }
 
-        @media (max-width: 480px) {
-            .visual-title {
-                font-size: 1.8rem;
-            }
-
-            .form-wrapper {
-                padding: 24px 20px;
-            }
-
-            .btn-login {
-                padding: 14px;
+            .social-buttons {
+                flex-direction: column;
             }
         }
     </style>

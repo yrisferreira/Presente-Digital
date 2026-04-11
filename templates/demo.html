@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demonstração Interativa - Surpresas Românticas</title>
+    <title>Demonstração - Surpresas Românticas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_meupresente_v2.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
@@ -15,13 +15,13 @@
     <!-- Background Animation -->
     <div class="demo-bg">
         <div class="floating-hearts">
-            <span class="heart">favorite</span>
-            <span class="heart">favorite</span>
-            <span class="heart">favorite</span>
-            <span class="heart">favorite</span>
-            <span class="heart">favorite</span>
-            <span class="heart">favorite</span>
-            <span class="heart">favorite</span>
+            <span class="heart">heart</span>
+            <span class="heart">heart</span>
+            <span class="heart">heart</span>
+            <span class="heart">heart</span>
+            <span class="heart">heart</span>
+            <span class="heart">heart</span>
+            <span class="heart">heart</span>
         </div>
         <div class="gradient-orbs">
             <div class="orb orb-1"></div>
@@ -32,721 +32,305 @@
     </div>
 
     <!-- Header -->
-    <header class="demo-header">
+    <header class="header-main">
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
                     <h1 class="logo">
-                        <span class="logo-icon">favorite</span>
+                        <span class="logo-icon">heart</span>
                         Surpresas Românticas
                     </h1>
                 </div>
                 <div class="nav-menu">
                     <a href="{{ url_for('index') }}" class="nav-link">Início</a>
                     <a href="{{ url_for('planos') }}" class="nav-link">Planos</a>
-                    <a href="{{ url_for('cadastro') }}" class="nav-link">Cadastrar</a>
-                    <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+                    <a href="{{ url_for('demo') }}" class="nav-link active">Demo</a>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('dashboard') }}" class="nav-link">Meu Painel</a>
+                        <a href="{{ url_for('logout') }}" class="nav-link">Sair</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+                        <a href="{{ url_for('cadastro') }}" class="btn btn-primary">Cadastrar</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="demo-hero">
+    <!-- Main Content -->
+    <main class="demo-main">
         <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title animate__animated animate__fadeInDown">
-                    Experimente a Magia em Tempo Real
-                </h1>
-                <p class="hero-subtitle animate__animated animate__fadeInUp">
-                    Crie, personalize e visualize sua surpresa romântica antes mesmo de se cadastrar
+            <!-- Demo Header -->
+            <section class="demo-header animate__animated animate__fadeInDown">
+                <h2 class="demo-title">
+                    Experimente Criar uma <span class="highlight">Surpresa</span>
+                </h2>
+                <p class="demo-subtitle">
+                    Veja como é fácil criar um presente digital romântico e personalizado
                 </p>
-                <div class="hero-buttons animate__animated animate__fadeInUp animate__delay-1s">
-                    <button class="btn btn-primary btn-large" onclick="startInteractiveDemo()">
-                        <i class="fas fa-play"></i>
-                        Começar Demonstração
-                    </button>
-                    <button class="btn btn-outline btn-large" onclick="showExamples()">
-                        <i class="fas fa-images"></i>
-                        Ver Exemplos
-                    </button>
-                </div>
-            </div>
-            
-            <div class="hero-visual animate__animated animate__fadeInRight animate__delay-1s">
-                <div class="demo-phone">
-                    <div class="phone-screen">
-                        <div class="demo-preview" id="demoPreview">
-                            <div class="preview-header">
-                                <h3>Minha Surpresa</h3>
-                                <div class="preview-actions">
+            </section>
+
+            <!-- Demo Form -->
+            <section class="demo-form-section animate__animated animate__fadeInUp">
+                <div class="demo-form-container">
+                    <div class="form-tabs">
+                        <button class="tab-btn active" data-tab="basic">Informações</button>
+                        <button class="tab-btn" data-tab="message">Mensagem</button>
+                        <button class="tab-btn" data-tab="photos">Fotos</button>
+                        <button class="tab-btn" data-tab="music">Música</button>
+                        <button class="tab-btn" data-tab="preview">Prévia</button>
+                    </div>
+
+                    <form class="demo-form">
+                        <!-- Basic Info Tab -->
+                        <div class="tab-content active" id="basic-tab">
+                            <div class="form-group">
+                                <label for="demo-seu-nome">
+                                    <i class="fas fa-user"></i>
+                                    Seu Nome
+                                </label>
+                                <input type="text" id="demo-seu-nome" placeholder="Seu nome">
+                            </div>
+                            <div class="form-group">
+                                <label for="demo-parceiro-nome">
                                     <i class="fas fa-heart"></i>
-                                    <i class="fas fa-share"></i>
-                                </div>
-                            </div>
-                            <div class="preview-content">
-                                <div class="preview-images">
-                                    <img src="https://picsum.photos/seed/love1/300/200" alt="Foto 1" class="preview-img">
-                                    <img src="https://picsum.photos/seed/love2/300/200" alt="Foto 2" class="preview-img">
-                                </div>
-                                <div class="preview-message">
-                                    <p>Para o amor da minha vida...</p>
-                                </div>
-                                <div class="preview-music">
-                                    <i class="fas fa-music"></i>
-                                    <span>Música Romântica</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interactive Demo Section -->
-    <section class="interactive-demo" id="interactiveDemo" style="display: none;">
-        <div class="container">
-            <div class="demo-container">
-                <div class="demo-controls">
-                    <h2>Crie Sua Surpresa Agora</h2>
-                    <p class="demo-subtitle">Personalize cada detalhe e veja o resultado em tempo real</p>
-                    
-                    <div class="control-panel">
-                        <!-- Step 1: Message -->
-                        <div class="control-section active" id="step1">
-                            <h3><i class="fas fa-pen"></i> Mensagem Romântica</h3>
-                            <textarea id="demoMessage" class="demo-textarea" placeholder="Escreva sua mensagem aqui..." maxlength="200">Para o amor da minha vida, você faz todos os meus dias mais especiais...</textarea>
-                            <div class="char-count">
-                                <span id="charCount">85</span>/200 caracteres
+                                    Nome do Parceiro(a)
+                                </label>
+                                <input type="text" id="demo-parceiro-nome" placeholder="Nome da pessoa especial">
                             </div>
                         </div>
 
-                        <!-- Step 2: Images -->
-                        <div class="control-section" id="step2">
-                            <h3><i class="fas fa-images"></i> Fotos Especiais</h3>
-                            <div class="image-selector">
-                                <div class="image-grid" id="imageGrid">
-                                    <div class="image-option selected" data-image="https://picsum.photos/seed/love1/300/200">
-                                        <img src="https://picsum.photos/seed/love1/100/100" alt="Opção 1">
-                                        <div class="image-overlay">
-                                            <i class="fas fa-check"></i>
-                                        </div>
-                                    </div>
-                                    <div class="image-option" data-image="https://picsum.photos/seed/love2/300/200">
-                                        <img src="https://picsum.photos/seed/love2/100/100" alt="Opção 2">
-                                        <div class="image-overlay">
-                                            <i class="fas fa-check"></i>
-                                        </div>
-                                    </div>
-                                    <div class="image-option" data-image="https://picsum.photos/seed/love3/300/200">
-                                        <img src="https://picsum.photos/seed/love3/100/100" alt="Opção 3">
-                                        <div class="image-overlay">
-                                            <i class="fas fa-check"></i>
-                                        </div>
-                                    </div>
-                                    <div class="image-option" data-image="https://picsum.photos/seed/love4/300/200">
-                                        <img src="https://picsum.photos/seed/love4/100/100" alt="Opção 4">
-                                        <div class="image-overlay">
-                                            <i class="fas fa-check"></i>
-                                        </div>
-                                    </div>
-                                    <div class="image-option" data-image="https://picsum.photos/seed/love5/300/200">
-                                        <img src="https://picsum.photos/seed/love5/100/100" alt="Opção 5">
-                                        <div class="image-overlay">
-                                            <i class="fas fa-check"></i>
-                                        </div>
-                                    </div>
-                                    <div class="image-option" data-image="https://picsum.photos/seed/love6/300/200">
-                                        <img src="https://picsum.photos/seed/love6/100/100" alt="Opção 6">
-                                        <div class="image-overlay">
-                                            <i class="fas fa-check"></i>
-                                        </div>
-                                    </div>
+                        <!-- Message Tab -->
+                        <div class="tab-content" id="message-tab">
+                            <div class="form-group">
+                                <label for="demo-mensagem">
+                                    <i class="fas fa-pen"></i>
+                                    Sua Mensagem de Amor
+                                </label>
+                                <textarea id="demo-mensagem" rows="6" placeholder="Escreva aqui sua mensagem..."></textarea>
+                            </div>
+                            <div class="message-templates">
+                                <h4>Inspire-se:</h4>
+                                <div class="template-options">
+                                    <button type="button" class="template-btn" onclick="setTemplate('romantic')">
+                                        <i class="fas fa-heart"></i> Romântico
+                                    </button>
+                                    <button type="button" class="template-btn" onclick="setTemplate('poetic')">
+                                        <i class="fas fa-feather"></i> Poético
+                                    </button>
+                                    <button type="button" class="template-btn" onclick="setTemplate('funny')">
+                                        <i class="fas fa-laugh"></i> Divertido
+                                    </button>
                                 </div>
-                                <p class="image-hint">Selecione até 3 fotos para sua surpresa</p>
                             </div>
                         </div>
 
-                        <!-- Step 3: Music -->
-                        <div class="control-section" id="step3">
-                            <h3><i class="fas fa-music"></i> Trilha Sonora</h3>
-                            <div class="music-selector">
-                                <div class="music-options">
-                                    <div class="music-option selected" data-music="romantic-classic">
-                                        <div class="music-cover">
+                        <!-- Photos Tab -->
+                        <div class="tab-content" id="photos-tab">
+                            <div class="photo-upload-demo">
+                                <div class="upload-zone-demo">
+                                    <i class="fas fa-camera"></i>
+                                    <h4>Adicione até 6 fotos</h4>
+                                    <p>Arraste ou clique para selecionar</p>
+                                </div>
+                                <div class="photo-preview-demo">
+                                    <div class="photo-placeholder-demo">
+                                        <i class="fas fa-image"></i>
+                                        <span>Foto 1</span>
+                                    </div>
+                                    <div class="photo-placeholder-demo">
+                                        <i class="fas fa-image"></i>
+                                        <span>Foto 2</span>
+                                    </div>
+                                    <div class="photo-add-demo">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Adicionar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Music Tab -->
+                        <div class="tab-content" id="music-tab">
+                            <div class="music-selection-demo">
+                                <h4>Escolha a trilha sonora:</h4>
+                                <div class="music-options-demo">
+                                    <label class="music-option-demo">
+                                        <input type="radio" name="demo-music" value="romantic1" checked>
+                                        <div class="music-card-demo">
                                             <i class="fas fa-heart"></i>
+                                            <span>Amor Eterno</span>
                                         </div>
-                                        <div class="music-info">
-                                            <h4>Clássico Romântico</h4>
-                                            <p>Perfeito para momentos especiais</p>
+                                    </label>
+                                    <label class="music-option-demo">
+                                        <input type="radio" name="demo-music" value="romantic2">
+                                        <div class="music-card-demo">
+                                            <i class="fas fa-star"></i>
+                                            <span>Noite Estrelada</span>
                                         </div>
-                                        <div class="music-play">
-                                            <i class="fas fa-play"></i>
+                                    </label>
+                                    <label class="music-option-demo">
+                                        <input type="radio" name="demo-music" value="romantic3">
+                                        <div class="music-card-demo">
+                                            <i class="fas fa-music"></i>
+                                            <span>Momentos Mágicos</span>
                                         </div>
-                                    </div>
-                                    <div class="music-option" data-music="acoustic-love">
-                                        <div class="music-cover">
-                                            <i class="fas fa-guitar"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preview Tab -->
+                        <div class="tab-content" id="preview-tab">
+                            <div class="preview-container">
+                                <div class="preview-phone">
+                                    <div class="preview-screen">
+                                        <div class="preview-header">
+                                            <h3 id="preview-parceiro">Nome do Parceiro</h3>
+                                            <span class="preview-date">Hoje</span>
                                         </div>
-                                        <div class="music-info">
-                                            <h4>Acústico Romântico</h4>
-                                            <p>Suave e emocionante</p>
+                                        <div class="preview-content">
+                                            <p class="preview-message" id="preview-message">Sua mensagem aparecerá aqui...</p>
+                                            <div class="preview-photos">
+                                                <div class="preview-photo"></div>
+                                                <div class="preview-photo"></div>
+                                            </div>
+                                            <div class="preview-music">
+                                                <i class="fas fa-music"></i>
+                                                <span>Música Romântica</span>
+                                            </div>
                                         </div>
-                                        <div class="music-play">
-                                            <i class="fas fa-play"></i>
-                                        </div>
-                                    </div>
-                                    <div class="music-option" data-music="modern-love">
-                                        <div class="music-cover">
-                                            <i class="fas fa-headphones"></i>
-                                        </div>
-                                        <div class="music-info">
-                                            <h4>Amor Moderno</h4>
-                                            <p>Contemporâneo e vibrante</p>
-                                        </div>
-                                        <div class="music-play">
-                                            <i class="fas fa-play"></i>
+                                        <div class="preview-footer">
+                                            <p>Com todo meu amor,</p>
+                                            <span id="preview-assinatura">Seu Nome</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </form>
 
-                        <!-- Step 4: Theme -->
-                        <div class="control-section" id="step4">
-                            <h3><i class="fas fa-palette"></i> Tema Visual</h3>
-                            <div class="theme-selector">
-                                <div class="theme-options">
-                                    <div class="theme-option selected" data-theme="romantic-pink">
-                                        <div class="theme-preview" style="background: linear-gradient(45deg, #FF6B9D, #FF8FAB);">
-                                            <i class="fas fa-heart"></i>
-                                        </div>
-                                        <span>Romântico Rosa</span>
-                                    </div>
-                                    <div class="theme-option" data-theme="elegant-purple">
-                                        <div class="theme-preview" style="background: linear-gradient(45deg, #667EEA, #764BA2);">
-                                            <i class="fas fa-gem"></i>
-                                        </div>
-                                        <span>Elegante Roxo</span>
-                                    </div>
-                                    <div class="theme-option" data-theme="golden-sunset">
-                                        <div class="theme-preview" style="background: linear-gradient(45deg, #F093FB, #F5576C);">
-                                            <i class="fas fa-sun"></i>
-                                        </div>
-                                        <span>Pôr Dourado</span>
-                                    </div>
-                                    <div class="theme-option" data-theme="ocean-blue">
-                                        <div class="theme-preview" style="background: linear-gradient(45deg, #4FACFE, #00F2FE);">
-                                            <i class="fas fa-water"></i>
-                                        </div>
-                                        <span>Oceano Azul</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Navigation -->
-                        <div class="demo-navigation">
-                            <button class="btn btn-outline" onclick="previousStep()" id="prevBtn" style="display: none;">
-                                <i class="fas fa-arrow-left"></i>
-                                Anterior
-                            </button>
-                            <div class="step-indicators">
-                                <span class="step-dot active" data-step="1"></span>
-                                <span class="step-dot" data-step="2"></span>
-                                <span class="step-dot" data-step="3"></span>
-                                <span class="step-dot" data-step="4"></span>
-                            </div>
-                            <button class="btn btn-primary" onclick="nextStep()" id="nextBtn">
-                                Próximo
-                                <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
+                    <div class="demo-actions">
+                        <button class="btn btn-outline" onclick="resetDemo()">
+                            <i class="fas fa-redo"></i>
+                            Limpar
+                        </button>
+                        <button class="btn btn-primary" onclick="saveDemo()">
+                            <i class="fas fa-heart"></i>
+                            Criar Minha Surpresa
+                        </button>
                     </div>
                 </div>
+            </section>
 
-                <div class="demo-preview-panel">
-                    <h2>Prévia em Tempo Real</h2>
-                    <div class="preview-container">
-                        <div class="preview-device">
-                            <div class="device-screen" id="livePreview">
-                                <!-- Dynamic content will be inserted here -->
-                            </div>
+            <!-- Features Demo -->
+            <section class="features-demo animate__animated animate__fadeInUp animate__delay-1s">
+                <div class="section-header">
+                    <h3 class="section-title">Recursos Incríveis</h3>
+                    <p class="section-subtitle">Veja o que torna nossas surpresas especiais</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card-demo">
+                        <div class="feature-icon-demo">
+                            <i class="fas fa-palette"></i>
                         </div>
-                        <div class="preview-actions">
-                            <button class="btn btn-sm btn-outline" onclick="shareDemo()">
-                                <i class="fas fa-share"></i>
-                                Compartilhar
-                            </button>
-                            <button class="btn btn-sm btn-primary" onclick="saveDemo()">
-                                <i class="fas fa-save"></i>
-                                Salvar
-                            </button>
+                        <h4>Templates Lindos</h4>
+                        <p>Designs românticos e modernos</p>
+                    </div>
+                    <div class="feature-card-demo">
+                        <div class="feature-icon-demo">
+                            <i class="fas fa-images"></i>
                         </div>
+                        <h4>Galeria de Fotos</h4>
+                        <p>Compartilhe seus melhores momentos</p>
+                    </div>
+                    <div class="feature-card-demo">
+                        <div class="feature-icon-demo">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <h4>Músicas Românticas</h4>
+                        <p>Trilha sonora perfeita para cada surpresa</p>
+                    </div>
+                    <div class="feature-card-demo">
+                        <div class="feature-icon-demo">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <h4>Compartilhamento</h4>
+                        <p>Envie por WhatsApp, email ou link</p>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-demo animate__animated animate__fadeInUp animate__delay-2s">
+                <div class="cta-content">
+                    <h3>Pronto para Criar uma Surpresa Real?</h3>
+                    <p>Cadastre-se gratuitamente e comece a espalhar amor!</p>
+                    <div class="cta-actions">
+                        <a href="{{ url_for('cadastro') }}" class="btn btn-primary btn-large">
+                            <i class="fas fa-heart"></i>
+                            Cadastrar Gratuitamente
+                        </a>
+                        <a href="{{ url_for('planos') }}" class="btn btn-outline btn-large">
+                            <i class="fas fa-gem"></i>
+                            Ver Planos
+                        </a>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
-
-    <!-- Examples Gallery -->
-    <section class="examples-gallery" id="examplesGallery" style="display: none;">
-        <div class="container">
-            <h2 class="section-title">Exemplos Inspiradores</h2>
-            <p class="section-subtitle">Veja como outros casais estão usando nossa plataforma</p>
-            
-            <div class="examples-grid">
-                <div class="example-card" onclick="loadExample('anniversary')">
-                    <div class="example-preview">
-                        <img src="https://picsum.photos/seed/anniversary/400/300" alt="Aniversário">
-                        <div class="example-overlay">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div class="example-content">
-                        <h3>Aniversário de Namoro</h3>
-                        <p>Comemore 2 anos de amor com fotos e músicas especiais</p>
-                        <div class="example-stats">
-                            <span><i class="fas fa-images"></i> 5 fotos</span>
-                            <span><i class="fas fa-music"></i> Música personalizada</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="example-card" onclick="loadExample('proposal')">
-                    <div class="example-preview">
-                        <img src="https://picsum.photos/seed/proposal/400/300" alt="Pedido">
-                        <div class="example-overlay">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div class="example-content">
-                        <h3>Pedido de Casamento</h3>
-                        <p>O momento mais especial com uma surpresa inesquecível</p>
-                        <div class="example-stats">
-                            <span><i class="fas fa-images"></i> 8 fotos</span>
-                            <span><i class="fas fa-music"></i> Música romântica</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="example-card" onclick="loadExample('valentine')">
-                    <div class="example-preview">
-                        <img src="https://picsum.photos/seed/valentine/400/300" alt="Dia dos Namorados">
-                        <div class="example-overlay">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div class="example-content">
-                        <h3>Dia dos Namorados</h3>
-                        <p>Surpresa especial para o dia dos namorados</p>
-                        <div class="example-stats">
-                            <span><i class="fas fa-images"></i> 6 fotos</span>
-                            <span><i class="fas fa-music"></i> Playlist romântica</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="example-card" onclick="loadExample('birthday')">
-                    <div class="example-preview">
-                        <img src="https://picsum.photos/seed/birthday/400/300" alt="Aniversário">
-                        <div class="example-overlay">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div class="example-content">
-                        <h3>Aniversário Especial</h3>
-                        <p>Celebre mais um ano de vida com muito amor</p>
-                        <div class="example-stats">
-                            <span><i class="fas fa-images"></i> 4 fotos</span>
-                            <span><i class="fas fa-music"></i> Música animada</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="example-card" onclick="loadExample('distance')">
-                    <div class="example-preview">
-                        <img src="https://picsum.photos/seed/distance/400/300" alt="Amor à Distância">
-                        <div class="example-overlay">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div class="example-content">
-                        <h3>Amor à Distância</h3>
-                        <p>Conecte corações mesmo separados pela distância</p>
-                        <div class="example-stats">
-                            <span><i class="fas fa-images"></i> 7 fotos</span>
-                            <span><i class="fas fa-music"></i> Música saudosa</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="example-card" onclick="loadExample('surprise')">
-                    <div class="example-preview">
-                        <img src="https://picsum.photos/seed/surprise/400/300" alt="Surpresa">
-                        <div class="example-overlay">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div class="example-content">
-                        <h3>Surpresa Inesperada</h3>
-                        <p>Uma surpresa espontânea para alegrar o dia</p>
-                        <div class="example-stats">
-                            <span><i class="fas fa-images"></i> 3 fotos</span>
-                            <span><i class="fas fa-music"></i> Música feliz</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Showcase -->
-    <section class="features-showcase">
-        <div class="container">
-            <h2 class="section-title">Recursos Incríveis</h2>
-            <p class="section-subtitle">Tudo que você precisa para criar surpresas perfeitas</p>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-magic"></i>
-                    </div>
-                    <h3>Criação Mágica</h3>
-                    <p>Interface intuitiva que transforma suas ideias em surpresas incríveis</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Mobile First</h3>
-                    <p>Perfeito para criar e compartilhar diretamente do seu celular</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-share-alt"></i>
-                    </div>
-                    <h3>Compartilhamento Fácil</h3>
-                    <p>WhatsApp, redes sociais, QR Code - compartilhe como quiser</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-music"></i>
-                    </div>
-                    <h3>Biblioteca Musical</h3>
-                    <p>Músicas românticas selecionadas para cada momento especial</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <h3>Templates Premium</h3>
-                    <p>Designs exclusivos criados por profissionais</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>100% Seguro</h3>
-                    <p>Seus dados e memórias protegidos com criptografia avançada</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2 class="cta-title">Pronto para Criar Sua Primeira Surpresa?</h2>
-            <p class="cta-subtitle">Comece agora mesmo e veja o amor se transformar em arte digital</p>
-            <div class="cta-buttons">
-                <a href="{{ url_for('cadastro') }}" class="btn btn-primary btn-large">
-                    <i class="fas fa-heart"></i>
-                    Criar Conta Gratuita
-                </a>
-                <button class="btn btn-outline btn-large" onclick="restartDemo()">
-                    <i class="fas fa-redo"></i>
-                    Tentar Novamente
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Surpresas Românticas</h3>
-                    <p>Transformando amor em surpresas inesquecíveis</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Links Úteis</h4>
-                    <ul>
-                        <li><a href="{{ url_for('index') }}">Início</a></li>
-                        <li><a href="{{ url_for('planos') }}">Planos</a></li>
-                        <li><a href="#">Como Funciona</a></li>
-                        <li><a href="#">Contato</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Suporte</h4>
-                    <ul>
-                        <li><a href="#">Dúvidas Frequentes</a></li>
-                        <li><a href="#">Termos de Uso</a></li>
-                        <li><a href="#">Política de Privacidade</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contato</h4>
-                    <p>suporte@surpresasromanticas.com.br</p>
-                    <p>WhatsApp: (11) 99999-8888</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Surpresas Românticas. Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </footer>
+    </main>
 
     <script>
-        // Demo State
-        let currentStep = 1;
-        let demoData = {
-            message: "Para o amor da minha vida, você faz todos os meus dias mais especiais...",
-            images: ["https://picsum.photos/seed/love1/300/200"],
-            music: "romantic-classic",
-            theme: "romantic-pink"
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tab = this.dataset.tab;
+                
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                document.getElementById(tab + '-tab').classList.add('active');
+            });
+        });
+
+        // Message templates
+        const templates = {
+            romantic: "Meu amor, cada dia ao seu lado é um presente. Seu sorriso ilumina meu mundo e seu abraço é meu porto seguro. Amo você mais do que palavras podem expressar.",
+            poetic: "Como estrelas em noite clara, você brilha em minha vida. Seu amor é poesia que meu coração escreve todos os dias. Você é minha canção preferida.",
+            funny: "Amor, você é a pessoa mais incrível, linda e maravilhosa que eu conheci... depois de mim, claro! Brincadeirinha, te amo mais que tudo!"
         };
 
-        // Initialize demo
-        function startInteractiveDemo() {
-            document.querySelector('.demo-hero').style.display = 'none';
-            document.getElementById('interactiveDemo').style.display = 'block';
-            document.getElementById('examplesGallery').style.display = 'none';
-            updateLivePreview();
-            initializeEventListeners();
+        function setTemplate(type) {
+            document.getElementById('demo-mensagem').value = templates[type];
+            updatePreview();
         }
 
-        function showExamples() {
-            document.querySelector('.demo-hero').style.display = 'none';
-            document.getElementById('interactiveDemo').style.display = 'none';
-            document.getElementById('examplesGallery').style.display = 'block';
-        }
-
-        function restartDemo() {
-            currentStep = 1;
-            document.querySelector('.demo-hero').style.display = 'block';
-            document.getElementById('interactiveDemo').style.display = 'none';
-            document.getElementById('examplesGallery').style.display = 'none';
-        }
-
-        // Step Navigation
-        function nextStep() {
-            if (currentStep < 4) {
-                document.getElementById(`step${currentStep}`).classList.remove('active');
-                currentStep++;
-                document.getElementById(`step${currentStep}`).classList.add('active');
-                updateStepIndicators();
-                updateNavigationButtons();
-                updateLivePreview();
-            }
-        }
-
-        function previousStep() {
-            if (currentStep > 1) {
-                document.getElementById(`step${currentStep}`).classList.remove('active');
-                currentStep--;
-                document.getElementById(`step${currentStep}`).classList.add('active');
-                updateStepIndicators();
-                updateNavigationButtons();
-                updateLivePreview();
-            }
-        }
-
-        function updateStepIndicators() {
-            document.querySelectorAll('.step-dot').forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentStep - 1);
-            });
-        }
-
-        function updateNavigationButtons() {
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
+        // Update preview in real-time
+        function updatePreview() {
+            const seuNome = document.getElementById('demo-seu-nome').value || 'Seu Nome';
+            const parceiroNome = document.getElementById('demo-parceiro-nome').value || 'Nome do Parceiro';
+            const mensagem = document.getElementById('demo-mensagem').value || 'Sua mensagem aparecerá aqui...';
             
-            prevBtn.style.display = currentStep === 1 ? 'none' : 'flex';
-            
-            if (currentStep === 4) {
-                nextBtn.innerHTML = '<i class="fas fa-check"></i> Finalizar';
-            } else {
-                nextBtn.innerHTML = 'Próximo <i class="fas fa-arrow-right"></i>';
-            }
+            document.getElementById('preview-parceiro').textContent = `Para: ${parceiroNome}`;
+            document.getElementById('preview-message').textContent = mensagem;
+            document.getElementById('preview-assinatura').textContent = seuNome;
         }
 
-        // Event Listeners
-        function initializeEventListeners() {
-            // Message textarea
-            document.getElementById('demoMessage').addEventListener('input', function() {
-                demoData.message = this.value;
-                document.getElementById('charCount').textContent = this.value.length;
-                updateLivePreview();
-            });
+        // Add event listeners for real-time preview
+        document.getElementById('demo-seu-nome').addEventListener('input', updatePreview);
+        document.getElementById('demo-parceiro-nome').addEventListener('input', updatePreview);
+        document.getElementById('demo-mensagem').addEventListener('input', updatePreview);
 
-            // Image selection
-            document.querySelectorAll('.image-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const selectedImages = document.querySelectorAll('.image-option.selected');
-                    
-                    if (this.classList.contains('selected')) {
-                        this.classList.remove('selected');
-                    } else if (selectedImages.length < 3) {
-                        this.classList.add('selected');
-                    } else {
-                        alert('Você pode selecionar no máximo 3 fotos!');
-                        return;
-                    }
-                    
-                    demoData.images = Array.from(document.querySelectorAll('.image-option.selected'))
-                        .map(el => el.dataset.image);
-                    updateLivePreview();
-                });
-            });
-
-            // Music selection
-            document.querySelectorAll('.music-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    document.querySelectorAll('.music-option').forEach(opt => opt.classList.remove('selected'));
-                    this.classList.add('selected');
-                    demoData.music = this.dataset.music;
-                    updateLivePreview();
-                });
-            });
-
-            // Theme selection
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('selected'));
-                    this.classList.add('selected');
-                    demoData.theme = this.dataset.theme;
-                    updateLivePreview();
-                });
-            });
-        }
-
-        // Live Preview Update
-        function updateLivePreview() {
-            const preview = document.getElementById('livePreview');
-            const themes = {
-                'romantic-pink': 'linear-gradient(45deg, #FF6B9D, #FF8FAB)',
-                'elegant-purple': 'linear-gradient(45deg, #667EEA, #764BA2)',
-                'golden-sunset': 'linear-gradient(45deg, #F093FB, #F5576C)',
-                'ocean-blue': 'linear-gradient(45deg, #4FACFE, #00F2FE)'
-            };
-
-            const musicInfo = {
-                'romantic-classic': { name: 'Clássico Romântico', icon: 'fa-heart' },
-                'acoustic-love': { name: 'Acústico Romântico', icon: 'fa-guitar' },
-                'modern-love': { name: 'Amor Moderno', icon: 'fa-headphones' }
-            };
-
-            preview.innerHTML = `
-                <div class="surprise-preview" style="background: ${themes[demoData.theme]};">
-                    <div class="surprise-header">
-                        <h3>Minha Surpresa</h3>
-                        <div class="surprise-actions">
-                            <i class="fas fa-heart"></i>
-                            <i class="fas fa-share"></i>
-                        </div>
-                    </div>
-                    <div class="surprise-content">
-                        <div class="surprise-images">
-                            ${demoData.images.map(img => `<img src="${img}" alt="Foto" class="surprise-img">`).join('')}
-                        </div>
-                        <div class="surprise-message">
-                            <p>${demoData.message}</p>
-                        </div>
-                        <div class="surprise-music">
-                            <i class="fas ${musicInfo[demoData.music].icon}"></i>
-                            <span>${musicInfo[demoData.music].name}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Load Example
-        function loadExample(type) {
-            const examples = {
-                'anniversary': {
-                    message: "2 anos de amor e cada dia mais especial ao seu lado. Feliz aniversário de namoro, meu amor!",
-                    images: ["https://picsum.photos/seed/anniversary1/300/200", "https://picsum.photos/seed/anniversary2/300/200", "https://picsum.photos/seed/anniversary3/300/200"],
-                    music: "romantic-classic",
-                    theme: "romantic-pink"
-                },
-                'proposal': {
-                    message: "Você quer se casar comigo? Quero passar o resto da minha vida ao seu lado, criando memórias incríveis como estas.",
-                    images: ["https://picsum.photos/seed/proposal1/300/200", "https://picsum.photos/seed/proposal2/300/200", "https://picsum.photos/seed/proposal3/300/200"],
-                    music: "romantic-classic",
-                    theme: "elegant-purple"
-                },
-                'valentine': {
-                    message: "Feliz Dia dos Namorados! Você é o melhor presente que a vida me deu. Te amo mais que tudo!",
-                    images: ["https://picsum.photos/seed/valentine1/300/200", "https://picsum.photos/seed/valentine2/300/200"],
-                    music: "modern-love",
-                    theme: "golden-sunset"
-                },
-                'birthday': {
-                    message: "Parabéns pelo seu dia! Que este novo ciclo traga muita felicidade, saúde e amor. Feliz aniversário!",
-                    images: ["https://picsum.photos/seed/birthday1/300/200", "https://picsum.photos/seed/birthday2/300/200"],
-                    music: "modern-love",
-                    theme: "ocean-blue"
-                },
-                'distance': {
-                    message: "Mesmo à distância, meu coração bate por você. Cada foto, cada memória me aproxima mais do seu abraço.",
-                    images: ["https://picsum.photos/seed/distance1/300/200", "https://picsum.photos/seed/distance2/300/200", "https://picsum.photos/seed/distance3/300/200"],
-                    music: "acoustic-love",
-                    theme: "elegant-purple"
-                },
-                'surprise': {
-                    message: "Surpresa! Pensei em você e não consegui resistir em criar algo especial para mostrar quanto você significa para mim.",
-                    images: ["https://picsum.photos/seed/surprise1/300/200"],
-                    music: "modern-love",
-                    theme: "romantic-pink"
-                }
-            };
-
-            demoData = examples[type];
-            startInteractiveDemo();
-            
-            // Update form with example data
-            document.getElementById('demoMessage').value = demoData.message;
-            document.getElementById('charCount').textContent = demoData.message.length;
-            
-            // Update image selection
-            document.querySelectorAll('.image-option').forEach(option => {
-                option.classList.toggle('selected', demoData.images.includes(option.dataset.image));
-            });
-            
-            // Update music selection
-            document.querySelectorAll('.music-option').forEach(option => {
-                option.classList.toggle('selected', option.dataset.music === demoData.music);
-            });
-            
-            // Update theme selection
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.classList.toggle('selected', option.dataset.theme === demoData.theme);
-            });
-        }
-
-        // Share and Save functions
-        function shareDemo() {
-            alert('Função de compartilhamento em desenvolvimento! Na versão completa, você poderá compartilhar sua surpresa.');
+        // Demo functions
+        function resetDemo() {
+            document.getElementById('demo-seu-nome').value = '';
+            document.getElementById('demo-parceiro-nome').value = '';
+            document.getElementById('demo-mensagem').value = '';
+            updatePreview();
         }
 
         function saveDemo() {
@@ -756,7 +340,7 @@
         // Floating hearts animation
         function createFloatingHeart() {
             const heart = document.createElement('div');
-            heart.innerHTML = 'favorite';
+            heart.innerHTML = 'heart';
             heart.className = 'floating-heart';
             heart.style.left = Math.random() * window.innerWidth + 'px';
             heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
@@ -769,76 +353,43 @@
             }, 5000);
         }
 
-        // Create floating hearts periodically
+        // Generate hearts periodically
         setInterval(createFloatingHeart, 3000);
 
-        // Initial hearts
-        for (let i = 0; i < 5; i++) {
+        // Initialize with some hearts
+        for (let i = 0; i < 3; i++) {
             setTimeout(createFloatingHeart, i * 1000);
         }
 
-        // Initialize on load
-        document.addEventListener('DOMContentLoaded', function() {
-            updateLivePreview();
-        });
+        // Initialize preview
+        updatePreview();
     </script>
 
     <style>
-        /* Demo Specific Styles */
+        /* Demo Page Specific Styles */
         .demo-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        }
-
-        .floating-hearts {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .floating-heart {
-            position: absolute;
-            color: rgba(255, 107, 157, 0.6);
-            font-size: 20px;
-            font-family: 'Material Icons';
-            animation: float-up linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes float-up {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #FF6B9D 75%, #FF8FAB 100%);
+            z-index: -2;
         }
 
         .gradient-orbs {
-            position: absolute;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            z-index: -1;
         }
 
         .orb {
             position: absolute;
             border-radius: 50%;
             filter: blur(40px);
-            opacity: 0.6;
             animation: float 6s ease-in-out infinite;
         }
 
@@ -846,7 +397,7 @@
             width: 300px;
             height: 300px;
             background: rgba(255, 107, 157, 0.3);
-            top: 20%;
+            top: 10%;
             left: 10%;
             animation-delay: 0s;
         }
@@ -854,137 +405,378 @@
         .orb-2 {
             width: 200px;
             height: 200px;
-            background: rgba(102, 126, 234, 0.3);
-            bottom: 30%;
-            right: 15%;
+            background: rgba(240, 147, 251, 0.3);
+            top: 60%;
+            right: 10%;
             animation-delay: 2s;
         }
 
         .orb-3 {
             width: 250px;
             height: 250px;
-            background: rgba(118, 75, 162, 0.3);
-            top: 60%;
-            left: 60%;
+            background: rgba(102, 126, 234, 0.3);
+            bottom: 10%;
+            left: 50%;
             animation-delay: 4s;
         }
 
         .orb-4 {
             width: 180px;
             height: 180px;
-            background: rgba(240, 147, 251, 0.3);
-            bottom: 20%;
-            left: 40%;
+            background: rgba(255, 215, 0, 0.3);
+            top: 30%;
+            right: 30%;
             animation-delay: 6s;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.7);
+            animation: float-up 8s linear infinite;
+            text-shadow: 0 0 10px rgba(255, 107, 157, 0.5);
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.8);
+            animation: float-up 5s linear infinite;
+            text-shadow: 0 0 15px rgba(255, 107, 157, 0.7);
+            pointer-events: none;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                transform: translateY(90vh) rotate(45deg) scale(1);
+                opacity: 1;
+            }
+            90% {
+                transform: translateY(10vh) rotate(315deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .demo-main {
+            padding: 120px 0 60px;
+            min-height: 100vh;
         }
 
         .demo-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            margin-bottom: 60px;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1.8rem;
+        .demo-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
             font-weight: 800;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .highlight {
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .logo-icon {
-            font-size: 2rem;
+        .demo-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .demo-form-section {
+            margin-bottom: 80px;
+        }
+
+        .demo-form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            border-bottom: 2px solid rgba(255, 107, 157, 0.1);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
             color: var(--primary-color);
         }
 
-        .demo-hero {
-            padding: 80px 0;
-            min-height: 100vh;
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
             display: flex;
             align-items: center;
-            color: white;
+            gap: 8px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
         }
 
-        .hero-content {
-            flex: 1;
-            max-width: 600px;
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid rgba(255, 107, 157, 0.1);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
         }
 
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 24px;
-            line-height: 1.1;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
         }
 
-        .hero-subtitle {
-            font-size: 1.4rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-            line-height: 1.6;
+        .message-templates {
+            margin-top: 16px;
         }
 
-        .hero-buttons {
+        .message-templates h4 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .template-options {
             display: flex;
-            gap: 20px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
-        .hero-visual {
-            flex: 1;
+        .template-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255, 107, 157, 0.1);
+            border: 1px solid rgba(255, 107, 157, 0.2);
+            border-radius: 20px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .template-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .photo-upload-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .upload-zone-demo {
+            border: 2px dashed rgba(255, 107, 157, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .upload-zone-demo i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 16px;
+        }
+
+        .upload-zone-demo h4 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .upload-zone-demo p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .photo-preview-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .photo-placeholder-demo,
+        .photo-add-demo {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .photo-placeholder-demo {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .photo-add-demo {
+            border: 2px dashed rgba(255, 107, 157, 0.3);
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .music-selection-demo h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .music-options-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .music-option-demo {
+            cursor: pointer;
+        }
+
+        .music-option-demo input[type="radio"] {
+            display: none;
+        }
+
+        .music-card-demo {
+            padding: 20px;
+            border: 2px solid rgba(255, 107, 157, 0.1);
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .music-option-demo input[type="radio"]:checked + .music-card-demo {
+            border-color: var(--primary-color);
+            background: rgba(255, 107, 157, 0.1);
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+        }
+
+        .music-option-demo:hover .music-card-demo {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .music-card-demo i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .preview-container {
             display: flex;
             justify-content: center;
-            align-items: center;
         }
 
-        .demo-phone {
+        .preview-phone {
             width: 300px;
             height: 600px;
-            background: rgba(255, 255, 255, 0.1);
+            background: #1a1a1a;
             border-radius: 40px;
             padding: 20px;
-            backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
-        .phone-screen {
+        .preview-screen {
             width: 100%;
             height: 100%;
             background: white;
             border-radius: 30px;
             overflow: hidden;
-            position: relative;
-        }
-
-        .demo-preview {
-            height: 100%;
-            background: linear-gradient(45deg, #FF6B9D, #FF8FAB);
             display: flex;
             flex-direction: column;
         }
 
         .preview-header {
             padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
+            border-bottom: 1px solid rgba(255, 107, 157, 0.1);
         }
 
-        .preview-actions {
-            display: flex;
-            gap: 16px;
+        .preview-header h3 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .preview-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
         }
 
         .preview-content {
@@ -992,537 +784,113 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-        }
-
-        .preview-images {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-        }
-
-        .preview-img {
-            width: 120px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 12px;
         }
 
         .preview-message {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 16px;
-            border-radius: 16px;
-            color: white;
+            flex: 1;
             font-style: italic;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .preview-photos {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .preview-photo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
         }
 
         .preview-music {
             display: flex;
             align-items: center;
-            gap: 12px;
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 12px;
-            border-radius: 12px;
-        }
-
-        .interactive-demo {
-            padding: 60px 0;
-            min-height: 100vh;
-        }
-
-        .demo-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .demo-controls {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .demo-controls h2 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-        }
-
-        .demo-subtitle {
-            color: var(--text-secondary);
-            margin-bottom: 32px;
-        }
-
-        .control-section {
-            display: none;
-        }
-
-        .control-section.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .control-section h3 {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--text-primary);
-        }
-
-        .demo-textarea {
-            width: 100%;
-            min-height: 120px;
-            padding: 16px;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 1rem;
-            font-family: inherit;
-            resize: vertical;
-            transition: all 0.3s ease;
-        }
-
-        .demo-textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.1);
-        }
-
-        .char-count {
-            text-align: right;
-            color: var(--text-secondary);
+            gap: 10px;
             font-size: 0.9rem;
-            margin-top: 8px;
-        }
-
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .image-option {
-            position: relative;
-            cursor: pointer;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-        .image-option:hover {
-            transform: scale(1.05);
-        }
-
-        .image-option.selected {
-            box-shadow: 0 0 0 3px var(--primary-color);
-        }
-
-        .image-option img {
-            width: 100%;
-            height: 80px;
-            object-fit: cover;
-        }
-
-        .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 107, 157, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .image-option.selected .image-overlay {
-            opacity: 1;
-        }
-
-        .image-hint {
             color: var(--text-secondary);
+        }
+
+        .preview-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 107, 157, 0.1);
+            text-align: center;
+        }
+
+        .preview-footer p {
             font-size: 0.9rem;
-        }
-
-        .music-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .music-option {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .music-option:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .music-option.selected {
-            border-color: var(--primary-color);
-            background: rgba(255, 107, 157, 0.05);
-        }
-
-        .music-cover {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .music-info {
-            flex: 1;
-        }
-
-        .music-info h4 {
-            font-size: 1rem;
-            font-weight: 600;
+            color: var(--text-secondary);
             margin-bottom: 4px;
         }
 
-        .music-info p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .music-play {
-            color: var(--primary-color);
+        .preview-footer span {
+            font-family: 'Dancing Script', cursive;
             font-size: 1.2rem;
+            color: var(--primary-color);
         }
 
-        .theme-options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-        .theme-option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding: 16px;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .theme-option:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .theme-option.selected {
-            border-color: var(--primary-color);
-            background: rgba(255, 107, 157, 0.05);
-        }
-
-        .theme-preview {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .theme-option span {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .demo-navigation {
+        .demo-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
             margin-top: 32px;
             padding-top: 32px;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid rgba(255, 107, 157, 0.1);
         }
 
-        .step-indicators {
-            display: flex;
-            gap: 8px;
+        .features-demo {
+            margin-bottom: 80px;
         }
 
-        .step-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .step-dot.active {
-            background: var(--primary-color);
-            transform: scale(1.2);
-        }
-
-        .demo-preview-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .demo-preview-panel h2 {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--text-primary);
-        }
-
-        .preview-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .preview-device {
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .device-screen {
-            width: 100%;
-            height: 600px;
-            background: white;
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .surprise-preview {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            color: white;
-        }
-
-        .surprise-header {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .surprise-actions {
-            display: flex;
-            gap: 16px;
-        }
-
-        .surprise-content {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .surprise-images {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-        }
-
-        .surprise-img {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-
-        .surprise-message {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            border-radius: 16px;
-            font-style: italic;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        .surprise-music {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 16px;
-            border-radius: 12px;
-        }
-
-        .preview-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .examples-gallery {
-            padding: 80px 0;
-            min-height: 100vh;
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
         }
 
         .section-title {
+            font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
-            font-weight: 800;
-            text-align: center;
+            font-weight: 700;
             margin-bottom: 16px;
             color: white;
         }
 
         .section-subtitle {
-            text-align: center;
             color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 60px;
-            font-size: 1.2rem;
-        }
-
-        .examples-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 32px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .example-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .example-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .example-preview {
-            position: relative;
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .example-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .example-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .example-card:hover .example-overlay {
-            opacity: 1;
-        }
-
-        .example-content {
-            padding: 24px;
-        }
-
-        .example-content h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-        }
-
-        .example-content p {
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-            line-height: 1.5;
-        }
-
-        .example-stats {
-            display: flex;
-            gap: 16px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .example-stats span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .features-showcase {
-            padding: 80px 0;
-            background: rgba(255, 255, 255, 0.05);
+            font-size: 1.1rem;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 32px;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
-        .feature-card {
+        .feature-card-demo {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            padding: 32px;
             border-radius: 20px;
+            padding: 32px;
             text-align: center;
-            transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
         }
 
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        .feature-card-demo:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
-        .feature-icon {
+        .feature-icon-demo {
             width: 60px;
             height: 60px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1532,104 +900,80 @@
             margin: 0 auto 20px;
         }
 
-        .feature-card h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
+        .feature-card-demo h4 {
+            font-size: 1.3rem;
             margin-bottom: 12px;
             color: var(--text-primary);
         }
 
-        .feature-card p {
+        .feature-card-demo p {
             color: var(--text-secondary);
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
-        .cta-section {
-            padding: 80px 0;
+        .cta-demo {
             text-align: center;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 80px 0;
+        }
+
+        .cta-demo h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
             color: white;
         }
 
-        .cta-title {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-            font-weight: 800;
-        }
-
-        .cta-subtitle {
+        .cta-demo p {
             font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 32px;
-            opacity: 0.9;
         }
 
-        .cta-buttons {
+        .cta-actions {
             display: flex;
             gap: 20px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         /* Responsive Design */
         @media (max-width: 768px) {
-            .demo-container {
-                grid-template-columns: 1fr;
-                gap: 40px;
+            .demo-main {
+                padding: 100px 20px 40px;
             }
 
-            .hero-title {
-                font-size: 2.5rem;
+            .demo-title {
+                font-size: 2rem;
             }
 
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .demo-phone {
-                width: 250px;
-                height: 500px;
-            }
-
-            .demo-controls,
-            .preview-container {
+            .demo-form-container {
                 padding: 24px;
             }
 
-            .image-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .form-tabs {
+                overflow-x: scroll;
             }
 
-            .theme-options {
+            .photo-upload-demo {
                 grid-template-columns: 1fr;
             }
 
-            .examples-grid {
-                grid-template-columns: 1fr;
+            .preview-phone {
+                width: 250px;
+                height: 500px;
             }
 
             .features-grid {
                 grid-template-columns: 1fr;
             }
 
-            .cta-buttons {
+            .demo-actions {
                 flex-direction: column;
-                align-items: center;
+            }
+
+            .template-options {
+                flex-direction: column;
             }
         }
     </style>

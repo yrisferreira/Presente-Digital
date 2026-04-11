@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Painel - Surpresas Românticas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_meupresente_v2.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="dashboard-bg">
+        <div class="floating-hearts-container">
+            <div class="floating-heart" style="left: 10%; animation-delay: 0s;">&#9829;</div>
+            <div class="floating-heart" style="left: 20%; animation-delay: 1s;">&#9733;</div>
+            <div class="floating-heart" style="left: 30%; animation-delay: 2s;">&#9829;</div>
+            <div class="floating-heart" style="left: 40%; animation-delay: 3s;">&#10047;</div>
+            <div class="floating-heart" style="left: 50%; animation-delay: 4s;">&#9829;</div>
+            <div class="floating-heart" style="left: 60%; animation-delay: 5s;">&#9733;</div>
+            <div class="floating-heart" style="left: 70%; animation-delay: 6s;">&#9829;</div>
+            <div class="floating-heart" style="left: 80%; animation-delay: 7s;">&#10047;</div>
+            <div class="floating-heart" style="left: 90%; animation-delay: 8s;">&#9829;</div>
+        </div>
+        <div class="gradient-overlay"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="dashboard-header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1 class="logo">
+                        <span class="logo-icon">heart</span>
+                        Surpresas Românticas
+                    </h1>
+                </div>
+                <div class="nav-menu">
+                    <a href="{{ url_for('index') }}" class="nav-link">Início</a>
+                    <a href="{{ url_for('planos') }}" class="nav-link">Planos</a>
+                    <a href="{{ url_for('dashboard') }}" class="nav-link active">Meu Painel</a>
+                    <div class="user-menu">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">{{ current_user.username }}</span>
+                            <a href="{{ url_for('logout') }}" class="logout-link">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Sair
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <div class="container">
+            <!-- Welcome Section -->
+            <section class="welcome-section animate__animated animate__fadeInDown">
+                <div class="welcome-content">
+                    <div class="welcome-header">
+                        <h2 class="welcome-title">
+                            <span class="greeting">Olá,</span>
+                            <span class="user-name">{{ current_user.username }}</span>
+                            <span class="emoji">heart</span>
+                        </h2>
+                        <p class="welcome-subtitle">Crie e gerencie suas surpresas românticas com amor</p>
+                    </div>
+                    <div class="welcome-actions">
+                        <a href="{{ url_for('criar_surpresa') }}" class="btn btn-primary btn-large">
+                            <i class="fas fa-heart"></i>
+                            Nova Surpresa
+                        </a>
+                        <a href="{{ url_for('planos') }}" class="btn btn-outline btn-large">
+                            <i class="fas fa-gem"></i>
+                            Adquirir Créditos
+                        </a>
+                    </div>
+                </div>
+                <div class="welcome-visual">
+                    <div class="hearts-animation">
+                        <div class="heart heart-1">favorite</div>
+                        <div class="heart heart-2">favorite</div>
+                        <div class="heart heart-3">favorite</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Cards -->
+            <section class="stats-section animate__animated animate__fadeInUp animate__delay-1s">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-heart"></i>
+                            <div class="icon-bg"></div>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">{{ surprises|length }}</div>
+                            <div class="stat-label">Surpresas Criadas</div>
+                            <div class="stat-trend">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>Este mês</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon premium">
+                            <i class="fas fa-gem"></i>
+                            <div class="icon-bg"></div>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">{{ current_user.creditos }}</div>
+                            <div class="stat-label">Créditos Disponíveis</div>
+                            <div class="stat-trend">
+                                <i class="fas fa-bolt"></i>
+                                <span>Prontos para usar</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-crown"></i>
+                            <div class="icon-bg"></div>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">{{ current_user.plano.title() }}</div>
+                            <div class="stat-label">Plano Atual</div>
+                            <div class="stat-trend">
+                                <i class="fas fa-star"></i>
+                                <span>Ativo</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-heart"></i>
+                            <div class="icon-bg"></div>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">{{ current_user.data_cadastro.strftime('%d/%m/%Y') }}</div>
+                            <div class="stat-label">Membro Desde</div>
+                            <div class="stat-trend">
+                                <i class="fas fa-clock"></i>
+                                <span>Membro ativo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="actions-section animate__animated animate__fadeInUp animate__delay-2s">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-magic"></i>
+                        Ações Rápidas
+                    </h3>
+                    <p class="section-subtitle">Crie, gerencie e explore suas surpresas</p>
+                </div>
+                <div class="actions-grid">
+                    <a href="{{ url_for('criar_surpresa') }}" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-heart"></i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <h4>Criar Surpresa</h4>
+                        <p>Comece uma nova surpresa romântica</p>
+                        <div class="action-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                    
+                    <a href="{{ url_for('planos') }}" class="action-card">
+                        <div class="action-icon premium">
+                            <i class="fas fa-gem"></i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <h4>Upgrade Plano</h4>
+                        <p>Obtenha mais créditos e recursos</p>
+                        <div class="action-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-line"></i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <h4>Estatísticas</h4>
+                        <p>Veja o desempenho das suas surpresas</p>
+                        <div class="action-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-cog"></i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <h4>Configurações</h4>
+                        <p>Personalize sua conta</p>
+                        <div class="action-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Recent Surprises -->
+            <section class="recent-surprises-section animate__animated animate__fadeInUp animate__delay-3s">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-clock"></i>
+                        Suas Surpresas Recentes
+                    </h3>
+                    {% if surprises|length > 0 %}
+                        <a href="#" class="view-all-link">
+                            Ver Todas
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    {% endif %}
+                </div>
+                
+                {% if surprises|length > 0 %}
+                    <div class="surprises-grid">
+                        {% for surpresa in surprises[:6] %}
+                        <div class="surprise-card">
+                            <div class="surprise-header">
+                                <div class="surprise-info">
+                                    <h4>Para: {{ surpresa.nome_parceiro }}</h4>
+                                    <span class="surprise-date">{{ surpresa.data_criacao.strftime('%d/%m/%Y') }}</span>
+                                </div>
+                                <div class="surprise-status">
+                                    <span class="status-badge status-{{ surpresa.status }}">
+                                        <i class="fas fa-circle"></i>
+                                        {{ surpresa.status.title() }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="surprise-content">
+                                <p class="surprise-message">{{ surpresa.mensagem[:100] }}{% if surpresa.mensagem|length > 100 %}...{% endif %}</p>
+                                <div class="surprise-meta">
+                                    {% if surpresa.imagens %}
+                                        <span class="meta-item">
+                                            <i class="fas fa-camera"></i>
+                                            {{ surpresa.imagens|length if surpresa.imagens is string else surpresa.imagens_lista|length }} fotos
+                                        </span>
+                                    {% endif %}
+                                    {% if surpresa.musica %}
+                                        <span class="meta-item">
+                                            <i class="fas fa-music"></i>
+                                            Música
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="surprise-actions">
+                                <a href="{{ url_for('visualizar_surpresa', id_unico=surpresa.id_unico) }}" class="btn btn-small btn-primary" target="_blank">
+                                    <i class="fas fa-eye"></i>
+                                    Visualizar
+                                </a>
+                                <button class="btn btn-small btn-outline copy-link" data-link="{{ url_for('visualizar_surpresa', id_unico=surpresa.id_unico, _external=True) }}">
+                                    <i class="fas fa-link"></i>
+                                    Copiar
+                                </button>
+                                <button class="btn btn-small btn-outline share-whatsapp" data-link="{{ url_for('visualizar_surpresa', id_unico=surpresa.id_unico, _external=True) }}">
+                                    <i class="fab fa-whatsapp"></i>
+                                    Compartilhar
+                                </button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-heart-broken"></i>
+                        </div>
+                        <h3>Nenhuma surpresa ainda</h3>
+                        <p>Comece criando sua primeira surpresa romântica!</p>
+                        <a href="{{ url_for('criar_surpresa') }}" class="btn btn-primary">
+                            <i class="fas fa-heart"></i>
+                            Criar Primeira Surpresa
+                        </a>
+                    </div>
+                {% endif %}
+            </section>
+        </div>
+    </main>
+
+    <!-- Flash Messages -->
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message {{ 'error' if 'erro' in message.lower() else 'success' }}">
+                        <div class="message-content">
+                            <i class="fas {{ 'fa-exclamation-circle' if 'erro' in message.lower() else 'fa-check-circle' }}"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                        <button class="close-btn" onclick="this.parentElement.remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        // Floating hearts animation
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart-dynamic';
+            const symbols = ['&#9829;', '&#9733;', '&#10047;', '&#9825;'];
+            heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 4 + 3) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heart.style.fontSize = (Math.random() * 10 + 20) + 'px';
+            
+            const colors = [
+                'rgba(255, 107, 157, 0.8)',
+                'rgba(255, 215, 0, 0.8)',
+                'rgba(255, 182, 193, 0.8)',
+                'rgba(240, 147, 251, 0.8)'
+            ];
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.querySelector('.floating-hearts-container').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+
+        // Generate hearts periodically
+        setInterval(createFloatingHeart, 3000);
+
+        // Initialize with some hearts
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createFloatingHeart, i * 800);
+        }
+
+        // Copy link functionality
+        document.querySelectorAll('.copy-link').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const link = this.dataset.link;
+                navigator.clipboard.writeText(link).then(() => {
+                    showNotification('Link copiado com sucesso!', 'success');
+                });
+            });
+        });
+
+        // Share on WhatsApp
+        document.querySelectorAll('.share-whatsapp').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const link = this.dataset.link;
+                const text = `Veja esta surpresa romântica que criei para você! ${link}`;
+                window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        });
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas ${getNotificationIcon(type)}"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        function getNotificationIcon(type) {
+            const icons = {
+                'success': 'fa-check-circle',
+                'error': 'fa-exclamation-circle',
+                'warning': 'fa-exclamation-triangle',
+                'info': 'fa-info-circle'
+            };
+            return icons[type] || 'fa-info-circle';
+        }
+
+        // Animate stats on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach(stat => {
+                        const finalValue = parseInt(stat.textContent);
+                        animateNumber(stat, finalValue, 1500);
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
+
+        function animateNumber(element, target, duration) {
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString('pt-BR');
+            }, 16);
+        }
+
+        // Add hover effects to cards
+        document.querySelectorAll('.stat-card, .action-card, .surprise-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Welcome animation
+        const welcomeHearts = document.querySelectorAll('.hearts-animation .heart');
+        welcomeHearts.forEach((heart, index) => {
+            heart.style.animationDelay = `${index * 0.2}s`;
+        });
+
+        // Auto-hide flash messages
+        setTimeout(() => {
+            const flashMessages = document.querySelector('.flash-messages');
+            if (flashMessages) {
+                flashMessages.style.opacity = '0';
+                setTimeout(() => {
+                    flashMessages.innerHTML = '';
+                }, 500);
+            }
+        }, 5000);
+    </script>
+
+    <style>
+        /* Dashboard Specific Styles */
+        .dashboard-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #FF6B9D 75%, #FF8FAB 100%);
+            z-index: -2;
+        }
+
+        .gradient-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(255, 107, 157, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(102, 126, 234, 0.3) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .floating-hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            animation: float-up 8s linear infinite;
+            text-shadow: 0 0 15px rgba(255, 107, 157, 0.6);
+        }
+
+        .floating-heart-dynamic {
+            position: absolute;
+            font-size: 24px;
+            animation: float-up 5s linear infinite;
+            text-shadow: 0 0 15px rgba(255, 107, 157, 0.7);
+            pointer-events: none;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                transform: translateY(90vh) rotate(45deg) scale(1);
+                opacity: 1;
+            }
+            90% {
+                transform: translateY(10vh) rotate(315deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .dashboard-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .logout-link {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .logout-link:hover {
+            color: var(--primary-color);
+        }
+
+        .dashboard-main {
+            padding: 40px 0;
+            min-height: 100vh;
+        }
+
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FF6B9D, #FF8FAB, #F093FB);
+        }
+
+        .welcome-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .greeting {
+            color: var(--text-secondary);
+        }
+
+        .user-name {
+            color: var(--primary-color);
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+        }
+
+        .emoji {
+            color: var(--primary-color);
+            font-size: 2rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        .welcome-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        .welcome-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .welcome-visual {
+            position: relative;
+        }
+
+        .hearts-animation {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hearts-animation .heart {
+            font-size: 2rem;
+            color: var(--primary-color);
+            animation: float-up 3s ease-in-out infinite;
+        }
+
+        .stats-section {
+            margin-bottom: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-icon {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .stat-icon.premium {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+
+        .icon-bg {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.3;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.1; }
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: var(--success-color);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .section-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .action-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 32px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .action-icon {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .action-icon.premium {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+
+        .icon-glow {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .action-card:hover .icon-glow {
+            opacity: 0.3;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .action-card h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .action-card p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .action-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .surprises-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .surprise-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .surprise-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .surprise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .surprise-info h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .surprise-date {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge.status-ativo {
+            background: rgba(72, 187, 120, 0.1);
+            color: var(--success-color);
+        }
+
+        .surprise-message {
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .surprise-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .surprise-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.8rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .view-all-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .view-all-link:hover {
+            transform: translateX(4px);
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .welcome-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .welcome-actions {
+                justify-content: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .surprises-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>

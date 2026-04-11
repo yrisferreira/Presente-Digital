@@ -3,423 +3,398 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Presente Digital Personalizado com Fotos e Música | Surpresas Românticas</title>
-    <meta name="description" content="A melhor forma de eternizar momentos especiais. Crie presentes digitais personalizados com fotos, música e mensagens.">
+    <title>Surpresas Românticas - Crie Presentes Digitais Inesquecíveis</title>
+    <meta name="description" content="Crie surpresas românticas digitais com fotos, músicas e mensagens personalizadas. O presente perfeito para demonstrar seu amor.">
+    <meta name="keywords" content="surpresa romântica, presente digital, presente para namorada, presente para namorado">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_meupresente_v2.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
+    <!-- Background Animation -->
+    <div class="romantic-bg">
+        <div class="floating-hearts-container">
+            <div class="floating-heart" style="left: 10%; animation-delay: 0s;">&#9829;</div>
+            <div class="floating-heart" style="left: 20%; animation-delay: 1s;">&#9733;</div>
+            <div class="floating-heart" style="left: 30%; animation-delay: 2s;">&#9829;</div>
+            <div class="floating-heart" style="left: 40%; animation-delay: 3s;">&#10047;</div>
+            <div class="floating-heart" style="left: 50%; animation-delay: 4s;">&#9829;</div>
+            <div class="floating-heart" style="left: 60%; animation-delay: 5s;">&#9733;</div>
+            <div class="floating-heart" style="left: 70%; animation-delay: 6s;">&#9829;</div>
+            <div class="floating-heart" style="left: 80%; animation-delay: 7s;">&#10047;</div>
+            <div class="floating-heart" style="left: 90%; animation-delay: 8s;">&#9829;</div>
+        </div>
+        <div class="gradient-overlay"></div>
+        <div class="sparkles">
+            <div class="sparkle sparkle-1"></div>
+            <div class="sparkle sparkle-2"></div>
+            <div class="sparkle sparkle-3"></div>
+            <div class="sparkle sparkle-4"></div>
+            <div class="sparkle sparkle-5"></div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header-main">
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
-                    <h1 class="logo">Surpresas Românticas</h1>
+                    <h1 class="logo">
+                        <span class="logo-icon">heart</span>
+                        Surpresas Românticas
+                    </h1>
                 </div>
                 <div class="nav-menu">
-                    <a href="{{ url_for('index') }}" class="nav-link">Início</a>
+                    <a href="{{ url_for('index') }}" class="nav-link active">Início</a>
                     <a href="{{ url_for('planos') }}" class="nav-link">Planos</a>
-                    {% if current_user.is_authenticated %}
-                        <a href="{{ url_for('dashboard') }}" class="nav-link">Meu Painel</a>
-                        <a href="{{ url_for('logout') }}" class="nav-link">Sair</a>
-                    {% else %}
-                        <a href="{{ url_for('login') }}" class="nav-link">Login</a>
-                        <a href="{{ url_for('cadastro') }}" class="btn btn-small">Cadastrar</a>
-                    {% endif %}
+                    <a href="{{ url_for('demo') }}" class="nav-link">Demo</a>
+                    <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+                    <a href="{{ url_for('cadastro') }}" class="btn btn-primary">Cadastrar</a>
                 </div>
             </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero-section">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">Presente Digital Personalizado com Fotos e Música</h1>
-                <p class="hero-subtitle">Demonstre seu amor com uma Surpresa Online Inesquecível</p>
-                <div class="hero-buttons">
-                    <a href="{{ url_for('criar_surpresa') }}" class="btn btn-primary btn-large">Criar Presente Agora</a>
-                    <a href="#exemplo" class="btn btn-outline btn-large">Ver Exemplo</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Proof Section -->
-    <section class="social-proof">
-        <div class="container">
-            <div class="social-proof-header">
-                <h2>Aprovado por +439 casais apaixonados</h2>
-            </div>
-            <div class="testimonials-carousel">
-                <div class="testimonial-item">
-                    <div class="testimonial-content">
-                        <div class="names">Camila & Rafael</div>
-                        <div class="time">1 ano e 3 meses</div>
-                        <div class="review">Muito criativo!! Nunca tinha visto algo assim, parabéns</div>
+                <div class="hero-text animate__animated animate__fadeInLeft">
+                    <h1 class="hero-title">
+                        Surpresas <span class="highlight">Românticas</span> Digitais
+                    </h1>
+                    <p class="hero-subtitle">
+                        Crie presentes digitais inesquecíveis com fotos, músicas e mensagens personalizadas. 
+                        Demonstre seu amor de uma forma única e especial.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="{{ url_for('cadastro') }}" class="btn btn-primary btn-large">
+                            <i class="fas fa-heart"></i>
+                            Criar Surpresa Gratuita
+                        </a>
+                        <a href="{{ url_for('demo') }}" class="btn btn-outline btn-large">
+                            <i class="fas fa-play"></i>
+                            Ver Demonstração
+                        </a>
                     </div>
                 </div>
-                <div class="testimonial-item">
-                    <div class="testimonial-content">
-                        <div class="names">Thiago & Letícia</div>
-                        <div class="time">2 anos e 1 mês</div>
-                        <div class="review">Amei! Foi a melhor surpresa que já recebi</div>
-                    </div>
-                </div>
-                <div class="testimonial-item">
-                    <div class="testimonial-content">
-                        <div class="names">Pedro & Ana Paula</div>
-                        <div class="time">8 meses</div>
-                        <div class="review">Incrível! Me emocionei até as lágrimas</div>
-                    </div>
-                </div>
-            </div>
-            <div class="more-testimonials">
-                <div class="testimonial-grid">
-                    <div class="testimonial-small">
-                        <span class="names">Felipe & Mariana</span>
-                        <span class="time">2 anos e 6 meses</span>
-                    </div>
-                    <div class="testimonial-small">
-                        <span class="names">Renata & Gustavo</span>
-                        <span class="time">4 anos e 2 meses</span>
-                    </div>
-                    <div class="testimonial-small">
-                        <span class="names">Juliana & Bruno</span>
-                        <span class="time">6 meses</span>
-                    </div>
-                    <div class="testimonial-small">
-                        <span class="names">Mariana & Lucas</span>
-                        <span class="time">1 ano e 7 meses</span>
-                    </div>
-                    <div class="testimonial-small">
-                        <span class="names">Diego & Fernanda</span>
-                        <span class="time">3 anos e 4 meses</span>
-                    </div>
-                    <div class="testimonial-small">
-                        <span class="names">Isabela & Matheus</span>
-                        <span class="time">11 meses</span>
-                    </div>
-                    <div class="testimonial-small">
-                        <span class="names">Carlos & Priscila</span>
-                        <span class="time">5 anos e 1 mês</span>
-                    </div>
-                    <div class="testimonial-small">
-                        <span class="names">Larissa & Vinícius</span>
-                        <span class="time">3 anos</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section class="how-it-works">
-        <div class="container">
-            <h2 class="section-title">Como funciona - do formulário ao link em minutos</h2>
-            <div class="steps-container">
-                <div class="step-item">
-                    <div class="step-number">1</div>
-                    <h3>Preenchimento do formulário</h3>
-                    <p>Adicione até 6 fotos, escolha a música que marca a relação e escreva sua mensagem. Você vê a prévia em tempo real - se não gostar de algo, muda na hora.</p>
-                </div>
-                <div class="step-item">
-                    <div class="step-number">2</div>
-                    <h3>Teste grátis, pague só se aprovar</h3>
-                    <p>A prévia é gratuita. Você só paga quando estiver satisfeito com o resultado.</p>
-                </div>
-                <div class="step-item">
-                    <div class="step-number">3</div>
-                    <h3>Geração de QR Code e Link</h3>
-                    <p>Assim que o pagamento é confirmado, você recebe link + QR Code no e-mail e na tela. Pronto para enviar.</p>
-                </div>
-                <div class="step-item">
-                    <div class="step-number">4</div>
-                    <h3>Compartilhar</h3>
-                    <p>Manda pelo WhatsApp, cola o QR Code num cartão ou surpreenda pessoalmente. A parte mais gostosa é essa.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why It Works Section -->
-    <section class="why-works">
-        <div class="container">
-            <h2 class="section-title">Por que funciona - mesmo se você não é nada criativo</h2>
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">3</div>
-                    <h4>Leva 3 minutos</h4>
-                    <p>Você preenche um formulário. O site monta tudo. Não tem template em branco, não tem nada pra travar.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">infinite</div>
-                    <h4>A página fica online para sempre</h4>
-                    <p>Ela pode abrir o link daqui a 2 anos e rever tudo - fotos, música, mensagem. Igual ao primeiro dia.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">qr</div>
-                    <h4>Link e QR Code na hora</h4>
-                    <p>Pagamento confirmado, surpresa liberada em segundos. Dá pra criar agora e enviar hoje à noite.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">mobile</div>
-                    <h4>Sem app, sem cadastro pra quem recebe</h4>
-                    <p>Ela abre no celular, direto no navegador. Simples assim.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="pricing-section" id="precos">
-        <div class="container">
-            <h2 class="section-title">Quanto custa eternizar um momento</h2>
-            <div class="pricing-cards">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Teste Grátis</h3>
-                        <div class="price">
-                            <span class="currency">R$</span>
-                            <span class="amount">0</span>
+                <div class="hero-visual animate__animated animate__fadeInRight">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="mockup-surprise">
+                                <div class="mockup-header">
+                                    <h3>Para: Amor da Minha Vida</h3>
+                                    <span class="mockup-date">Hoje</span>
+                                </div>
+                                <div class="mockup-content">
+                                    <p class="mockup-message">Você é tudo pra mim...</p>
+                                    <div class="mockup-images">
+                                        <div class="mockup-image"></div>
+                                        <div class="mockup-image"></div>
+                                    </div>
+                                    <div class="mockup-music">
+                                        <i class="fas fa-music"></i>
+                                        <span>Música Especial</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <p class="description">Crie e visualize sem compromisso</p>
-                    </div>
-                    <div class="pricing-features">
-                        <ul>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>Criação completa</span>
-                            </li>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>Preview em tempo real</span>
-                            </li>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>Até 6 fotos</span>
-                            </li>
-                            <li class="excluded">
-                                <span class="icon">close</span>
-                                <span>Link para compartilhar</span>
-                            </li>
-                            <li class="excluded">
-                                <span class="icon">close</span>
-                                <span>QR Code</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="pricing-action">
-                        <a href="{{ url_for('criar_surpresa') }}" class="btn btn-outline">Testar Agora</a>
-                    </div>
-                </div>
-
-                <div class="pricing-card featured">
-                    <div class="badge">Mais Popular</div>
-                    <div class="pricing-header">
-                        <h3>Plano Eterno</h3>
-                        <div class="price">
-                            <span class="currency">R$</span>
-                            <span class="amount">29,90</span>
-                        </div>
-                        <p class="description">Sua surpresa online para sempre</p>
-                    </div>
-                    <div class="pricing-features">
-                        <ul>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>Tudo do plano gratuito</span>
-                            </li>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>Link permanente</span>
-                            </li>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>QR Code personalizado</span>
-                            </li>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>Compartilhamento ilimitado</span>
-                            </li>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>Suporte prioritário</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="pricing-action">
-                        <a href="{{ url_for('pagamento', plano='eterno') }}" class="btn btn-primary">Criar Agora</a>
-                    </div>
-                </div>
-
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Plano Ilimitado</h3>
-                        <div class="price">
-                            <span class="currency">R$</span>
-                            <span class="amount">79,90</span>
-                        </div>
-                        <p class="description">Surpresas ilimitadas por 30 dias</p>
-                    </div>
-                    <div class="pricing-features">
-                        <ul>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>Tudo do plano eterno</span>
-                            </li>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>Surpresas ilimitadas</span>
-                            </li>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>Templates exclusivos</span>
-                            </li>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>Músicas premium</span>
-                            </li>
-                            <li class="included">
-                                <span class="icon">check</span>
-                                <span>Suporte VIP</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="pricing-action">
-                        <a href="{{ url_for('pagamento', plano='ilimitado') }}" class="btn btn-outline">Assinar Agora</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    
-    <!-- FAQ Section -->
-    <section class="faq-section">
+    <!-- Features Section -->
+    <section class="features-section">
         <div class="container">
-            <h2 class="section-title">Perguntas Frequentes sobre Presente Digital e Surpresa Online</h2>
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>Como fazer um presente virtual?</h3>
-                    <p>É simples! Preencha nosso formulário com fotos, escolha uma música, escreva sua mensagem e receba um link único para compartilhar. Todo o processo leva menos de 5 minutos.</p>
+            <div class="section-header animate__animated animate__fadeInUp">
+                <h2 class="section-title">Como Funciona</h2>
+                <p class="section-subtitle">Crie sua surpresa em 3 passos simples</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="feature-icon">
+                        <i class="fas fa-edit"></i>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3>1. Personalize</h3>
+                    <p>Escreva uma mensagem do coração, escolha fotos especiais e selecione uma música romântica</p>
                 </div>
-                <div class="faq-item">
-                    <h3>O que é o nosso Presente Digital?</h3>
-                    <p>É uma página web personalizada com suas fotos, mensagem e música, criada especialmente para celebrar momentos especiais. Fica online para sempre e pode ser acessada de qualquer dispositivo.</p>
+                <div class="feature-card animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3>2. Geramos</h3>
+                    <p>Criamos uma página linda e animada com suas memórias, pronta para encantar</p>
                 </div>
-                <div class="faq-item">
-                    <h3>O que está incluído na minha página personalizada?</h3>
-                    <p>Inclui até 6 fotos, mensagem personalizada, trilha sonora romântica, design responsivo, link permanente e QR Code para compartilhamento fácil.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>A página personalizada tem validade?</h3>
-                    <p>Não! Sua página fica online para sempre. A pessoa pode acessar o link daqui a 1 ano, 5 anos, 10 anos e tudo estará exatamente como você criou.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>Quanto tempo demora para receber o link e o QR Code?</h3>
-                    <p>Imediato! Assim que o pagamento é confirmado, você recebe o link e QR Code na tela e no seu e-mail. O processo é automático e leva segundos.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>Como posso criar uma página personalizada?</h3>
-                    <p>Clique em "Criar Presente Agora", preencha o formulário com suas informações, faça o preview gratuito e, se gostar, finalize o pagamento para liberar o link.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>Quais são as formas de pagamento?</h3>
-                    <p>Aceitamos cartão de crédito, débito e PIX através do Stripe, uma plataforma de pagamento 100% segura.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>Posso alterar depois de pagar?</h3>
-                    <p>Sim! Você pode fazer alterações gratuitamente por 24 horas após o pagamento. Depois disso, entre em contato conosco para ajustes.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>Preciso instalar algum app? E a pessoa que vai receber?</h3>
-                    <p>Não! Tudo funciona direto no navegador, sem necessidade de instalar nenhum aplicativo. Nem você nem a pessoa que recebe precisam de apps.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>O que é um presente digital e como funciona?</h3>
-                    <p>É uma experiência digital única que combina fotos, música e mensagem em uma página web personalizada. Funciona como um cartão de presente moderno, mas eterno e interativo.</p>
+                <div class="feature-card animate__animated animate__fadeInUp animate__delay-3s">
+                    <div class="feature-icon">
+                        <i class="fas fa-share-alt"></i>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3>3. Compartilhe</h3>
+                    <p>Envie o link ou QR Code para sua pessoa amada e veja a emoção do presente</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Final CTA -->
+    <!-- Preview Section -->
+    <section class="preview-section">
+        <div class="container">
+            <div class="section-header animate__animated animate__fadeInUp">
+                <h2 class="section-title">Veja Como Fica Seu Presente</h2>
+                <p class="section-subtitle">Experimente interativamente como será sua surpresa</p>
+            </div>
+            <div class="preview-container animate__animated animate__fadeInUp animate__delay-1s">
+                <div class="preview-tabs">
+                    <button class="tab-btn active" data-tab="message">Mensagem</button>
+                    <button class="tab-btn" data-tab="photos">Fotos</button>
+                    <button class="tab-btn" data-tab="music">Música</button>
+                    <button class="tab-btn" data-tab="theme">Tema</button>
+                </div>
+                <div class="preview-content">
+                    <div class="tab-content active" id="message-tab">
+                        <div class="message-preview">
+                            <h3>Para: <span contenteditable="true" id="partner-name">Nome do Parceiro</span></h3>
+                            <div class="message-box">
+                                <p contenteditable="true" id="love-message">Escreva aqui sua mensagem de amor...</p>
+                                <p class="signature">Com todo meu amor, <span contenteditable="true" id="your-name">Seu Nome</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="photos-tab">
+                        <div class="photos-preview">
+                            <div class="photo-grid">
+                                <div class="photo-placeholder">
+                                    <i class="fas fa-camera"></i>
+                                    <span>Foto 1</span>
+                                </div>
+                                <div class="photo-placeholder">
+                                    <i class="fas fa-camera"></i>
+                                    <span>Foto 2</span>
+                                </div>
+                                <div class="photo-placeholder">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Adicionar</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="music-tab">
+                        <div class="music-preview">
+                            <div class="music-player">
+                                <div class="album-art">
+                                    <i class="fas fa-music"></i>
+                                </div>
+                                <div class="music-info">
+                                    <h4>Música Romântica</h4>
+                                    <p>Para momentos especiais</p>
+                                </div>
+                                <div class="music-controls">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="theme-tab">
+                        <div class="theme-preview">
+                            <div class="theme-options">
+                                <div class="theme-option active" data-theme="romantic">
+                                    <div class="theme-preview-box romantic"></div>
+                                    <span>Romântico</span>
+                                </div>
+                                <div class="theme-option" data-theme="modern">
+                                    <div class="theme-preview-box modern"></div>
+                                    <span>Moderno</span>
+                                </div>
+                                <div class="theme-option" data-theme="classic">
+                                    <div class="theme-preview-box classic"></div>
+                                    <span>Clássico</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header animate__animated animate__fadeInUp">
+                <h2 class="section-title">Casais Apaixonados</h2>
+                <p class="section-subtitle">Veja quem já usou nossas surpresas</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="testimonial-content">
+                        <p>"Foi o presente mais lindo que já recebi! Chorei de emoção com cada detalhe."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <h4>Maria & João</h4>
+                            <span>2 anos de namoro</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="testimonial-content">
+                        <p>"Consegui expressar todo meu amor de uma forma que nunca consegui antes."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">P</div>
+                        <div class="author-info">
+                            <h4>Pedro & Ana</h4>
+                            <span>6 meses juntos</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate__animated animate__fadeInUp animate__delay-3s">
+                    <div class="testimonial-content">
+                        <p>"A reação dela foi inesquecível! Valeu cada segundo dedicado."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">L</div>
+                        <div class="author-info">
+                            <h4>Lucas & Beatriz</h4>
+                            <span>1 ano de amor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
     <section class="cta-section">
         <div class="container">
-            <h2>Sua surpresa fica pronta em 3 minutos.</h2>
-            <p>Comece agora mesmo e emocione quem você ama</p>
-            <a href="{{ url_for('criar_surpresa') }}" class="btn btn-primary btn-large">Criar Presente Agora</a>
+            <div class="cta-content animate__animated animate__fadeInUp">
+                <h2 class="cta-title">Pronto para Criar uma Surpresa Inesquecível?</h2>
+                <p class="cta-subtitle">Comece gratuitamente e encante a pessoa que você ama</p>
+                <div class="cta-actions">
+                    <a href="{{ url_for('cadastro') }}" class="btn btn-primary btn-large">
+                        <i class="fas fa-heart"></i>
+                        Começar Agora
+                    </a>
+                    <a href="{{ url_for('planos') }}" class="btn btn-outline btn-large">
+                        <i class="fas fa-gem"></i>
+                        Ver Planos
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
-
-    <!-- Veja como fica seu presente Section -->
-    {% include 'preview_section.html' %}
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Surpresas Românticas</h3>
-                    <p>Criando momentos especiais que duram para sempre</p>
+                <div class="footer-brand">
+                    <h3 class="footer-logo">
+                        <span class="logo-icon">heart</span>
+                        Surpresas Românticas
+                    </h3>
+                    <p>Criando momentos inesquecíveis de amor e carinho.</p>
                 </div>
-                <div class="footer-section">
-                    <h4>Links Úteis</h4>
-                    <ul>
-                        <li><a href="{{ url_for('planos') }}">Planos e Preços</a></li>
-                        <li><a href="#exemplo">Ver Exemplo</a></li>
-                        <li><a href="#precos">Como Funciona</a></li>
-                        <li><a href="#">Contato</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Suporte</h4>
-                    <ul>
-                        <li><a href="#">Dúvidas Frequentes</a></li>
-                        <li><a href="#">Termos de Uso</a></li>
-                        <li><a href="#">Política de Privacidade</a></li>
-                        <li><a href="#">Política de Reembolso</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contato</h4>
-                    <p>** suporte@surpresasromanticas.com.br</p>
-                    <p>** WhatsApp: (11) 99999-8888</p>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Produto</h4>
+                        <a href="{{ url_for('demo') }}">Demonstração</a>
+                        <a href="{{ url_for('planos') }}">Planos</a>
+                        <a href="#">Exemplos</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Suporte</h4>
+                        <a href="#">FAQ</a>
+                        <a href="#">Contato</a>
+                        <a href="#">Tutorial</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Empresa</h4>
+                        <a href="#">Sobre Nós</a>
+                        <a href="#">Privacidade</a>
+                        <a href="#">Termos</a>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 Surpresas Românticas. Todos os direitos reservados.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Flash Messages -->
-    <div class="flash-messages">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="flash-message">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </div>
-
     <script>
-        // Auto-hide flash messages
-        setTimeout(() => {
-            const flashMessages = document.querySelector('.flash-messages');
-            if (flashMessages) {
-                flashMessages.style.opacity = '0';
-                setTimeout(() => {
-                    flashMessages.innerHTML = '';
-                }, 500);
-            }
-        }, 5000);
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tab = this.dataset.tab;
+                
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                document.getElementById(tab + '-tab').classList.add('active');
+            });
+        });
 
-        // Smooth scrolling for anchor links
+        // Theme selection
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.theme-option').forEach(o => o.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Floating hearts animation
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart-dynamic';
+            const symbols = ['&#9829;', '&#9733;', '&#10047;', '&#9825;'];
+            heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heart.style.fontSize = (Math.random() * 10 + 20) + 'px';
+            
+            const colors = [
+                'rgba(255, 107, 157, 0.8)',
+                'rgba(255, 215, 0, 0.8)',
+                'rgba(255, 182, 193, 0.8)',
+                'rgba(240, 147, 251, 0.8)'
+            ];
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.querySelector('.floating-hearts-container').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // Generate hearts periodically
+        setInterval(createFloatingHeart, 3000);
+
+        // Initialize with some hearts
+        for (let i = 0; i < 3; i++) {
+            setTimeout(createFloatingHeart, i * 1000);
+        }
+
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -433,411 +408,768 @@
             });
         });
 
-        // Testimonials carousel
-        let currentTestimonial = 0;
-        const testimonials = document.querySelectorAll('.testimonial-item');
-        
-        function showTestimonial(index) {
-            testimonials.forEach((testimonial, i) => {
-                testimonial.style.display = i === index ? 'block' : 'none';
-            });
-        }
-        
-        if (testimonials.length > 0) {
-            showTestimonial(0);
-            setInterval(() => {
-                currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-                showTestimonial(currentTestimonial);
-            }, 3000);
-        }
-
-        // FAQ Accordion
-        document.querySelectorAll('.faq-item h3').forEach(header => {
-            header.addEventListener('click', () => {
-                const item = header.parentElement;
-                const content = item.querySelector('p');
-                
-                // Toggle active class
-                item.classList.toggle('active');
-                
-                // Toggle content visibility
-                if (item.classList.contains('active')) {
-                    content.style.maxHeight = content.scrollHeight + 'px';
-                } else {
-                    content.style.maxHeight = '0';
-                }
-            });
-        });
-
-        // Preview demo
-        function playPreview() {
-            alert('Demonstração em desenvolvimento! Em breve você poderá ver uma apresentação interativa.');
-        }
-
-        // Add floating animation to elements
-        function addFloatingAnimation() {
-            const elements = document.querySelectorAll('.benefit-icon, .step-number');
-            elements.forEach((element, index) => {
-                element.style.animation = `float ${3 + index * 0.5}s ease-in-out infinite`;
-            });
-        }
-
-        addFloatingAnimation();
-
-        // Intersection Observer for animations
+        // Add animation on scroll
         const observerOptions = {
             threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
+            rootMargin: '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.step-item, .benefit-item, .pricing-card').forEach(el => {
+        // Observe elements for scroll animations
+        document.querySelectorAll('.feature-card, .testimonial-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(el);
         });
     </script>
 
     <style>
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .testimonial-item {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        :root {
+            --primary-color: #FF6B9D;
+            --secondary-color: #F093FB;
+            --accent-color: #FFD700;
+            --text-primary: #2C3E50;
+            --text-secondary: #7F8C8D;
+            --text-light: #ECF0F1;
+            --bg-light: rgba(255, 255, 255, 0.95);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Background Animation */
+        .romantic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #FF6B9D 75%, #FF8FAB 100%);
+            z-index: -2;
+        }
+
+        .gradient-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(255, 107, 157, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(102, 126, 234, 0.3) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .floating-hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            animation: float-up 8s linear infinite;
+            text-shadow: 0 0 15px rgba(255, 107, 157, 0.6);
+        }
+
+        .floating-heart-dynamic {
+            position: absolute;
+            font-size: 24px;
+            animation: float-up 5s linear infinite;
+            text-shadow: 0 0 15px rgba(255, 107, 157, 0.7);
+            pointer-events: none;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                transform: translateY(90vh) rotate(45deg) scale(1);
+                opacity: 1;
+            }
+            90% {
+                transform: translateY(10vh) rotate(315deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
+        .header-main {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar {
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            max-width: 400px;
+            padding: 0 20px;
         }
 
-        .testimonial-content .names {
+        .nav-brand .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
             font-weight: 600;
-            color: #2C3E50;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-large {
+            padding: 16px 32px;
             font-size: 1.1rem;
         }
 
-        .testimonial-content .time {
-            color: #7F8C8D;
-            font-size: 0.9rem;
-            margin: 4px 0;
-        }
-
-        .testimonial-content .review {
-            color: #2C3E50;
-            font-style: italic;
-            margin-top: 8px;
-        }
-
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-top: 32px;
-        }
-
-        .testimonial-small {
-            background: white;
-            padding: 16px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .testimonial-small .names {
-            font-weight: 600;
-            color: #2C3E50;
-            display: block;
-        }
-
-        .testimonial-small .time {
-            color: #7F8C8D;
-            font-size: 0.85rem;
-        }
-
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 32px;
-            margin-top: 40px;
-        }
-
-        .step-item {
-            text-align: center;
-            padding: 32px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: #FF6B6B;
-            color: white;
-            border-radius: 50%;
+        /* Hero Section */
+        .hero-section {
+            padding: 120px 0 80px;
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0 auto 20px;
         }
 
-        .step-item h3 {
-            color: #2C3E50;
-            margin-bottom: 12px;
-            font-size: 1.2rem;
-        }
-
-        .step-item p {
-            color: #7F8C8D;
-            line-height: 1.6;
-        }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 32px;
-            margin-top: 40px;
-        }
-
-        .benefit-item {
-            text-align: center;
-            padding: 32px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .benefit-icon {
-            width: 60px;
-            height: 60px;
-            background: #4ECDC4;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0 auto 20px;
-        }
-
-        .benefit-item h4 {
-            color: #2C3E50;
-            margin-bottom: 12px;
-            font-size: 1.1rem;
-        }
-
-        .benefit-item p {
-            color: #7F8C8D;
-            line-height: 1.6;
-        }
-
-        .example-preview {
+        .hero-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: center;
-            margin-top: 60px;
         }
 
-        .preview-phone {
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .highlight {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
             display: flex;
-            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
-        .phone-frame {
+        .phone-mockup {
             width: 300px;
             height: 600px;
-            background: #2C3E50;
-            border-radius: 30px;
-            padding: 10px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
 
         .phone-screen {
             width: 100%;
             height: 100%;
             background: white;
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 30px;
             overflow: hidden;
+            position: relative;
         }
 
-        .preview-header h3 {
-            color: #FF6B6B;
-            font-size: 1.1rem;
-            margin-bottom: 16px;
+        .mockup-surprise {
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mockup-header h3 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .mockup-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .mockup-message {
+            flex: 1;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        .mockup-images {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .mockup-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+        }
+
+        .mockup-music {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+            background: var(--bg-light);
+            backdrop-filter: blur(20px);
+        }
+
+        .section-header {
             text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .icon-glow {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.3;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.1; }
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Preview Section */
+        .preview-section {
+            padding: 80px 0;
+        }
+
+        .preview-container {
+            background: var(--bg-light);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .preview-tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 32px;
+            border-bottom: 2px solid rgba(255, 107, 157, 0.1);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .message-preview {
+            text-align: center;
+        }
+
+        .message-preview h3 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .message-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .message-box p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            text-align: right;
         }
 
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
         }
 
         .photo-placeholder {
             aspect-ratio: 1;
-            background: #F8F9FA;
-            border: 2px dashed #E1E8ED;
-            border-radius: 8px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .music-player {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: white;
+            padding: 24px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .album-art {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
-            color: #7F8C8D;
+            color: white;
+            font-size: 2rem;
         }
 
-        .preview-message {
-            background: #F8F9FA;
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 16px;
+        .theme-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
         }
 
-        .preview-message p {
-            color: #2C3E50;
-            font-style: italic;
+        .theme-option {
             text-align: center;
-            font-size: 0.9rem;
+            cursor: pointer;
         }
 
-        .preview-signature {
-            text-align: right;
-            margin-bottom: 16px;
+        .theme-preview-box {
+            width: 100px;
+            height: 100px;
+            border-radius: 15px;
+            margin-bottom: 12px;
         }
 
-        .preview-signature span {
-            color: #FF6B6B;
-            font-weight: 600;
-            font-size: 0.9rem;
+        .theme-preview-box.romantic {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
         }
 
-        .preview-music {
-            text-align: center;
-            padding: 12px;
-            background: #F8F9FA;
-            border-radius: 8px;
+        .theme-preview-box.modern {
+            background: linear-gradient(45deg, #667eea, #764ba2);
         }
 
-        .preview-music span {
-            color: #7F8C8D;
-            font-size: 0.8rem;
+        .theme-preview-box.classic {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
         }
 
-        .preview-description h3 {
-            color: #2C3E50;
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 80px 0;
+            background: var(--bg-light);
+            backdrop-filter: blur(20px);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 32px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .testimonial-content {
             margin-bottom: 24px;
-            font-size: 1.5rem;
         }
 
-        .preview-description ul {
-            list-style: none;
+        .testimonial-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .author-info span {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
             margin-bottom: 32px;
         }
 
-        .preview-description li {
-            padding: 8px 0;
-            color: #2C3E50;
-            position: relative;
-            padding-left: 24px;
+        .cta-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        .preview-description li::before {
-            content: "check";
-            position: absolute;
-            left: 0;
-            color: #4ECDC4;
-            font-weight: bold;
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            color: var(--text-light);
+            padding: 60px 0 20px;
         }
 
-        .preview-actions {
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 40px;
+        }
+
+        .link-group h4 {
+            margin-bottom: 16px;
+            color: var(--primary-color);
+        }
+
+        .link-group a {
+            display: block;
+            color: var(--text-light);
+            text-decoration: none;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .link-group a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links {
             display: flex;
             gap: 16px;
         }
 
-        .faq-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
 
-        .faq-item {
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .social-links a:hover {
+            background: var(--primary-color);
+            color: white;
         }
 
-        .faq-item h3 {
-            color: #2C3E50;
-            margin-bottom: 12px;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-
-        .faq-item p {
-            color: #7F8C8D;
-            line-height: 1.6;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            max-height: 200px;
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .example-preview {
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero-content {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                text-align: center;
             }
 
-            .preview-phone {
-                order: 2;
+            .hero-title {
+                font-size: 2.5rem;
             }
 
-            .preview-description {
-                order: 1;
-            }
-
-            .phone-frame {
+            .phone-mockup {
                 width: 250px;
                 height: 500px;
+                margin: 0 auto;
             }
 
-            .steps-container,
-            .benefits-grid {
+            .features-grid,
+            .testimonials-grid {
                 grid-template-columns: 1fr;
             }
 
-            .testimonial-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .preview-tabs {
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
 
-        @media (max-width: 480px) {
-            .testimonial-grid {
+            .footer-content {
                 grid-template-columns: 1fr;
+                text-align: center;
             }
 
-            .preview-actions {
+            .footer-bottom {
                 flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
+                gap: 20px;
+                text-align: center;
             }
         }
     </style>

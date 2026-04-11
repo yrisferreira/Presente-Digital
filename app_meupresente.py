@@ -162,7 +162,7 @@ def logout():
 @login_required
 def dashboard():
     surprises = Surprise.query.filter_by(usuario_id=current_user.id).order_by(Surprise.data_criacao.desc()).all()
-    return render_template('dashboard.html', surprises=surprises)
+    return render_template('dashboard_v4.html', surprises=surprises)
 
 @app.route('/criar', methods=['GET', 'POST'])
 @login_required
@@ -243,7 +243,7 @@ def visualizar_surpresa(id_unico):
     else:
         surpresa.imagens_lista = []
     
-    return render_template('surpresa_meupresente.html', surpresa=surpresa)
+    return render_template('surpresa_v4.html', surpresa=surpresa)
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):

@@ -3,530 +3,496 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planos e Preços - Surpresas Românticas</title>
-    <meta name="description" content="Escolha o plano perfeito para criar surpresas românticas inesquecíveis. Planos acessíveis com recursos incríveis.">
+    <title>Planos - Surpresas Românticas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_meupresente_v2.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
+    <!-- Background Animation -->
+    <div class="romantic-bg">
+        <div class="floating-hearts-container">
+            <div class="floating-heart" style="left: 10%; animation-delay: 0s;">&#9829;</div>
+            <div class="floating-heart" style="left: 20%; animation-delay: 1s;">&#9733;</div>
+            <div class="floating-heart" style="left: 30%; animation-delay: 2s;">&#9829;</div>
+            <div class="floating-heart" style="left: 40%; animation-delay: 3s;">&#10047;</div>
+            <div class="floating-heart" style="left: 50%; animation-delay: 4s;">&#9829;</div>
+            <div class="floating-heart" style="left: 60%; animation-delay: 5s;">&#9733;</div>
+            <div class="floating-heart" style="left: 70%; animation-delay: 6s;">&#9829;</div>
+            <div class="floating-heart" style="left: 80%; animation-delay: 7s;">&#10047;</div>
+            <div class="floating-heart" style="left: 90%; animation-delay: 8s;">&#9829;</div>
+        </div>
+        <div class="gradient-overlay"></div>
+    </div>
+
     <!-- Header -->
     <header class="header-main">
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
-                    <h1 class="logo">Surpresas Românticas</h1>
+                    <h1 class="logo">
+                        <span class="logo-icon">heart</span>
+                        Surpresas Românticas
+                    </h1>
                 </div>
                 <div class="nav-menu">
                     <a href="{{ url_for('index') }}" class="nav-link">Início</a>
                     <a href="{{ url_for('planos') }}" class="nav-link active">Planos</a>
+                    <a href="{{ url_for('demo') }}" class="nav-link">Demo</a>
                     {% if current_user.is_authenticated %}
                         <a href="{{ url_for('dashboard') }}" class="nav-link">Meu Painel</a>
                         <a href="{{ url_for('logout') }}" class="nav-link">Sair</a>
                     {% else %}
                         <a href="{{ url_for('login') }}" class="nav-link">Login</a>
-                        <a href="{{ url_for('cadastro') }}" class="btn btn-small">Cadastrar</a>
+                        <a href="{{ url_for('cadastro') }}" class="btn btn-primary">Cadastrar</a>
                     {% endif %}
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="pricing-hero">
+    <!-- Main Content -->
+    <main class="plans-main">
         <div class="container">
-            <div class="pricing-hero-content">
-                <h1 class="pricing-hero-title">Escolha o Plano Perfeito</h1>
-                <p class="pricing-hero-subtitle">Crie surpresas românticas inesquecíveis com o plano ideal para você</p>
-                <div class="pricing-badges">
-                    <span class="badge">Sem taxas ocultas</span>
-                    <span class="badge">Cancelamento a qualquer momento</span>
-                    <span class="badge">Suporte 24/7</span>
+            <!-- Header Section -->
+            <section class="plans-header animate__animated animate__fadeInDown">
+                <div class="header-content">
+                    <h2 class="plans-title">
+                        Escolha seu Plano de <span class="highlight">Amor</span>
+                    </h2>
+                    <p class="plans-subtitle">
+                        Transforme seus sentimentos em presentes digitais inesquecíveis
+                    </p>
                 </div>
-            </div>
-        </div>
-    </section>
+                <div class="billing-toggle">
+                    <span class="toggle-label">Mensal</span>
+                    <label class="switch">
+                        <input type="checkbox" id="billingToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="toggle-label">Anual <span class="discount">-20%</span></span>
+                </div>
+            </section>
 
-    <!-- Toggle Billing -->
-    <section class="billing-toggle">
-        <div class="container">
-            <div class="toggle-container">
-                <span class="toggle-label">Mensal</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="billingToggle">
-                    <span class="toggle-slider"></span>
-                </label>
-                <span class="toggle-label">Anual <span class="discount">Economize 20%</span></span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Cards -->
-    <section class="pricing-cards-section">
-        <div class="container">
-            <div class="pricing-grid">
-                <!-- Plano Gratuito -->
-                <div class="pricing-card starter">
-                    <div class="card-header">
-                        <h3 class="plan-name">Gratuito</h3>
-                        <div class="plan-price">
-                            <span class="currency">R$</span>
-                            <span class="amount">0</span>
-                            <span class="period">/mês</span>
-                        </div>
-                        <p class="plan-description">Perfeito para experimentar</p>
-                    </div>
-                    
-                    <div class="card-features">
-                        <ul class="features-list">
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>1 surpresa romântica</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Template básico</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Até 3 fotos</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Música romântica</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Link para compartilhar</span>
-                            </li>
-                            <li class="feature-item excluded">
-                                <span class="feature-icon">remove_circle</span>
-                                <span>Templates premium</span>
-                            </li>
-                            <li class="feature-item excluded">
-                                <span class="feature-icon">remove_circle</span>
-                                <span>Suporte prioritário</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="card-footer">
-                        <a href="{{ url_for('criar_surpresa') }}" class="btn btn-outline">Começar Grátis</a>
-                        <p class="card-note">Sem cartão de crédito</p>
-                    </div>
-                </div>
-
-                <!-- Plano Básico -->
-                <div class="pricing-card basic">
-                    <div class="card-header">
-                        <h3 class="plan-name">Básico</h3>
-                        <div class="plan-price">
-                            <span class="currency">R$</span>
-                            <span class="amount monthly">19,90</span>
-                            <span class="amount yearly" style="display: none;">15,92</span>
-                            <span class="period">/mês</span>
-                        </div>
-                        <p class="plan-description">Para casais que amam surpresas</p>
-                    </div>
-                    
-                    <div class="card-features">
-                        <ul class="features-list">
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>5 surpresas românticas</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Todos os templates</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Até 6 fotos por surpresa</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Músicas premium</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Link personalizado</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>QR Code para compartilhar</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Suporte por email</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="card-footer">
-                        <a href="{{ url_for('pagamento', plano='basico') }}" class="btn btn-primary">Assinar Agora</a>
-                        <p class="card-note">Teste 7 dias grátis</p>
-                    </div>
-                </div>
-
-                <!-- Plano Premium -->
-                <div class="pricing-card premium featured">
-                    <div class="popular-badge">
-                        <span class="badge-text">MAIS POPULAR</span>
-                    </div>
-                    <div class="card-header">
-                        <h3 class="plan-name">Premium</h3>
-                        <div class="plan-price">
-                            <span class="currency">R$</span>
-                            <span class="amount monthly">39,90</span>
-                            <span class="amount yearly" style="display: none;">31,92</span>
-                            <span class="period">/mês</span>
-                        </div>
-                        <p class="plan-description">Para românticos assíduos</p>
-                    </div>
-                    
-                    <div class="card-features">
-                        <ul class="features-list">
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>15 surpresas românticas</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Templates exclusivos</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Fotos ilimitadas</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Músicas personalizadas</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Link eterno</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>QR Code personalizado</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Suporte prioritário</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Vídeos nas surpresas</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="card-footer">
-                        <a href="{{ url_for('pagamento', plano='premium') }}" class="btn btn-primary btn-large">Assinar Premium</a>
-                        <p class="card-note">Melhor custo-benefício</p>
-                    </div>
-                </div>
-
-                <!-- Plano Ilimitado -->
-                <div class="pricing-card unlimited">
-                    <div class="card-header">
-                        <h3 class="plan-name">Ilimitado</h3>
-                        <div class="plan-price">
-                            <span class="currency">R$</span>
-                            <span class="amount monthly">79,90</span>
-                            <span class="amount yearly" style="display: none;">63,92</span>
-                            <span class="period">/mês</span>
-                        </div>
-                        <p class="plan-description">Para profissionais do amor</p>
-                    </div>
-                    
-                    <div class="card-features">
-                        <ul class="features-list">
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Surpresas ilimitadas</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Templates VIP exclusivos</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Fotos e vídeos ilimitados</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Biblioteca musical completa</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Domínio personalizado</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>API para desenvolvedores</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Suporte VIP 24/7</span>
-                            </li>
-                            <li class="feature-item included">
-                                <span class="feature-icon">check_circle</span>
-                                <span>Consultoria personalizada</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="card-footer">
-                        <a href="{{ url_for('pagamento', plano='ilimitado') }}" class="btn btn-secondary">Assinar Ilimitado</a>
-                        <p class="card-note">Para profissionais</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Comparison -->
-    <section class="comparison-section">
-        <div class="container">
-            <h2 class="section-title">Compare os Recursos</h2>
-            <div class="comparison-table">
-                <div class="table-header">
-                    <div class="feature-name">Recurso</div>
-                    <div class="plan-col">Gratuito</div>
-                    <div class="plan-col">Básico</div>
-                    <div class="plan-col">Premium</div>
-                    <div class="plan-col">Ilimitado</div>
-                </div>
-                
-                <div class="table-row">
-                    <div class="feature-name">Surpresas por mês</div>
-                    <div class="plan-col">1</div>
-                    <div class="plan-col">5</div>
-                    <div class="plan-col">15</div>
-                    <div class="plan-col">Ilimitadas</div>
-                </div>
-                
-                <div class="table-row">
-                    <div class="feature-name">Templates</div>
-                    <div class="plan-col">Básicos</div>
-                    <div class="plan-col">Todos</div>
-                    <div class="plan-col">Exclusivos</div>
-                    <div class="plan-col">VIP</div>
-                </div>
-                
-                <div class="table-row">
-                    <div class="feature-name">Fotos por surpresa</div>
-                    <div class="plan-col">3</div>
-                    <div class="plan-col">6</div>
-                    <div class="plan-col">Ilimitadas</div>
-                    <div class="plan-col">Ilimitadas</div>
-                </div>
-                
-                <div class="table-row">
-                    <div class="feature-name">Músicas</div>
-                    <div class="plan-col">Básicas</div>
-                    <div class="plan-col">Premium</div>
-                    <div class="plan-col">Personalizadas</div>
-                    <div class="plan-col">Completa</div>
-                </div>
-                
-                <div class="table-row">
-                    <div class="feature-name">Suporte</div>
-                    <div class="plan-col">Comunidade</div>
-                    <div class="plan-col">Email</div>
-                    <div class="plan-col">Prioritário</div>
-                    <div class="plan-col">VIP 24/7</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials-section">
-        <div class="container">
-            <h2 class="section-title">O Que Nossos Clientes Dizem</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <div class="stars">stars stars stars stars stars</div>
-                        <p>"O plano Premium é perfeito! Consigo criar surpresas incríveis para minha namorada todos os meses."</p>
-                        <div class="author-info">
-                            <div class="author-avatar">JD</div>
-                            <div class="author-details">
-                                <strong>João Dias</strong>
-                                <span>Usuário Premium</span>
+            <!-- Pricing Cards -->
+            <section class="pricing-section animate__animated animate__fadeInUp">
+                <div class="pricing-grid">
+                    <!-- Free Plan -->
+                    <div class="pricing-card free-card">
+                        <div class="card-header">
+                            <div class="plan-badge">Popular</div>
+                            <h3 class="plan-name">Gratuito</h3>
+                            <div class="plan-price">
+                                <span class="currency">R$</span>
+                                <span class="amount">0</span>
+                                <span class="period">/mês</span>
                             </div>
+                            <p class="plan-description">Perfeito para experimentar</p>
+                        </div>
+                        
+                        <div class="card-features">
+                            <ul class="features-list">
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>1 surpresa romântica</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Template básico</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Até 3 fotos</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Música romântica</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Link para compartilhar</span>
+                                </li>
+                                <li class="feature-item excluded">
+                                    <span class="feature-icon">remove_circle</span>
+                                    <span>Templates premium</span>
+                                </li>
+                                <li class="feature-item excluded">
+                                    <span class="feature-icon">remove_circle</span>
+                                    <span>Suporte prioritário</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="{{ url_for('criar_surpresa') }}" class="btn btn-outline">Começar Grátis</a>
+                            <p class="card-note">Sem cartão de crédito</p>
                         </div>
                     </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <div class="stars">stars stars stars stars stars</div>
-                        <p>"Comecei com o plano gratuito e amei! Agora estou no Básico e vale cada centavo."</p>
-                        <div class="author-info">
-                            <div class="author-avatar">MS</div>
-                            <div class="author-details">
-                                <strong>Maria Silva</strong>
-                                <span>Usuária Básica</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <div class="stars">stars stars stars stars stars</div>
-                        <p>"Como profissional de eventos, o plano Ilimitado mudou meu negócio. Incrível!"</p>
-                        <div class="author-info">
-                            <div class="author-avatar">RC</div>
-                            <div class="author-details">
-                                <strong>Ricardo Costa</strong>
-                                <span>Usuário Ilimitado</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- FAQ -->
-    <section class="faq-section">
-        <div class="container">
-            <h2 class="section-title">Perguntas Frequentes</h2>
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3 class="faq-question">Posso mudar de plano a qualquer momento?</h3>
-                    <p class="faq-answer">Sim! Você pode upgrade ou downgrade seu plano a qualquer momento. Se fizer upgrade, o valor será ajustado proporcionalmente.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3 class="faq-question">O plano gratuito é realmente grátis?</h3>
-                    <p class="faq-answer">Sim! O plano gratuito é 100% gratuito e não requer cartão de crédito. Você pode criar 1 surpresa por mês sem custo algum.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3 class="faq-question">Como funciona o período de teste?</h3>
-                    <p class="faq-answer">Os planos pagos oferecem 7 dias de teste gratuito. Você pode cancelar a qualquer momento durante o teste sem ser cobrado.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3 class="faq-question">Qual forma de pagamento aceitam?</h3>
-                    <p class="faq-answer">Aceitamos cartão de crédito, débito e PIX através do Stripe, uma plataforma 100% segura.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3 class="faq-question">Minhas surpresas expiram?</h3>
-                    <p class="faq-answer">Não! Suas surpresas ficam online para sempre. Mesmo que cancele seu plano, suas surpresas criadas continuam ativas.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3 class="faq-question">Posso cancelar quando quiser?</h3>
-                    <p class="faq-answer">Sim! Não há compromisso. Você pode cancelar seu plano a qualquer momento sem multas ou taxas de cancelamento.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <!-- Basic Plan -->
+                    <div class="pricing-card basic-card featured">
+                        <div class="card-header">
+                            <div class="plan-badge">Mais Popular</div>
+                            <h3 class="plan-name">Básico</h3>
+                            <div class="plan-price">
+                                <span class="currency">R$</span>
+                                <span class="amount monthly">19,90</span>
+                                <span class="amount yearly" style="display: none;">15,92</span>
+                                <span class="period">/mês</span>
+                            </div>
+                            <p class="plan-description">Para casais que amam surpresas</p>
+                        </div>
+                        
+                        <div class="card-features">
+                            <ul class="features-list">
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>5 surpresas românticas</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Todos os templates</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Até 6 fotos por surpresa</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Músicas premium</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Link personalizado</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>QR Code para compartilhar</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Suporte por email</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="{{ url_for('pagamento', plano='basico') }}" class="btn btn-primary">Assinar Agora</a>
+                            <p class="card-note">Teste 7 dias grátis</p>
+                        </div>
+                    </div>
 
-    <!-- CTA -->
-    <section class="cta-section">
-        <div class="container">
-            <h2 class="cta-title">Pronto para Criar Surpresas Inesquecíveis?</h2>
-            <p class="cta-subtitle">Escolha o plano perfeito e comece a emocionar quem você ama hoje mesmo</p>
-            <div class="cta-buttons">
-                <a href="{{ url_for('criar_surpresa') }}" class="btn btn-outline btn-large">Começar Gratuitamente</a>
-                <a href="{{ url_for('cadastro') }}" class="btn btn-primary btn-large">Ver Planos Detalhados</a>
-            </div>
+                    <!-- Premium Plan -->
+                    <div class="pricing-card premium-card">
+                        <div class="card-header">
+                            <div class="plan-badge">Melhor Valor</div>
+                            <h3 class="plan-name">Premium</h3>
+                            <div class="plan-price">
+                                <span class="currency">R$</span>
+                                <span class="amount monthly">39,90</span>
+                                <span class="amount yearly" style="display: none;">31,92</span>
+                                <span class="period">/mês</span>
+                            </div>
+                            <p class="plan-description">Para românticos assíduos</p>
+                        </div>
+                        
+                        <div class="card-features">
+                            <ul class="features-list">
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>15 surpresas românticas</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Templates exclusivos</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Fotos ilimitadas</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Músicas personalizadas</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Link eterno</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>QR Code personalizado</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Suporte prioritário</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Vídeos nas surpresas</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="{{ url_for('pagamento', plano='premium') }}" class="btn btn-primary btn-large">Assinar Premium</a>
+                            <p class="card-note">Melhor custo-benefício</p>
+                        </div>
+                    </div>
+
+                    <!-- Unlimited Plan -->
+                    <div class="pricing-card unlimited-card">
+                        <div class="card-header">
+                            <div class="plan-badge">Profissional</div>
+                            <h3 class="plan-name">Ilimitado</h3>
+                            <div class="plan-price">
+                                <span class="currency">R$</span>
+                                <span class="amount monthly">79,90</span>
+                                <span class="amount yearly" style="display: none;">63,92</span>
+                                <span class="period">/mês</span>
+                            </div>
+                            <p class="plan-description">Para profissionais do amor</p>
+                        </div>
+                        
+                        <div class="card-features">
+                            <ul class="features-list">
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Surpresas ilimitadas</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Templates VIP exclusivos</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Fotos e vídeos ilimitados</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Biblioteca musical completa</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Domínio personalizado</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>API para desenvolvedores</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Suporte VIP 24/7</span>
+                                </li>
+                                <li class="feature-item included">
+                                    <span class="feature-icon">check</span>
+                                    <span>Consultoria personalizada</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="{{ url_for('pagamento', plano='ilimitado') }}" class="btn btn-secondary">Assinar Ilimitado</a>
+                            <p class="card-note">Para profissionais</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="faq-section animate__animated animate__fadeInUp animate__delay-1s">
+                <div class="section-header">
+                    <h3 class="section-title">Perguntas Frequentes</h3>
+                    <p class="section-subtitle">Tudo que você precisa saber sobre nossos planos</p>
+                </div>
+                
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>Como funciona o período de teste?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Oferecemos 7 dias grátis nos planos pagos. Você pode cancelar a qualquer momento sem custos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>Posso mudar de plano?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Sim! Você pode upgrade ou downgrade seu plano a qualquer momento. O ajuste será proporcional.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>As surpresas expiram?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Surpresas criadas permanecem ativas para sempre. Planos pagos oferecem links eternos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>Que formas de pagamento aceitam?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Aceitamos cartão de crédito, débito e boleto através do Stripe, uma plataforma segura.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-section animate__animated animate__fadeInUp animate__delay-2s">
+                <div class="cta-content">
+                    <h3>Pronto para Espalhar Amor?</h3>
+                    <p>Comece com nosso plano gratuito ou escolha o perfeito para você</p>
+                    <div class="cta-actions">
+                        <a href="{{ url_for('cadastro') }}" class="btn btn-primary btn-large">
+                            <i class="fas fa-heart"></i>
+                            Começar Gratuitamente
+                        </a>
+                        <a href="#pricing" class="btn btn-outline btn-large">
+                            <i class="fas fa-gem"></i>
+                            Ver Planos
+                        </a>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Surpresas Românticas</h3>
-                    <p>Criando momentos especiais que duram para sempre</p>
+                <div class="footer-brand">
+                    <h3 class="footer-logo">
+                        <span class="logo-icon">heart</span>
+                        Surpresas Românticas
+                    </h3>
+                    <p>Criando momentos inesquecíveis de amor e carinho.</p>
                 </div>
-                <div class="footer-section">
-                    <h4>Links Úteis</h4>
-                    <ul>
-                        <li><a href="{{ url_for('index') }}">Início</a></li>
-                        <li><a href="{{ url_for('planos') }}">Planos</a></li>
-                        <li><a href="#">Como Funciona</a></li>
-                        <li><a href="#">Contato</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Suporte</h4>
-                    <ul>
-                        <li><a href="#">Dúvidas Frequentes</a></li>
-                        <li><a href="#">Termos de Uso</a></li>
-                        <li><a href="#">Política de Privacidade</a></li>
-                        <li><a href="#">Política de Reembolso</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contato</h4>
-                    <p>suporte@surpresasromanticas.com.br</p>
-                    <p>WhatsApp: (11) 99999-8888</p>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Produto</h4>
+                        <a href="{{ url_for('demo') }}">Demonstração</a>
+                        <a href="#pricing">Planos</a>
+                        <a href="#">Exemplos</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Suporte</h4>
+                        <a href="#">FAQ</a>
+                        <a href="#">Contato</a>
+                        <a href="#">Tutorial</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Empresa</h4>
+                        <a href="#">Sobre Nós</a>
+                        <a href="#">Privacidade</a>
+                        <a href="#">Termos</a>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 Surpresas Românticas. Todos os direitos reservados.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Flash Messages -->
-    <div class="flash-messages">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="flash-message">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </div>
-
     <script>
         // Billing toggle
-        document.getElementById('billingToggle').addEventListener('change', function() {
-            const isYearly = this.checked;
-            const monthlyPrices = document.querySelectorAll('.amount.monthly');
-            const yearlyPrices = document.querySelectorAll('.amount.yearly');
-            
-            monthlyPrices.forEach(price => {
-                price.style.display = isYearly ? 'none' : 'inline';
-            });
-            
-            yearlyPrices.forEach(price => {
-                price.style.display = isYearly ? 'inline' : 'none';
-            });
+        const billingToggle = document.getElementById('billingToggle');
+        const monthlyPrices = document.querySelectorAll('.amount.monthly');
+        const yearlyPrices = document.querySelectorAll('.amount.yearly');
+        
+        billingToggle.addEventListener('change', function() {
+            if (this.checked) {
+                monthlyPrices.forEach(price => price.style.display = 'none');
+                yearlyPrices.forEach(price => price.style.display = 'inline');
+            } else {
+                monthlyPrices.forEach(price => price.style.display = 'inline');
+                yearlyPrices.forEach(price => price.style.display = 'none');
+            }
         });
 
         // FAQ Accordion
         document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
+            question.addEventListener('click', function() {
+                const faqItem = this.parentElement;
                 const answer = faqItem.querySelector('.faq-answer');
+                const icon = this.querySelector('i');
                 
-                // Toggle active class
+                // Close other FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('active');
+                        item.querySelector('.faq-answer').style.maxHeight = '0';
+                        item.querySelector('.fa-chevron-down').style.transform = 'rotate(0deg)';
+                    }
+                });
+                
+                // Toggle current FAQ
                 faqItem.classList.toggle('active');
-                
-                // Toggle answer visibility
                 if (faqItem.classList.contains('active')) {
                     answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
                 } else {
                     answer.style.maxHeight = '0';
+                    icon.style.transform = 'rotate(0deg)';
                 }
             });
         });
 
-        // Smooth scrolling
+        // Floating hearts animation
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart-dynamic';
+            const symbols = ['&#9829;', '&#9733;', '&#10047;', '&#9825;'];
+            heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heart.style.fontSize = (Math.random() * 10 + 20) + 'px';
+            
+            const colors = [
+                'rgba(255, 107, 157, 0.8)',
+                'rgba(255, 215, 0, 0.8)',
+                'rgba(255, 182, 193, 0.8)',
+                'rgba(240, 147, 251, 0.8)'
+            ];
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.querySelector('.floating-hearts-container').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // Generate hearts periodically
+        setInterval(createFloatingHeart, 3000);
+
+        // Initialize with some hearts
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createFloatingHeart, i * 800);
+        }
+
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -540,118 +506,151 @@
             });
         });
 
-        // Auto-hide flash messages
-        setTimeout(() => {
-            const flashMessages = document.querySelector('.flash-messages');
-            if (flashMessages) {
-                flashMessages.style.opacity = '0';
-                setTimeout(() => {
-                    flashMessages.innerHTML = '';
-                }, 500);
-            }
-        }, 5000);
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
-                }
+        // Add hover effects to pricing cards
+        document.querySelectorAll('.pricing-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
             });
-        }, observerOptions);
-
-        document.querySelectorAll('.pricing-card, .testimonial-card, .faq-item').forEach(el => {
-            observer.observe(el);
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
         });
     </script>
 
     <style>
-        /* Pricing Page Specific Styles */
-        .pricing-hero {
-            padding: 80px 0 60px;
+        /* Plans Page Specific Styles */
+        .romantic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #FF6B9D 75%, #FF8FAB 100%);
+            z-index: -2;
+        }
+
+        .gradient-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(255, 107, 157, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(102, 126, 234, 0.3) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .floating-hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            animation: float-up 8s linear infinite;
+            text-shadow: 0 0 15px rgba(255, 107, 157, 0.6);
+        }
+
+        .floating-heart-dynamic {
+            position: absolute;
+            font-size: 24px;
+            animation: float-up 5s linear infinite;
+            text-shadow: 0 0 15px rgba(255, 107, 157, 0.7);
+            pointer-events: none;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                transform: translateY(90vh) rotate(45deg) scale(1);
+                opacity: 1;
+            }
+            90% {
+                transform: translateY(10vh) rotate(315deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .plans-main {
+            padding: 120px 0 60px;
+            min-height: 100vh;
+        }
+
+        .plans-header {
             text-align: center;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            margin-bottom: 60px;
         }
 
-        .pricing-hero-title {
+        .plans-title {
+            font-family: 'Playfair Display', serif;
             font-size: 3rem;
-            font-weight: 900;
-            color: white;
+            font-weight: 800;
             margin-bottom: 16px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            color: white;
         }
 
-        .pricing-hero-subtitle {
-            font-size: 1.3rem;
+        .highlight {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .plans-subtitle {
+            font-size: 1.2rem;
             color: rgba(255, 255, 255, 0.9);
             margin-bottom: 32px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .pricing-badges {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            backdrop-filter: blur(10px);
         }
 
         .billing-toggle {
-            padding: 40px 0;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .toggle-container {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 16px;
-            font-size: 1.1rem;
-            font-weight: 500;
         }
 
         .toggle-label {
-            color: white;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
         }
 
         .discount {
-            background: var(--success-color);
-            color: white;
+            background: var(--accent-color);
+            color: var(--text-primary);
             padding: 2px 8px;
             border-radius: 12px;
             font-size: 0.8rem;
-            margin-left: 8px;
+            font-weight: 600;
         }
 
-        .toggle-switch {
+        .switch {
             position: relative;
+            display: inline-block;
             width: 60px;
             height: 30px;
         }
 
-        .toggle-switch input {
+        .switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
 
-        .toggle-slider {
+        .slider {
             position: absolute;
             cursor: pointer;
             top: 0;
@@ -659,11 +658,11 @@
             right: 0;
             bottom: 0;
             background-color: rgba(255, 255, 255, 0.3);
-            transition: 0.4s;
+            transition: .4s;
             border-radius: 30px;
         }
 
-        .toggle-slider:before {
+        .slider:before {
             position: absolute;
             content: "";
             height: 22px;
@@ -671,25 +670,25 @@
             left: 4px;
             bottom: 4px;
             background-color: white;
-            transition: 0.4s;
+            transition: .4s;
             border-radius: 50%;
         }
 
-        input:checked + .toggle-slider {
+        input:checked + .slider {
             background-color: var(--primary-color);
         }
 
-        input:checked + .toggle-slider:before {
+        input:checked + .slider:before {
             transform: translateX(30px);
         }
 
-        .pricing-cards-section {
-            padding: 60px 0;
+        .pricing-section {
+            margin-bottom: 80px;
         }
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 32px;
             max-width: 1200px;
             margin: 0 auto;
@@ -698,50 +697,49 @@
         .pricing-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s ease;
             position: relative;
+            transition: all 0.3s ease;
         }
 
         .pricing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
         }
 
         .pricing-card.featured {
-            border: 3px solid var(--primary-color);
             transform: scale(1.05);
+            box-shadow: 0 30px 60px rgba(255, 107, 157, 0.3);
+            border-color: var(--primary-color);
         }
 
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-8px);
-        }
-
-        .popular-badge {
+        .plan-badge {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
             background: var(--primary-color);
             color: white;
-            padding: 8px;
-            text-align: center;
+            padding: 4px 16px;
+            border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
         }
 
         .card-header {
-            padding: 32px 24px 24px;
             text-align: center;
+            margin-bottom: 32px;
         }
 
         .plan-name {
+            font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--text-primary);
             margin-bottom: 16px;
+            color: var(--text-primary);
         }
 
         .plan-price {
@@ -750,19 +748,18 @@
 
         .currency {
             font-size: 1.2rem;
-            color: var(--primary-color);
-            vertical-align: super;
+            color: var(--text-secondary);
+            vertical-align: top;
         }
 
         .amount {
             font-size: 3rem;
-            font-weight: 900;
+            font-weight: 800;
             color: var(--primary-color);
         }
 
         .period {
             color: var(--text-secondary);
-            font-size: 1rem;
         }
 
         .plan-description {
@@ -770,12 +767,9 @@
             font-size: 1rem;
         }
 
-        .card-features {
-            padding: 0 24px;
-        }
-
         .features-list {
             list-style: none;
+            padding: 0;
             margin-bottom: 32px;
         }
 
@@ -784,8 +778,7 @@
             align-items: center;
             gap: 12px;
             padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255, 107, 157, 0.1);
         }
 
         .feature-item:last-child {
@@ -794,205 +787,147 @@
 
         .feature-icon {
             font-size: 1.2rem;
-            flex-shrink: 0;
+            width: 24px;
+            text-align: center;
         }
 
-        .included {
-            color: var(--text-primary);
-        }
-
-        .included .feature-icon {
+        .feature-item.included .feature-icon {
             color: var(--success-color);
         }
 
-        .excluded {
-            color: var(--text-light);
-            opacity: 0.6;
-        }
-
-        .excluded .feature-icon {
+        .feature-item.excluded .feature-icon {
             color: var(--text-light);
         }
 
         .card-footer {
-            padding: 24px;
             text-align: center;
         }
 
+        .btn-large {
+            padding: 16px 32px;
+            font-size: 1.1rem;
+        }
+
         .card-note {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
             margin-top: 12px;
-        }
-
-        .comparison-section {
-            padding: 80px 0;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .comparison-table {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .table-header {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-            background: var(--primary-color);
-            color: white;
-            padding: 20px;
-            font-weight: 600;
-        }
-
-        .table-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .table-row:last-child {
-            border-bottom: none;
-        }
-
-        .table-row:nth-child(even) {
-            background: var(--bg-secondary);
-        }
-
-        .testimonials-section {
-            padding: 80px 0;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .testimonial-card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 32px;
-            border-radius: 20px;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition);
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .author-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .author-avatar {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .author-details strong {
-            color: var(--text-primary);
-            display: block;
-        }
-
-        .author-details span {
-            color: var(--text-secondary);
             font-size: 0.9rem;
+            color: var(--text-secondary);
         }
 
         .faq-section {
-            padding: 80px 0;
-            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .section-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
         }
 
         .faq-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 24px;
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
         .faq-item {
             background: rgba(255, 255, 255, 0.95);
-            padding: 24px;
+            backdrop-filter: blur(20px);
             border-radius: 16px;
-            box-shadow: var(--shadow-md);
+            overflow: hidden;
         }
 
         .faq-question {
-            color: var(--text-primary);
-            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
             cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
 
         .faq-question:hover {
+            background: rgba(255, 107, 157, 0.05);
+        }
+
+        .faq-question h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .faq-question i {
             color: var(--primary-color);
+            transition: transform 0.3s ease;
         }
 
         .faq-answer {
-            color: var(--text-secondary);
-            line-height: 1.6;
+            max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease;
-            max-height: 0;
         }
 
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-            margin-top: 12px;
+        .faq-answer p {
+            padding: 0 20px 20px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
         }
 
         .cta-section {
-            padding: 80px 0;
             text-align: center;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 80px 0;
+        }
+
+        .cta-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
             color: white;
         }
 
-        .cta-title {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-            font-weight: 800;
-        }
-
-        .cta-subtitle {
+        .cta-content p {
             font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 32px;
-            opacity: 0.9;
         }
 
-        .cta-buttons {
+        .cta-actions {
             display: flex;
             gap: 20px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .pricing-hero-title {
+            .plans-main {
+                padding: 100px 20px 40px;
+            }
+
+            .plans-title {
                 font-size: 2rem;
+            }
+
+            .billing-toggle {
+                flex-direction: column;
+                gap: 12px;
             }
 
             .pricing-grid {
@@ -1000,37 +935,15 @@
             }
 
             .pricing-card.featured {
-                transform: none;
-            }
-
-            .table-header,
-            .table-row {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-
-            .table-header > *:not(:first-child),
-            .table-row > *:not(:first-child) {
-                display: none;
-            }
-
-            .table-row > *:first-child::after {
-                content: attr(data-mobile);
-                font-weight: 600;
-                color: var(--primary-color);
-            }
-
-            .testimonials-grid {
-                grid-template-columns: 1fr;
+                transform: scale(1);
             }
 
             .faq-grid {
                 grid-template-columns: 1fr;
             }
 
-            .cta-buttons {
+            .cta-actions {
                 flex-direction: column;
-                align-items: center;
             }
         }
     </style>
