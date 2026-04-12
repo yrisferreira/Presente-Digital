@@ -13,3 +13,4 @@ stripe==7.8.0
 python-dotenv==1.0.0
 email-validator==2.1.0
 Flask-Mail==0.9.1
+gunicorn==20.1.0
