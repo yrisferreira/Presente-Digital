@@ -375,8 +375,9 @@ def admin():
 def not_found(error):
     return render_template('404.html'), 404
 
+# Criar banco de dados antes de iniciar
+with app.app_context():
+    db.create_all()
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    
     app.run(debug=True, host='0.0.0.0', port=5004)
